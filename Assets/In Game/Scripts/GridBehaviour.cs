@@ -9,15 +9,20 @@ public class GridBehaviour : MonoBehaviour
     private int gridHeight;
     public int scale = 1;
     public GameObject gridPrefab;
-    public Vector3 leftBottom = new Vector3(0,0,0);
+    public Vector3 leftBottom = new Vector3(0, 0, 0);
     public GameObject[,] gridArray;
     public int startX, startY;
     public int endX, endY;
 
     private void Awake()
     {
+        //temp
+        gridWidth = 10;
+        gridHeight = 10;
+        //endtemp
+
         gridArray = new GameObject[gridHeight, gridWidth];
-        
+
         //Component gridStats = gameObject.GetComponent<GridStats>();
 
         //gridWidth = gridStats.width;
@@ -33,22 +38,23 @@ public class GridBehaviour : MonoBehaviour
         // Every time that the for loop is run through, the ticker increases by one.
         //
         // Because the grid is not being used at this point, this is only to create gameobjects at each position in the grid
-        // You can think of this code as functioning alike one of them old TV scre ens turned on its side:
+        // You can think of this code as functioning alike one of them old TV screens turned on its side:
         // It creates a series of grid spots in a line upwards, until it reaches the height designated.
-        // At this point, it moves across by one and repeats the above line. This is repeated until it width designated.
+        // At this point, it moves across by one and repeats the above line. This is repeated until it reaches the width designated.
         // The function is then finished.
 
 
         for (int tickerA = 0; tickerA < gridHeight; tickerA = tickerA + 1)
         {
-            for(int tickerB = 0; tickerB < gridWidth; tickerB = tickerB + 1)
+            for (int tickerB = 0; tickerB < gridWidth; tickerB = tickerB + 1)
             {
                 GameObject surrogateObj = Instantiate(gridPrefab, new Vector3(leftBottom.x + scale * tickerA, leftBottom.y, leftBottom.z + scale * tickerB), Quaternion.identity);
                 surrogateObj.transform.SetParent(gameObject.transform);
-                surrogateObj.GetComponent<GridStats>().x = tickerB;
-                surrogateObj.GetComponent<GridStats>().y = tickerA;
-                Debug.Log("Generated grid position " + tickerB + "," + tickerA);
-                gridArray[tickerA,tickerB] = surrogateObj;
+                surrogateObj.AddComponent<GridStats>();
+                //surrogateObj.GetComponent<GridStats>().x = tickerB;
+                //surrogateObj.GetComponent<GridStats>().y = tickerA;
+                Debug.Log("Generated grid position " + tickerA + "," + tickerB);
+                gridArray[tickerA, tickerB] = surrogateObj;
             }
         }
     }
@@ -59,3 +65,4 @@ public class GridBehaviour : MonoBehaviour
         GridGeneration(gridWidth, gridHeight);
 
     }
+}
