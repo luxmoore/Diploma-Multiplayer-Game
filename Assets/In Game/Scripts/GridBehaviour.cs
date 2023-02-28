@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class GridBehaviour : MonoBehaviour
-{  
+public class GridBehaviour : MetaStats
+{
+    public bool findDistance = false;
     private int gridWidth;
     private int gridHeight;
     public int scale = 1;
@@ -140,6 +141,7 @@ public class GridBehaviour : MonoBehaviour
         {
             SetVisited(localX - 1, localY, step);
         }
+
     }
 
     private void SetDistance()
@@ -153,7 +155,7 @@ public class GridBehaviour : MonoBehaviour
         {
             foreach(GameObject surrogateObj in gridArray)
             {
-                if(surrogateObj.GetComponent<GridStats>().visited == step - 1)
+                if(surrogateObj && surrogateObj.GetComponent<GridStats>().visited == step - 1)
                 {
                     TestFourDirections((int)surrogateObj.GetComponent<GridStats>().gridPos.x, (int)surrogateObj.GetComponent<GridStats>().gridPos.y, step);
                 }
@@ -196,6 +198,11 @@ public class GridBehaviour : MonoBehaviour
             {
                 SetVisited(localX - 1, localY, step);
             }
+            GameObject tempObj = FindClosest(gridArray[endX, endY].transform, tempList);
+            path.Add(tempObj);
+            localX = (int)tempObj.GetComponent<GridStats>().gridPos.x;
+            localY = (int)tempObj.GetComponent<GridStats>().gridPos.y;
+            tempList.Clear();
         }
     }
 
@@ -210,7 +217,17 @@ public class GridBehaviour : MonoBehaviour
                 currentDistance = Vector3.Distance(targetLocation.position, list[tickerC].transform.position);
                 indexNum = tickerC;
             }
-            return list[indexNum];
+        }
+        return list[indexNum];
+    }
+
+    private void Update()
+    {
+        if(findDistance)
+        {
+            SetDistance();
+            SetPath();
+            findDistance = false;
         }
     }
 
