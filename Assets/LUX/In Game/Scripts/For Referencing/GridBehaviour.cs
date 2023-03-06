@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
+// An explanation of the WaveFront Pathfinding Algorithm on a square based grid.
+// The way this works is by getting a point, we'll call this the starting spot.
+// From this starting spot, it goes one out in all directions.
+// Each time it reaches a new spot, it imprints that spot with a number.
+// This number is one above the last spot it was on.
+// When it reaches its' goal, it ceases to explore new spots.
+// Instead, it will start again, this time from the end spot.
+// Rather than searching and imprinting new numbers, it will check for the lowest value.
+// This continues until it has reached the begginning spot.
+// This returns as a List of gameobjects that resemble a path.
+
 // Things I do not yet understand:
 // - The relation between the test direction function and actually testing directions 
 
@@ -85,7 +96,7 @@ public class GridBehaviour : MetaStats
         // the int variable 'direction' tells which case to use. 1 is up, 2 is right, 3 is down, 4 is left
         // By using the x and y of the grid, we are able to calculate what is directly to the left, right, up and down of a gridbit.
         // This function is used in the 'TestFourDirections' function. One being used, all of the directions are tested in different for loop go-arounds.
-        // The step being tested is always specified as '-1'. Couldn't have written that for clarity? Had to have 700 local vars called 'step' specifically? cunt.
+        // During the initial stage, the 'step' variable being tested for is '-1', however, this function is reused in walking backwards. ('step' = last step minus one)
         // On returning true, ie, the tested gridbit is in fact '-1':
         //     The tile tested by the function is fed into the 'SetVisited' function and given a differing step value than the one specified in this function.
         // On returning false, ie, the tested gridbit is not '-1':
@@ -97,7 +108,6 @@ public class GridBehaviour : MetaStats
                 if((localY + 1) < gridHeight && gridArray[localX, localY + 1] && gridArray[localX, localY + 1].GetComponent<GridStats>().visited == step)
                     // this (and all four other if statements check that:
                     // if one gridbit over is inside the possible gridspots (if it is larger than the set possible height, it cannot be returned as true)
-                    //                                                      (a note, the sideways one is set to the width and the 'negatives' are tested against -1)
                     //
                 {
                     return true;
@@ -147,7 +157,7 @@ public class GridBehaviour : MetaStats
 
     private void TestFourDirections(int localX, int localY, int step) // no elses, all are tested, then imprinted with the step specified.
     {
-        if(TestDirection(localX, localY, -1, 1))
+        if(TestDirection(localX, localY, -1, 1)) // this only tests for unexplored bits. Indicated by -1.
         {
             SetVisited(localX, localY + 1, step);
         }
@@ -166,19 +176,22 @@ public class GridBehaviour : MetaStats
 
     }
 
-    private void SetDistance()
+    private void SetDistance() // this function sets out all of the visited values. The visited values can be thought of as how many steps it took to get there.
     {
-        InitialSetUp();
+        InitialSetUp(); // sets all of the gridbits' visited variable to -1
         int localX = startX;
         int localY = startY;
 
-        int[] testArray = new int[gridHeight * gridWidth];
-        for(int step = 1; step < gridWidth; step++) // steps backward through steps, using the array to check each array member's step variable
+        int[] testArray = new int[gridHeight * gridWidth]; // returns the size of the array. Like the area of a square in geometry. Multiply the sides.
+        for(int step = 1; step < gridWidth; step++) 
         {
-            foreach(GameObject surrogateObj in gridArray)
+            foreach(GameObject surrogateObj in gridArray) // this goes over every gridbit in the array.
             {
-                if(surrogateObj && surrogateObj.GetComponent<GridStats>().visited == step - 1)
+                if(surrogateObj && surrogateObj.GetComponent<GridStats>().visited == step - 1) 
                 {
+                    // if the particular gridbit being pointed at by the foreach loop has a step value of one less than the current step,
+                    // then imprint the current step in all four directions as long as they are not -1.
+
                     TestFourDirections((int)surrogateObj.GetComponent<GridStats>().gridPos.x, (int)surrogateObj.GetComponent<GridStats>().gridPos.y, step);
                 }
             }
@@ -188,12 +201,13 @@ public class GridBehaviour : MetaStats
     private void SetPath()
     {
         int step;
-        int localX = endX;
-        int localY = endY;
+        int localX = endX; // the second starting point is the end
+        int localY = endY; // the second starting point is the end
         List<GameObject> tempList = new List<GameObject>();
         path.Clear();
         if (gridArray[endX,endY] && gridArray[endX, endY].GetComponent<GridStats>().visited > 0)
         {
+            // steps backward through steps, using the array to check each array member's step variable
             path.Add(gridArray[localX, localY]);
             step = gridArray[localX, localY].GetComponent<GridStats>().visited - 1;
         }
