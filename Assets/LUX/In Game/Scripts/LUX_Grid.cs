@@ -25,6 +25,7 @@ public class LUX_Grid : MonoBehaviour
 
     public Vector2 showcase;
     public bool hitIt;
+    public Material debugMat;
 
     #endregion
 
@@ -115,6 +116,7 @@ public class LUX_Grid : MonoBehaviour
         if (localGridArray[(int)particularGridbitXY.x, (int)particularGridbitXY.y])
         {
             localGridArray[(int)particularGridbitXY.x, (int)particularGridbitXY.y].GetComponent<LUX_GridBit>().visited = step;
+            localGridArray[(int)particularGridbitXY.x, (int)particularGridbitXY.y].GetComponent<MeshRenderer>().material = debugMat;
         }
     }
 
@@ -133,20 +135,6 @@ public class LUX_Grid : MonoBehaviour
         }
     }
 
-    private void DebugSetColours()
-    {
-        Color debuggingColour;
-
-        foreach(GameObject obj in localGridArray)
-        {
-            Renderer rend = obj.GetComponent<Renderer>();
-            int red = obj.GetComponent<LUX_GridBit>().visited;
-
-            debuggingColour = new Color(red * 20, 0, 0);
-            rend.material.SetColor("_Color", debuggingColour);
-        }
-    }
-
     private void Update()
     {
         if(hitIt == true)
@@ -154,7 +142,6 @@ public class LUX_Grid : MonoBehaviour
             hitIt= false;
             SetAllVisitedNegative(showcase);
             SetDistance(showcase);
-            DebugSetColours();
         }
     }
 
