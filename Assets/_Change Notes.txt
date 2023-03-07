@@ -1,0 +1,8 @@
+Current Version: 0.0.6
+
+> Moved the URP stuff into their own big boy folder.
++ Added player class definition. Just stats at the moment.
++ Added script 'Singleton Values' to store variables across the whole scene.
++ Added summaries for all of my 'LUX_blahblahblah' scripts
++ Added functionality to LUX_Grid step setting. 90% functional
++ Added currently nonfunctional 'LUX_GridClick'

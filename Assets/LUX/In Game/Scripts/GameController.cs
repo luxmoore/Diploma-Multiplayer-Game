@@ -26,52 +26,7 @@ public class GameController : MetaStats
         // Place players on that grid
         // Begin turn one, go one - turning on the appropiate player controller
 
-        gridComp.GridGen(10, 10); // the dimensions are temporary.
+        gridComp.GridGen(gridGenMaxX, gridGenMaxY);
     }
 
-    //private int CheckPlayerAmount()
-    //{
-    //    foreach (GameObject playerFeller in alivePlayers)
-    //    {
-    //        if(playerFeller.GetComponent<PlayerStats>().isAlive == true)
-    //        {
-    //            if(alivePlayers.Contains(playerFeller))
-    //            {
-    //                // donn do nuthin prettyboy.
-
-    //                // yeah. youse al-redy at da party.
-    //            }
-    //            else
-    //            {
-    //                // geddafuck outta here.
-                    
-    //                // yeah. youse aint welcome rounn here no mores.
-    //                alivePlayers.Remove(playerFeller);
-    //            }
-    //        }
-    //    }
-
-    //    maxGoes = alivePlayers.Count;
-    //    Debug.Log("Current amount of players: " + maxGoes);
-
-    //    return (alivePlayers.Count);
-    //}
-
-
-    //public void EndGo()
-    //{
-    //    currentGo++;
-
-    //    if(currentGo >= maxGoes)
-    //    {
-    //        currentGo = 0;
-    //        currentTurn++;
-    //    }
-
-    //    currentPlayer = alivePlayers[currentGo];
-
-    //    TurnOverArcher();
-    //}
-
-    // LUX
 }
