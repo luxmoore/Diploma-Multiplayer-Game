@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>This script is like the referee, taking in all of the rules of the game and ensuring that all play abides by them. Only holds functions to activate other functions in separate scripts.</summary>
 
 public class GameController : MetaStats
 {

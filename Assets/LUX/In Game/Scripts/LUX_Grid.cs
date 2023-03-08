@@ -22,10 +22,17 @@ public class LUX_Grid : MonoBehaviour
     public GameObject gridHolderEmpty;
     [Tooltip("A gridbit can be anything, only thing that matters is that the prefab supplied has the 'LUX_GridBit' script in it.")]
     public GameObject gridBitPrefab;
+    [Tooltip("The list of gameobjects that make a path from the start to the end.")]
+    public List<GameObject> pathList = new List<GameObject>();
 
-    public Vector2 showcase;
+    [Header("Debug")]
+    public Vector2 debugStartXY;
+    public Vector2 debugEndXY;
     public bool hitIt;
-    public Material debugMat;
+    [Space(5)]
+    public Material debugMatBAD;
+    public Material debugMatGUY;
+    public Material debugMatPATH;
 
     #endregion
 
@@ -43,9 +50,9 @@ public class LUX_Grid : MonoBehaviour
         gridWidth = width;
         gridHeight = height;
 
-        for(int tickerA = 0; tickerA < height; tickerA++)
+        for(int tickerA = 0; tickerA < width; tickerA++)
         {
-            for(int tickerB = 0; tickerB < width; tickerB++)
+            for(int tickerB = 0; tickerB < height; tickerB++) // potentially swap these - hard to test but unsure of real combination
             {
                 GameObject obj = Instantiate(gridBitPrefab, new Vector3(x0y0Location.x + tickerA, x0y0Location.y, x0y0Location.z + tickerB), Quaternion.identity);
                 obj.transform.SetParent(gridHolderEmpty.transform);
@@ -53,6 +60,7 @@ public class LUX_Grid : MonoBehaviour
                 obj.GetComponent<LUX_GridBit>().gridPos.y = tickerB;
                 funcReturnVal[tickerA, tickerB] = obj;
                 Debug.Log("Generated grid bit, position " + tickerA + ", " + tickerB);
+                obj.name = "GridBit " + tickerB + ", " + tickerA;
             }
         }
 
@@ -71,6 +79,7 @@ public class LUX_Grid : MonoBehaviour
             obj.GetComponent<LUX_GridBit>().visited = -1;
         }
         localGridArray[(int)currentXY.x, (int)currentXY.y].GetComponent<LUX_GridBit>().visited = 0;
+        localGridArray[(int)currentXY.x, (int)currentXY.y].GetComponent<MeshRenderer>().material = debugMatGUY;
     }
 
     private bool TestADirectionFrom(Vector2 fromXY, int step, int direction, int debug)
@@ -116,7 +125,7 @@ public class LUX_Grid : MonoBehaviour
         if (localGridArray[(int)particularGridbitXY.x, (int)particularGridbitXY.y])
         {
             localGridArray[(int)particularGridbitXY.x, (int)particularGridbitXY.y].GetComponent<LUX_GridBit>().visited = step;
-            localGridArray[(int)particularGridbitXY.x, (int)particularGridbitXY.y].GetComponent<MeshRenderer>().material = debugMat;
+            localGridArray[(int)particularGridbitXY.x, (int)particularGridbitXY.y].GetComponent<MeshRenderer>().material = debugMatBAD;
         }
     }
 
@@ -140,8 +149,16 @@ public class LUX_Grid : MonoBehaviour
         if(hitIt == true)
         {
             hitIt= false;
-            SetAllVisitedNegative(showcase);
-            SetDistance(showcase);
+            SetAllVisitedNegative(debugStartXY);
+            SetDistance(debugStartXY);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach(GameObject obj in pathList)
+        {
+            obj.GetComponent<MeshRenderer>().material = debugMatPATH;
         }
     }
 
