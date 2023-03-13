@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 /// <summary>This scipt hosts the functions that pathfind on and create the grid. Not functional by itself, has to be procced elsewhere.</summary>
 
@@ -24,6 +26,10 @@ public class LUX_Grid : MonoBehaviour
     public GameObject gridBitPrefab;
     [Tooltip("The list of gameobjects that make a path from the start to the end.")]
     public List<GameObject> pathList = new List<GameObject>();
+
+    [HideInInspector]
+    Vector2 pathfindingObjective = new Vector2();
+    GameObject currentPathFollowingAgent;
 
     [Header("Debug")]
     public Vector2 debugStartXY;
@@ -103,8 +109,13 @@ public class LUX_Grid : MonoBehaviour
                 debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
                 if (((int)fromXY.x - 1) > -1 && localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step) { Debug.Log("Tested left from " + fromXY + ". Positive result. Given " + debug); return true;}
                 else { Debug.Log("Tested left from " + fromXY + " Negative result. Not given " + debug); return false;}
-            case 5:
-                Debug.Log("You dumbass, you went too high. One to four next time silly.");
+            case 5: // diagonal - up + left
+            case 6: // diagonal - up + right
+            case 7: // diagonal - down + left
+            case 8: // diagonal - down + right
+            
+            case 9:
+                Debug.Log("You dumbass, you went too high. One to eight next time silly.");
                 return false;
         }
 
@@ -154,7 +165,7 @@ public class LUX_Grid : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void SetPathMat()
     {
         foreach(GameObject obj in pathList)
         {

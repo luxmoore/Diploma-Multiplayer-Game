@@ -207,7 +207,6 @@ public class GridBehaviour : MetaStats
         path.Clear();
         if (gridArray[endX,endY] && gridArray[endX, endY].GetComponent<GridStats>().visited > 0)
         {
-            // steps backward through steps, using the array to check each array member's step variable
             path.Add(gridArray[localX, localY]);
             step = gridArray[localX, localY].GetComponent<GridStats>().visited - 1;
         }
@@ -216,7 +215,7 @@ public class GridBehaviour : MetaStats
             Debug.Log("Cannot reach desired location");
             return;
         }
-        for(int i = step; step > -1; step--)
+        for(int i = step; step > -1; step--)  // steps backward through steps, using the array to check each array member's step variable
         {
             if (TestDirection(localX, localY, -1, 1))
             {
