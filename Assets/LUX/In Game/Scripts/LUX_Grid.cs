@@ -28,8 +28,8 @@ public class LUX_Grid : MonoBehaviour
     public List<GameObject> pathList = new List<GameObject>();
 
     [HideInInspector]
-    Vector2 pathfindingObjective = new Vector2();
-    GameObject currentPathFollowingAgent;
+    public Vector2 pathfindingObjective = new Vector2();
+    public GameObject currentPathFollowingAgent;
 
     [Header("Debug")]
     public Vector2 debugStartXY;

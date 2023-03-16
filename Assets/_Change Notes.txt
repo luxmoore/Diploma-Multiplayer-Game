@@ -1,8 +1,5 @@
-Current Version: 0.0.6
+Current Version: 0.0.7
 
-> Moved the URP stuff into their own big boy folder.
-+ Added player class definition. Just stats at the moment.
-+ Added script 'Singleton Values' to store variables across the whole scene.
-+ Added summaries for all of my 'LUX_blahblahblah' scripts
-+ Added functionality to LUX_Grid step setting. 90% functional
-+ Added currently nonfunctional 'LUX_GridClick'
++ Added a functional saving system into the 'For Referencing' folder
++ Added three tile sprites to replace the current material hotswapping to signify what is and is not a path. (NOT YET IMPLEMENTED FULLY)
++ Added the variables that I specifically want to save.
