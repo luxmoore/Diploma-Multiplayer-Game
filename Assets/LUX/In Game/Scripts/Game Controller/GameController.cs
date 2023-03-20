@@ -26,7 +26,7 @@ public class GameController : MetaStats
         // Place players on that grid
         // Begin turn one, go one - turning on the appropiate player controller
 
-        gridComp.GridGen(gridGenMaxX, gridGenMaxY);
+        gridComp.GridGen(gridGenMaxX, gridGenMaxY, gridHolesAmount);
     }
 
 }

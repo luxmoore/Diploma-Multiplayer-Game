@@ -14,8 +14,8 @@ public class MetaStats : MonoBehaviour
     public int gridGenMaxY;
     [Tooltip("The gridbits that are essential are set to differing 'maps'. Like paths that have to exist or the players will not be able to reach one another.")]
     public int gridMap;
-    [Tooltip("The chance of a non-essential gridbit being classed as a type of obstacle. 1 is all non-essentail gridbits will be an obstacle, 0 is no obstacles.")]
-    public float gridWalkAbility;
+    [Tooltip("The amount of holes present in a generated grid. They are chosen at random.")]
+    public int gridHolesAmount;
 
     [Header("Players")]
     [Tooltip("The amount of players in the game")]

@@ -14,9 +14,6 @@ using UnityEngine;
 // This continues until it has reached the begginning spot.
 // This returns as a List of gameobjects that resemble a path.
 
-// Things I do not yet understand:
-// - The relation between the test direction function and actually testing directions 
-
 // Things Explained in these comments:
 // - The generation of the grid and the way that the particular gridbit is stored
 

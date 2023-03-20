@@ -140,7 +140,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a9d21d8f76550ba4abedb5c9d549ec11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -190,6 +190,13 @@ MonoBehaviour:
   gridPos: {x: 0, y: 0}
   visited: -69
   playerOnThis: 0
+  isWalkable: 1
+  canvasObj: {fileID: 8354534012805287072}
+  image: {fileID: 0}
+  spriteList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &8354534012805287072
 GameObject:
   m_ObjectHideFlags: 0

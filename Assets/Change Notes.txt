@@ -1,0 +1,7 @@
+Current Version: 0.0.8
+
++ Added a variable to detect if a gridbit is walkable or not
+! Fixed a crucial error in my code - step creation is now fully functional in the four monodirections 
++ Swapped out MKToon free for the full version
++ The grid is now able to remove an amount of random gridbits as specified by the player.
++ Added entirely nonfunctional :( diagonal movement and expanded the if statements in the function 'TestADirectionFrom' to be a bit more than vaguely readable 

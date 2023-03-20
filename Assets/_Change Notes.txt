@@ -1,5 +1,0 @@
-Current Version: 0.0.7
-
-+ Added a functional saving system into the 'For Referencing' folder
-+ Added three tile sprites to replace the current material hotswapping to signify what is and is not a path. (NOT YET IMPLEMENTED FULLY)
-+ Added the variables that I specifically want to save.

@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3352945940411781478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -68,6 +68,15 @@ MonoBehaviour:
   gridHolderEmpty: {fileID: 0}
   gridBitPrefab: {fileID: 7160357388077768598, guid: e334d58e11e6be845b2eb4e02b956edf,
     type: 3}
+  pathList: []
+  pathfindingObjective: {x: 0, y: 0}
+  currentPathFollowingAgent: {fileID: 0}
+  debugStartXY: {x: 0, y: 0}
+  debugEndXY: {x: 0, y: 0}
+  hitIt: 0
+  debugMatBAD: {fileID: 0}
+  debugMatGUY: {fileID: 0}
+  debugMatPATH: {fileID: 0}
 --- !u!114 &4851414581703515478
 MonoBehaviour:
   m_ObjectHideFlags: 0

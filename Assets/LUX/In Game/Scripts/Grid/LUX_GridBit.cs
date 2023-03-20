@@ -10,8 +10,10 @@ public class LUX_GridBit : MonoBehaviour
     public Vector2 gridPos = Vector2.zero;
     public int visited = -1;
     public bool playerOnThis = false;
+    public bool isWalkable = true;
 
     // image variables
+    public GameObject canvasObj;
     public Image image = null;
     public Sprite[] spriteList = new Sprite[3];
 

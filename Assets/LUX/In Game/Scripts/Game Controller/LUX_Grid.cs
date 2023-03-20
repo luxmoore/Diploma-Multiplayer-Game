@@ -12,7 +12,6 @@ public class LUX_Grid : MonoBehaviour
     #region Variables
 
     // Private
-    private GameController gc;
     private Vector3 x0y0Location = Vector3.zero;
     private GameObject[,] localGridArray;
     private int debugTicker = 0;
@@ -44,21 +43,18 @@ public class LUX_Grid : MonoBehaviour
 
     #region Grid Generation
 
-    private void Awake()
-    {
-        gc = gameObject.GetComponent<GameController>();
-    }
-
-    public GameObject[,] GridGen(int width, int height)
+    public GameObject[,] GridGen(int width, int height, int holesAmount)
     {
         GameObject[,] funcReturnVal = new GameObject[width, height];
 
         gridWidth = width;
         gridHeight = height;
 
-        for(int tickerA = 0; tickerA < width; tickerA++)
+        // this generates up a column, then moves to the side and generates another column.
+
+        for(int tickerA = 0; tickerA < width; tickerA++) // tickerA is width, or, x
         {
-            for(int tickerB = 0; tickerB < height; tickerB++) // potentially swap these - hard to test but unsure of real combination
+            for(int tickerB = 0; tickerB < height; tickerB++) // tickerB is height, or, y
             {
                 GameObject obj = Instantiate(gridBitPrefab, new Vector3(x0y0Location.x + tickerA, x0y0Location.y, x0y0Location.z + tickerB), Quaternion.identity);
                 obj.transform.SetParent(gridHolderEmpty.transform);
@@ -66,12 +62,36 @@ public class LUX_Grid : MonoBehaviour
                 obj.GetComponent<LUX_GridBit>().gridPos.y = tickerB;
                 funcReturnVal[tickerA, tickerB] = obj;
                 Debug.Log("Generated grid bit, position " + tickerA + ", " + tickerB);
-                obj.name = "GridBit " + tickerB + ", " + tickerA;
+                obj.name = "GridBit " + tickerA + ", " + tickerB;
             }
         }
 
         localGridArray = funcReturnVal;
+
+        Debug.Log("Poking out " + holesAmount + " gridbits.");
+        PokeRandomHole(holesAmount);
         return (funcReturnVal);
+    }
+
+    private void PokeRandomHole(int amount)
+    {
+        Vector2 pokeoutSpot = Vector2.zero;
+        GameObject obj;
+
+        Debug.Log("AAH");
+
+        for(int ticker = 0; ticker < amount; ticker++)
+        {
+            pokeoutSpot.x = Random.Range(0, (gridWidth - 1));
+            pokeoutSpot.y = Random.Range(0, (gridHeight - 1));
+
+            Debug.Log("Poking out spot at " + pokeoutSpot.x + ", " + pokeoutSpot.y);
+
+            obj = localGridArray[(int)pokeoutSpot.x, (int)pokeoutSpot.y];
+            obj.GetComponent<LUX_GridBit>().isWalkable = true;
+            obj.GetComponent<MeshRenderer>().enabled = false;
+            obj.GetComponent<LUX_GridBit>().canvasObj.SetActive(false);
+        }
     }
 
     #endregion
@@ -93,27 +113,161 @@ public class LUX_Grid : MonoBehaviour
         // This function tests the direction asked of it, by the int direction. The direction chosen is 1 for up, 2 for right and so on clockwise.
         switch (direction)
         {
-            case 1: // up
+            #region 1 - UP
+            case 1: 
                 debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
-                if (((int)fromXY.y + 1) < gridWidth && localGridArray[(int)fromXY.x,((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step) { Debug.Log("Tested up from " + fromXY + " Positive result. Given " + debug); return true;}
+                if 
+                (
+                    ((int)fromXY.y + 1) < gridHeight 
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
+                ) { Debug.Log("Tested up from " + fromXY + " Positive result. Given " + debug); return true;}
                 else { Debug.Log("Tested up from " + fromXY + " Negative result. Not given " + debug); return false;}
-            case 2: // right
+            #endregion
+
+            #region 2 - RIGHT
+            case 2:
                 debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
-                if (((int)fromXY.x + 1) < gridHeight && localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step) { Debug.Log("Tested right from " + fromXY + " Positive result. Given " + debug); return true;}
+                if 
+                (
+                    ((int)fromXY.x + 1) < gridWidth
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
+                ) { Debug.Log("Tested right from " + fromXY + " Positive result. Given " + debug); return true;}
                 else { Debug.Log("Tested rightfrom  " + fromXY + " Negative result. Not given " + debug); return false;}
-            case 3: // down
+            #endregion
+
+            #region 3 - DOWN
+            case 3:
                 debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
-                if (((int)fromXY.y - 1) > -1 && localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step) { Debug.Log("Tested down from " + fromXY + " Positive result. Given " + debug); return true;}
+                if
+                (
+                    ((int)fromXY.y - 1) > -1
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
+                ) { Debug.Log("Tested down from " + fromXY + " Positive result. Given " + debug); return true;}
                 else { Debug.Log("Tested down from " + fromXY + " Negative result. Not given " + debug); return false;}
-            case 4: // left
+            #endregion
+
+            #region 4 - LEFT
+            case 4:
                 debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
-                if (((int)fromXY.x - 1) > -1 && localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step) { Debug.Log("Tested left from " + fromXY + ". Positive result. Given " + debug); return true;}
+                if 
+                (
+                    ((int)fromXY.x - 1) > -1 
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
+                ) 
+                { Debug.Log("Tested left from " + fromXY + ". Positive result. Given " + debug); return true;}
                 else { Debug.Log("Tested left from " + fromXY + " Negative result. Not given " + debug); return false;}
-            case 5: // diagonal - up + left
-            case 6: // diagonal - up + right
-            case 7: // diagonal - down + left
-            case 8: // diagonal - down + right
-            
+            #endregion
+
+            #region 5 - UP + LEFT
+            case 5:
+                debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
+                if
+                (
+                    //left
+                    ((int)fromXY.x - 1) > -1
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
+
+                    &&
+
+                    //up
+                    ((int)fromXY.y + 1) < gridHeight
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
+                )
+                { Debug.Log("Tested diagonal up-left from " + fromXY + ". Positive result. Given " + debug); return true; }
+                else { Debug.Log("Tested diagonal up-left from " + fromXY + " Negative result. Not given " + debug); return false; }
+            #endregion
+
+            #region 6 - UP + RIGHT
+            case 6: 
+                debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
+                if
+                (
+                    //right 
+                    ((int)fromXY.x + 1) < gridWidth
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
+
+                    &&
+
+                    //up
+                    ((int)fromXY.y + 1) < gridHeight
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
+                ) { Debug.Log("Tested up-right from " + fromXY + " Positive result. Given " + debug); return true; }
+                else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Not given " + debug); return false; }
+            #endregion
+
+            #region 7 - DOWN + LEFT
+            case 7: 
+                debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
+                if
+                (
+                    //left
+                    ((int)fromXY.x - 1) > -1
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
+
+                    &&
+
+                    //down
+                    ((int)fromXY.y - 1) > -1
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
+                )
+                { Debug.Log("Tested diagonal up-left from " + fromXY + ". Positive result. Given " + debug); return true; }
+                else { Debug.Log("Tested diagonal up-left from " + fromXY + " Negative result. Not given " + debug); return false; }
+            #endregion
+
+            #region 8 - DOWN + RIGHT
+            case 8:
+                debugTicker++; Debug.Log("Check number " + debugTicker + " is:");
+                if
+                (
+                    //right 
+                    ((int)fromXY.x + 1) < gridWidth
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
+
+                    &&
+
+                    //down
+                    ((int)fromXY.y - 1) > -1
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
+                ) { Debug.Log("Tested up-right from " + fromXY + " Positive result. Given " + debug); return true; }
+                else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Not given " + debug); return false; }
+            #endregion
+
             case 9:
                 Debug.Log("You dumbass, you went too high. One to eight next time silly.");
                 return false;
@@ -123,12 +277,16 @@ public class LUX_Grid : MonoBehaviour
         return false; // failsafe
     }
 
-    private void TestAllFourDirections(Vector2 fromXY, int step)
+    private void TestAllDirections(Vector2 fromXY, int step)
     {
-        if (TestADirectionFrom(fromXY, -1, 1, step))      {SetVisitedVarOnGridBit(new Vector2(fromXY.x, fromXY.y + 1), step);} // up
-        if (TestADirectionFrom(fromXY, -1, 2, step))      {SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y), step);} // right
-        if (TestADirectionFrom(fromXY, -1, 3, step))      {SetVisitedVarOnGridBit(new Vector2(fromXY.x, fromXY.y - 1), step);} // down
-        if (TestADirectionFrom(fromXY, -1, 4, step))      {SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y), step);} // left
+        if (TestADirectionFrom(fromXY, -1, 1, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x, fromXY.y + 1), step); }     // up
+        if (TestADirectionFrom(fromXY, -1, 2, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y), step); }     // right
+        if (TestADirectionFrom(fromXY, -1, 3, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x, fromXY.y - 1), step); }     // down
+        if (TestADirectionFrom(fromXY, -1, 4, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y), step); }     // left
+        if (TestADirectionFrom(fromXY, -1, 5, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y + 1), step); } // up + left
+        if (TestADirectionFrom(fromXY, -1, 6, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y + 1), step); } // up + right
+        if (TestADirectionFrom(fromXY, -1, 7, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y - 1), step); } // down + left
+        if (TestADirectionFrom(fromXY, -1, 8, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y - 1), step); } // down + right
     }
 
     private void SetVisitedVarOnGridBit(Vector2 particularGridbitXY, int step)
@@ -149,10 +307,24 @@ public class LUX_Grid : MonoBehaviour
             {
                 if(obj.GetComponent<LUX_GridBit>().visited == step - 1)
                 {
-                    TestAllFourDirections(obj.GetComponent<LUX_GridBit>().gridPos, step);
+                    TestAllDirections(obj.GetComponent<LUX_GridBit>().gridPos, step);
                 }
             }
         }
+    }
+
+    public void CreatePath(Vector2 fromXY, Vector2 toXY, int MoveEnergy, int totalEnergy)
+    {
+        #region Explanation
+
+        // This code walks backwards from the gridbit specified by the toXY local variable
+        // It walks backwards by first grabbing the step count of the toXY, then moving to a neighbouring gridbit with a step count of one lower, recording the path
+        // This repeats until the stepcount is zero, at which point we have a path
+
+        #endregion
+
+        pathList.Clear();
+        pathList.Add(localGridArray[(int)toXY.x, (int)toXY.y]);
     }
 
     private void Update()
