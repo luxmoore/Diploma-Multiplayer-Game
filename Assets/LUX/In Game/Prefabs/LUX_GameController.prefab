@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8043512514443776947}
   - component: {fileID: 7531143826738013427}
+  - component: {fileID: 1303578835986444480}
   - component: {fileID: 6701393834324026474}
   - component: {fileID: 4851414581703515478}
   m_Layer: 0
@@ -49,10 +50,22 @@ MonoBehaviour:
   gridGenMaxX: 0
   gridGenMaxY: 0
   gridMap: 0
-  gridWalkAbility: 0
+  gridHolesAmount: 0
   playerAmount: 0
   playerTurnStructure: 
   alivePlayers: []
+--- !u!114 &1303578835986444480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352945940411781478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa2ebfe4859cd243add05e51640403d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6701393834324026474
 MonoBehaviour:
   m_ObjectHideFlags: 0
