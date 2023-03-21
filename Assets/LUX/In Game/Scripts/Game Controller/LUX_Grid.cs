@@ -13,7 +13,6 @@ public class LUX_Grid : MonoBehaviour
 
     // Private
     private Vector3 x0y0Location = Vector3.zero;
-    private GameObject[,] localGridArray;
     private int debugTicker = 0;
     private int gridWidth;
     private int gridHeight;
@@ -25,6 +24,8 @@ public class LUX_Grid : MonoBehaviour
     public GameObject gridBitPrefab;
     [Tooltip("The list of gameobjects that make a path from the start to the end.")]
     public List<GameObject> pathList = new List<GameObject>();
+    [Tooltip("This holds all of the gridbits.")]
+    public GameObject[,] localGridArray;
 
     [HideInInspector]
     public Vector2 pathfindingObjective = new Vector2();
@@ -63,6 +64,7 @@ public class LUX_Grid : MonoBehaviour
                 funcReturnVal[tickerA, tickerB] = obj;
                 Debug.Log("Generated grid bit, position " + tickerA + ", " + tickerB);
                 obj.name = "GridBit " + tickerA + ", " + tickerB;
+                obj.tag = "GridBit";
             }
         }
 
@@ -82,15 +84,16 @@ public class LUX_Grid : MonoBehaviour
 
         for(int ticker = 0; ticker < amount; ticker++)
         {
-            pokeoutSpot.x = Random.Range(0, (gridWidth - 1));
-            pokeoutSpot.y = Random.Range(0, (gridHeight - 1));
+            pokeoutSpot.x = Random.Range(0, gridWidth);
+            pokeoutSpot.y = Random.Range(0, gridHeight);
 
             Debug.Log("Poking out spot at " + pokeoutSpot.x + ", " + pokeoutSpot.y);
 
             obj = localGridArray[(int)pokeoutSpot.x, (int)pokeoutSpot.y];
-            obj.GetComponent<LUX_GridBit>().isWalkable = true;
+            obj.GetComponent<LUX_GridBit>().isWalkable = false;
             obj.GetComponent<MeshRenderer>().enabled = false;
             obj.GetComponent<LUX_GridBit>().canvasObj.SetActive(false);
+            obj.tag = "Dead GridBit";
         }
     }
 
@@ -102,7 +105,14 @@ public class LUX_Grid : MonoBehaviour
     {
         foreach(GameObject obj in localGridArray)
         {
-            obj.GetComponent<LUX_GridBit>().visited = -1;
+            if(obj.GetComponent<LUX_GridBit>().isWalkable == false)
+            {
+                obj.GetComponent<LUX_GridBit>().visited = -2;
+            }
+            else
+            {
+                obj.GetComponent<LUX_GridBit>().visited = -1;
+            }
         }
         localGridArray[(int)currentXY.x, (int)currentXY.y].GetComponent<LUX_GridBit>().visited = 0;
         localGridArray[(int)currentXY.x, (int)currentXY.y].GetComponent<MeshRenderer>().material = debugMatGUY;
@@ -179,8 +189,6 @@ public class LUX_Grid : MonoBehaviour
                     ((int)fromXY.x - 1) > -1
                     &&
                     localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
-                    &&
-                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
 
                     &&
 
@@ -188,8 +196,15 @@ public class LUX_Grid : MonoBehaviour
                     ((int)fromXY.y + 1) < gridHeight
                     &&
                     localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
+
                     &&
-                    localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
+
+                    // up + left
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y + 1)]
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
                 )
                 { Debug.Log("Tested diagonal up-left from " + fromXY + ". Positive result. Given " + debug); return true; }
                 else { Debug.Log("Tested diagonal up-left from " + fromXY + " Negative result. Not given " + debug); return false; }
@@ -204,8 +219,6 @@ public class LUX_Grid : MonoBehaviour
                     ((int)fromXY.x + 1) < gridWidth
                     &&
                     localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
-                    &&
-                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
 
                     &&
 
@@ -213,8 +226,15 @@ public class LUX_Grid : MonoBehaviour
                     ((int)fromXY.y + 1) < gridHeight
                     &&
                     localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
+
                     &&
-                    localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
+
+                    //up + right
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y + 1)]
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
                 ) { Debug.Log("Tested up-right from " + fromXY + " Positive result. Given " + debug); return true; }
                 else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Not given " + debug); return false; }
             #endregion
@@ -228,8 +248,6 @@ public class LUX_Grid : MonoBehaviour
                     ((int)fromXY.x - 1) > -1
                     &&
                     localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
-                    &&
-                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
 
                     &&
 
@@ -237,8 +255,15 @@ public class LUX_Grid : MonoBehaviour
                     ((int)fromXY.y - 1) > -1
                     &&
                     localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
+
                     &&
-                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
+
+                    //down + left
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y - 1)]
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x - 1, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
                 )
                 { Debug.Log("Tested diagonal up-left from " + fromXY + ". Positive result. Given " + debug); return true; }
                 else { Debug.Log("Tested diagonal up-left from " + fromXY + " Negative result. Not given " + debug); return false; }
@@ -253,8 +278,6 @@ public class LUX_Grid : MonoBehaviour
                     ((int)fromXY.x + 1) < gridWidth
                     &&
                     localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
-                    &&
-                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
 
                     &&
 
@@ -262,8 +285,15 @@ public class LUX_Grid : MonoBehaviour
                     ((int)fromXY.y - 1) > -1
                     &&
                     localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
+
                     &&
-                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
+
+                    //down + right
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y - 1)]
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
+                    &&
+                    localGridArray[(int)fromXY.x + 1, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
                 ) { Debug.Log("Tested up-right from " + fromXY + " Positive result. Given " + debug); return true; }
                 else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Not given " + debug); return false; }
             #endregion

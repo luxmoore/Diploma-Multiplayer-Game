@@ -6,37 +6,39 @@ using UnityEngine;
 
 public class LUX_GridClicker : MonoBehaviour
 {
-    private Camera cam;
-    private Ray ray;
-    private GameController gc;
+    private PlayerController pc;
+    int playerAffecting;
+
+    public GameController gc;
     [HideInInspector] public GameObject[,] gridbits;
 
-    public int playerAffecting;
+    // RayCasting Vars
+    private Camera cam;
 
     private void Start()
     {
-        gc = gameObject.GetComponent<GameController>();
-    }
-
-    void Update()
-    {
-        VariableChangesAndRayDrawing();
-        if (Input.GetMouseButtonDown(0))
-        {
-            SelectGridbit();
-        }
-    }
-
-    private void SelectGridbit()
-    {
-
-    }
-
-    private void VariableChangesAndRayDrawing()
-    {
+        pc = gameObject.GetComponent<PlayerController>();
+        playerAffecting = pc.playerNum;
+        gridbits = gc.GetComponent<LUX_Grid>().localGridArray;
         cam = Camera.current;
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 100;
+    }
 
+    private void Update() // the update function is okay, because this component is designed to be turned on and off
+    {
+        // cast out a ray to check what the player is mousing over and if they have clicked or not.
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                //hit.collider.gameObject;
+
+                // Do something with the object that was hit by the raycast.
+            }
+        }
+        
     }
 }

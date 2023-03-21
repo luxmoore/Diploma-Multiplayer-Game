@@ -32,8 +32,8 @@ public class LUX_PathFollower : MonoBehaviour
 
     IEnumerator STATE_MOVE()
     {
-        pathList.Clear();
-        pathList = gridComp.pathList;
+        //pathList.Clear();
+        //pathList = gridComp.pathList;
 
         int totalSteps = pathList.Count;
         int stepsTaken = 0;
@@ -52,7 +52,7 @@ public class LUX_PathFollower : MonoBehaviour
         else
         {
             moveThis.position = new Vector3(currentPos.x, 1, currentPos.y);
-            nextGoal_V2 = pathList[1].GetComponent<LUX_GridBit>().gridPos;
+            nextGoal_V2 = pathList[0].GetComponent<LUX_GridBit>().gridPos;
             stepsTaken = 1;
         }
 
@@ -60,8 +60,10 @@ public class LUX_PathFollower : MonoBehaviour
         {
             // set currentPos as last goal's vector2
             // set the next goal to pathList[stepstaken]
-
-            currentPos = nextGoal_V2;
+            if (stepsTaken != 1)
+            {
+                currentPos = nextGoal_V2;
+            }
             nextGoal_V2 = pathList[stepsTaken].GetComponent<LUX_GridBit>().gridPos;
             nextGoal_V3 = new Vector3(nextGoal_V2.x, 1, nextGoal_V2.y);
 
