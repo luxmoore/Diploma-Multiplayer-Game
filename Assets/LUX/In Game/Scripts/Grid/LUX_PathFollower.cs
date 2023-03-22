@@ -16,6 +16,7 @@ public class LUX_PathFollower : MonoBehaviour
 
     private void Start()
     {
+        gameControllerGameObj = GameObject.FindWithTag("GC");
         gameController = gameControllerGameObj.GetComponent<GameController>();
         gridComp = gameController.GetComponent<LUX_Grid>();
         moveThis = gameObject.GetComponent<Transform>();

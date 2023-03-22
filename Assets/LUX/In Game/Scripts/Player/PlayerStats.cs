@@ -10,6 +10,10 @@ public class PlayerStats : MonoBehaviour
     [Tooltip("Dead players do not contribute to the player count. Players die when their health reaches zero.")]
     public bool isAlive;
 
+    [Header("Grid")]
+    [Tooltip("The location that this player takes up on the grid.")]
+    public Vector2 gridPos;
+
     [Header("Energy")]
     [Tooltip("Both forms of energy convert to eachother, in a 2:1 ratio - 2 move energy = 1 attack energy.")]
     public int moveEnergy;

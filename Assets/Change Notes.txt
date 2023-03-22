@@ -1,5 +1,8 @@
-Current Version: 0.0.8.1
+Current Version: 0.1.0
 
-+ Added diagonal function. The agent has to be able to move in both respective monodirections in order to skip across diagonally
-+ Fixed the 'PathFollowerAgent' script to now start at the begginning of the array.
-+ Added the foundations for the gridclicker and created a new prefab to follow the grid
++ Add ability to spawn a player prefab onto grid that instantly knows where it is
++ Added UI to display various values
++ Added UI to display how many steps away from a set point a gridbit is
++ Added 'Gridpos' to the 'PlayerStats' script and entirely removed the unused and non-functional 'PlayerController' script
+! Changed the requirements of 0.1.0 completion to make myself feel better
+! On an unrelated note, ZERO POINT ONE BABY!!!!

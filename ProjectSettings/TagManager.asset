@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GridBit
   - Dead GridBit
+  - GC
+  - FollowingText
   layers:
   - Default
   - TransparentFX

@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_BigMan : MonoBehaviour
 {
     #region Variables
 
     public GameObject camCanvasGObj;
-    Canvas camCanvas;
+    [SerializeField] Canvas camCanvas;
 
-    public Text mouseText;
-    public int stepCount;
+    public TextMeshProUGUI healthTMP;
+    public TextMeshProUGUI atkTMP;
+    public TextMeshProUGUI moveTMP;
 
     #endregion
 
@@ -22,9 +24,11 @@ public class UI_BigMan : MonoBehaviour
         camCanvas = camCanvas.GetComponent<Canvas>();
     }
 
-    private void Update()
+    private void ChangeOver(int movementEnergy, int attackEnergy, int health)
     {
-        
+        atkTMP.SetText("ATK - " + attackEnergy.ToString()); atkTMP.ForceMeshUpdate();
+        moveTMP.SetText("MVM - " + movementEnergy.ToString()); moveTMP.ForceMeshUpdate();
+        healthTMP.SetText("HTP - " + health.ToString()); healthTMP.ForceMeshUpdate();
     }
     #endregion
 }

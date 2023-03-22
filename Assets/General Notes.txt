@@ -1,17 +1,23 @@
-Current Version: 0.0.8
+Current Version: 0.1.0
 
 Goals for 0.1.0 completion:
-- A pathfind agent is able to be spawned onto the grid at random
-- The user is able to select a gridbit for the agent to move to, which is then passed back to the LUX_Grid component.
-- This pathfinding agent is then able to move along that path. While it is moving, the user is not able to touch anything.
-- The pathfinding agent is able to be limited by the amount of movement energy it has.
++ The grid is able to be generated to specified dimennsions
++ The grid is able to have randomised holes poked into it
++ The user is able to select a gridbit for the agent to move to, which is then passed back to the LUX_Grid component.
++ The pathfinding agent is able to be limited by the amount of movement energy it has.
 
 Goals for 0.2.0 completion:
+- The pathfinding agent is then able to move along that path. While it is moving, the user is not able to touch anything.
+
+Goals for 0.3.0 completion:
 - Two pathfinding agents are able to operate by exchanging operation ability via a turn system
 - Above but with as many as the player wants.
 
-Goals for 0.3.0 completion:
+Goals for 0.4.0 completion:
 - The pathfinding agents are able to roundhouse kick eachother and interact with eachother's stats.
 
+Goals for 0.5.0 completion:
+- Full menu function
+
 Goals for 1.0.0 completion:
-- jimbo jones from animated comedy sitcom: the simpsons
+- Final call for checking that all of the boxes are ticked for assessment

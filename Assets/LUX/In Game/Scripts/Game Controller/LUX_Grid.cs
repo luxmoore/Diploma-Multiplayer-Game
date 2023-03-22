@@ -16,6 +16,7 @@ public class LUX_Grid : MonoBehaviour
     private int debugTicker = 0;
     private int gridWidth;
     private int gridHeight;
+    private GameController gameController;
 
     // Public
     [Tooltip("This gameobject is what all of the gridbits will be parented to. Cannot be a prefab from inspector. Generally just make this a new empty.")]
@@ -43,6 +44,11 @@ public class LUX_Grid : MonoBehaviour
     #endregion
 
     #region Grid Generation
+
+    private void Start()
+    {
+        gameController = gameObject.GetComponent<GameController>();
+    }
 
     public GameObject[,] GridGen(int width, int height, int holesAmount)
     {
@@ -72,6 +78,10 @@ public class LUX_Grid : MonoBehaviour
 
         Debug.Log("Poking out " + holesAmount + " gridbits.");
         PokeRandomHole(holesAmount);
+
+        Debug.Log("Placing players");
+        PlacePlayersOnGrid();
+
         return (funcReturnVal);
     }
 
@@ -95,6 +105,41 @@ public class LUX_Grid : MonoBehaviour
             obj.GetComponent<LUX_GridBit>().canvasObj.SetActive(false);
             obj.tag = "Dead GridBit";
         }
+    }
+
+    private void PlacePlayersOnGrid()
+    {
+        // get the amount of players (counted from array)
+        // get two random ints and check against grid if possible
+
+        int randX;
+        int randY;
+        int playerAmount = gameController.alivePlayers.Count;
+
+        for(int ticker = 0; ticker < playerAmount; ticker++)
+        {
+            bool cont = true;
+            while(cont == true)
+            {
+                randX = Random.Range(0, gridWidth);
+                randY = Random.Range(0, gridHeight);
+                LUX_GridBit selectedGridBit = localGridArray[randX, randY].GetComponent<LUX_GridBit>();
+                if (selectedGridBit.isWalkable == true && selectedGridBit.playerOnThis == false)
+                {
+                    // place already spawned player on gridbit
+                    // set playerOnThis to be true
+                    // allow the for-loop to progress by one
+
+                    gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().gridPos = new Vector2(randX, randY);
+                    gameController.alivePlayers[ticker].transform.position = new Vector3(randX, 1, randY);
+
+                    selectedGridBit.playerOnThis = true;
+
+                    cont = false;
+                }
+            }
+        }
+
     }
 
     #endregion
@@ -298,7 +343,7 @@ public class LUX_Grid : MonoBehaviour
                 else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Not given " + debug); return false; }
             #endregion
 
-            case 9:
+            case <= 9:
                 Debug.Log("You dumbass, you went too high. One to eight next time silly.");
                 return false;
         }
@@ -373,6 +418,15 @@ public class LUX_Grid : MonoBehaviour
         {
             obj.GetComponent<MeshRenderer>().material = debugMatPATH;
         }
+    }
+
+    #endregion
+
+    #region Input Output
+
+    public void ReceiveSelection(Vector2 selection, int playerNum)
+    {
+
     }
 
     #endregion
