@@ -189,8 +189,8 @@ public class LUX_Grid : MonoBehaviour
                     localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
                     &&
                     localGridArray[(int)fromXY.x, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
-                ) { Debug.Log("Tested up from " + fromXY + " Positive result. Given " + debug); return true;}
-                else { Debug.Log("Tested up from " + fromXY + " Negative result. Not given " + debug); return false;}
+                ) { Debug.Log("Tested up from " + fromXY + " Positive result. Tested for " + debug); return true;}
+                else { Debug.Log("Tested up from " + fromXY + " Negative result. Tested for " + debug); return false;}
             #endregion
 
             #region 2 - RIGHT
@@ -203,8 +203,8 @@ public class LUX_Grid : MonoBehaviour
                     localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().isWalkable == true
                     &&
                     localGridArray[(int)fromXY.x + 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
-                ) { Debug.Log("Tested right from " + fromXY + " Positive result. Given " + debug); return true;}
-                else { Debug.Log("Tested rightfrom  " + fromXY + " Negative result. Not given " + debug); return false;}
+                ) { Debug.Log("Tested right from " + fromXY + " Positive result. Tested for " + debug); return true;}
+                else { Debug.Log("Tested rightfrom  " + fromXY + " Negative result. Tested for " + debug); return false;}
             #endregion
 
             #region 3 - DOWN
@@ -217,8 +217,8 @@ public class LUX_Grid : MonoBehaviour
                     localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
                     &&
                     localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
-                ) { Debug.Log("Tested down from " + fromXY + " Positive result. Given " + debug); return true;}
-                else { Debug.Log("Tested down from " + fromXY + " Negative result. Not given " + debug); return false;}
+                ) { Debug.Log("Tested down from " + fromXY + " Positive result. Tested for " + debug); return true;}
+                else { Debug.Log("Tested down from " + fromXY + " Negative result. Tested for " + debug); return false;}
             #endregion
 
             #region 4 - LEFT
@@ -232,8 +232,8 @@ public class LUX_Grid : MonoBehaviour
                     &&
                     localGridArray[(int)fromXY.x - 1, ((int)fromXY.y)].GetComponent<LUX_GridBit>().visited == step
                 ) 
-                { Debug.Log("Tested left from " + fromXY + ". Positive result. Given " + debug); return true;}
-                else { Debug.Log("Tested left from " + fromXY + " Negative result. Not given " + debug); return false;}
+                { Debug.Log("Tested left from " + fromXY + ". Positive result. Tested for " + debug); return true;}
+                else { Debug.Log("Tested left from " + fromXY + " Negative result. Tested for " + debug); return false;}
             #endregion
 
             #region 5 - UP + LEFT
@@ -262,8 +262,8 @@ public class LUX_Grid : MonoBehaviour
                     &&
                     localGridArray[(int)fromXY.x - 1, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
                 )
-                { Debug.Log("Tested diagonal up-left from " + fromXY + ". Positive result. Given " + debug); return true; }
-                else { Debug.Log("Tested diagonal up-left from " + fromXY + " Negative result. Not given " + debug); return false; }
+                { Debug.Log("Tested diagonal up-left from " + fromXY + ". Positive result. Tested for " + debug); return true; }
+                else { Debug.Log("Tested diagonal up-left from " + fromXY + " Negative result. Tested for " + debug); return false; }
             #endregion
 
             #region 6 - UP + RIGHT
@@ -291,8 +291,8 @@ public class LUX_Grid : MonoBehaviour
                     localGridArray[(int)fromXY.x + 1, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().isWalkable == true
                     &&
                     localGridArray[(int)fromXY.x + 1, ((int)fromXY.y + 1)].GetComponent<LUX_GridBit>().visited == step
-                ) { Debug.Log("Tested up-right from " + fromXY + " Positive result. Given " + debug); return true; }
-                else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Not given " + debug); return false; }
+                ) { Debug.Log("Tested up-right from " + fromXY + " Positive result. Tested for " + debug); return true; }
+                else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Tested for " + debug); return false; }
             #endregion
 
             #region 7 - DOWN + LEFT
@@ -321,8 +321,8 @@ public class LUX_Grid : MonoBehaviour
                     &&
                     localGridArray[(int)fromXY.x - 1, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
                 )
-                { Debug.Log("Tested diagonal up-left from " + fromXY + ". Positive result. Given " + debug); return true; }
-                else { Debug.Log("Tested diagonal up-left from " + fromXY + " Negative result. Not given " + debug); return false; }
+                { Debug.Log("Tested diagonal up-left from " + fromXY + ". Positive result. Tested for " + debug); return true; }
+                else { Debug.Log("Tested diagonal up-left from " + fromXY + " Negative result. Tested for " + debug); return false; }
             #endregion
 
             #region 8 - DOWN + RIGHT
@@ -350,8 +350,8 @@ public class LUX_Grid : MonoBehaviour
                     localGridArray[(int)fromXY.x + 1, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
                     &&
                     localGridArray[(int)fromXY.x + 1, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().visited == step
-                ) { Debug.Log("Tested up-right from " + fromXY + " Positive result. Given " + debug); return true; }
-                else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Not given " + debug); return false; }
+                ) { Debug.Log("Tested up-right from " + fromXY + " Positive result. Tested for " + debug); return true; }
+                else { Debug.Log("Tested up-rightfrom  " + fromXY + " Negative result. Tested for " + debug); return false; }
             #endregion
 
             case <= 9:
@@ -363,9 +363,9 @@ public class LUX_Grid : MonoBehaviour
         return false; // failsafe
     }
 
-    private void TestAllDirections(Vector2 fromXY, int step, bool overWrite)
+    private void TestAllDirections(Vector2 fromXY, int step, bool overWrite, int testingFor)
     {
-        if (TestADirectionFrom(fromXY, -1, 1, step)) // up
+        if (TestADirectionFrom(fromXY, testingFor, 1, step)) // up
         {
             if (overWrite)
             {
@@ -377,7 +377,7 @@ public class LUX_Grid : MonoBehaviour
             }
         }
 
-        if (TestADirectionFrom(fromXY, -1, 2, step)) // right
+        if (TestADirectionFrom(fromXY, testingFor, 2, step)) // right
         {
             if (overWrite)
             {
@@ -389,7 +389,7 @@ public class LUX_Grid : MonoBehaviour
             }
         }     
 
-        if (TestADirectionFrom(fromXY, -1, 3, step)) // down
+        if (TestADirectionFrom(fromXY, testingFor, 3, step)) // down
         {
             if (overWrite)
             {
@@ -401,7 +401,7 @@ public class LUX_Grid : MonoBehaviour
             }
         }
 
-        if (TestADirectionFrom(fromXY, -1, 4, step)) // left
+        if (TestADirectionFrom(fromXY, testingFor, 4, step)) // left
         {
             if (overWrite)
             {
@@ -413,7 +413,7 @@ public class LUX_Grid : MonoBehaviour
             }
         }
 
-        if (TestADirectionFrom(fromXY, -1, 5, step)) // up + left
+        if (TestADirectionFrom(fromXY, testingFor, 5, step)) // up + left
         {
             if (overWrite)
             {
@@ -425,7 +425,7 @@ public class LUX_Grid : MonoBehaviour
             }
         }
 
-        if (TestADirectionFrom(fromXY, -1, 6, step)) // up + right
+        if (TestADirectionFrom(fromXY, testingFor, 6, step)) // up + right
         {
             if (overWrite)
             {
@@ -437,7 +437,7 @@ public class LUX_Grid : MonoBehaviour
             }
         }
 
-        if (TestADirectionFrom(fromXY, -1, 7, step)) // down + left
+        if (TestADirectionFrom(fromXY, testingFor, 7, step)) // down + left
         {
             if (overWrite)
             {
@@ -448,7 +448,7 @@ public class LUX_Grid : MonoBehaviour
                 return;
             }
         } 
-        if (TestADirectionFrom(fromXY, -1, 8, step)) // down + right
+        if (TestADirectionFrom(fromXY, testingFor, 8, step)) // down + right
         {
             if (overWrite)
             {
@@ -479,7 +479,7 @@ public class LUX_Grid : MonoBehaviour
             {
                 if(obj.GetComponent<LUX_GridBit>().visited == step - 1)
                 {
-                    TestAllDirections(obj.GetComponent<LUX_GridBit>().gridPos, step, true);
+                    TestAllDirections(obj.GetComponent<LUX_GridBit>().gridPos, step, true, -1);
                 }
             }
         }
@@ -508,19 +508,19 @@ public class LUX_Grid : MonoBehaviour
 
         // Because the path is initially reversed, we do this backwards, then use the .Reverse() function
 
-        Debug.Log("Attempting to move from " + fromXY + " to " + toXY);
+        int maxSteps = localGridArray[fromX, fromY].GetComponent<LUX_GridBit>().visited;
+        // maxSteps is set to how many steps it minimally takes to reach a specific gridbit
 
-        int maxSteps = localGridArray[toX, toY].GetComponent<LUX_GridBit>().visited; // maxSteps is set to how many steps it minimally takes to reach a specific gridbit
-        Debug.Log("jimbo jones from hit animated comedy sitcom: The Simpsons");
-        pathList.Add(localGridArray[toX, toY]); // !!ERROR HERE ARRAY OUTSIDE OF BOUNDS!!
-        Debug.Log("ERROR CODE 97 -jefferror");
-        nextPathBit = localGridArray[toX, toY];
+        Debug.Log("Attempting to move from " + fromXY + " to " + toXY + ", with " + maxSteps + " maximum movements");
+
+        nextPathBit = localGridArray[fromX, fromY];
+        pathList.Add(nextPathBit);
         Debug.Log("Added first gridbit successfully");
 
-        for(int step = maxSteps; step >= 0; step--)
+        for(int step = maxSteps; step != 0; step--)
         {
             Debug.Log("Step attempt number " + (maxSteps - step) + " is from " + nextPathBit.GetComponent<LUX_GridBit>().gridPos);
-            TestAllDirections(nextPathBit.GetComponent<LUX_GridBit>().gridPos, maxSteps, false);
+            TestAllDirections(nextPathBit.GetComponent<LUX_GridBit>().gridPos, maxSteps - 1, false, step); // always tries for -1???
 
             if(pathList.Contains(nextPathBit))
             {
@@ -529,10 +529,12 @@ public class LUX_Grid : MonoBehaviour
             else
             {
                 pathList.Add(nextPathBit);
+                Debug.Log("Added gridbit number " + step);
             }
         }
         Debug.Log("Added last gridbit");
-        pathList.Add(localGridArray[fromX, fromY]);
+        pathList.Add(localGridArray[toX, toY]);
+        pathList.Reverse();
     }
 
     private void Update()
