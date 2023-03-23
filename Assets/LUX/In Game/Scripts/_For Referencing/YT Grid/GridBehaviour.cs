@@ -212,7 +212,7 @@ public class GridBehaviour : MetaStats
             Debug.Log("Cannot reach desired location");
             return;
         }
-        for(int i = step; step > -1; step--)  // steps backward through steps, using the array to check each array member's step variable
+        for(int i = step; step > -1; step--)
         {
             if (TestDirection(localX, localY, -1, 1))
             {

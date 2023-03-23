@@ -115,12 +115,16 @@ public class LUX_Grid : MonoBehaviour
         int randX;
         int randY;
         int playerAmount = gameController.alivePlayers.Count;
+        int tries;
 
         for(int ticker = 0; ticker < playerAmount; ticker++)
         {
             bool cont = true;
+            tries = 0;
+
             while(cont == true)
             {
+                tries++;
                 randX = Random.Range(0, gridWidth);
                 randY = Random.Range(0, gridHeight);
                 LUX_GridBit selectedGridBit = localGridArray[randX, randY].GetComponent<LUX_GridBit>();
@@ -133,8 +137,15 @@ public class LUX_Grid : MonoBehaviour
                     gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().gridPos = new Vector2(randX, randY);
                     gameController.alivePlayers[ticker].transform.position = new Vector3(randX, 1, randY);
 
+                    Debug.Log("Placed player number " + ticker + " at position " + randX + ", " + randY);
+
                     selectedGridBit.playerOnThis = true;
 
+                    cont = false;
+                }
+                if(tries == 50)
+                {
+                    Debug.Log("NO SPAWN FOR YOU >:)");
                     cont = false;
                 }
             }
@@ -352,16 +363,102 @@ public class LUX_Grid : MonoBehaviour
         return false; // failsafe
     }
 
-    private void TestAllDirections(Vector2 fromXY, int step)
+    private void TestAllDirections(Vector2 fromXY, int step, bool overWrite)
     {
-        if (TestADirectionFrom(fromXY, -1, 1, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x, fromXY.y + 1), step); }     // up
-        if (TestADirectionFrom(fromXY, -1, 2, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y), step); }     // right
-        if (TestADirectionFrom(fromXY, -1, 3, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x, fromXY.y - 1), step); }     // down
-        if (TestADirectionFrom(fromXY, -1, 4, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y), step); }     // left
-        if (TestADirectionFrom(fromXY, -1, 5, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y + 1), step); } // up + left
-        if (TestADirectionFrom(fromXY, -1, 6, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y + 1), step); } // up + right
-        if (TestADirectionFrom(fromXY, -1, 7, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y - 1), step); } // down + left
-        if (TestADirectionFrom(fromXY, -1, 8, step))      { SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y - 1), step); } // down + right
+        if (TestADirectionFrom(fromXY, -1, 1, step)) // up
+        {
+            if (overWrite)
+            {
+                SetVisitedVarOnGridBit(new Vector2(fromXY.x, fromXY.y + 1), step);
+            } else
+            {
+                nextPathBit = localGridArray[(int)fromXY.x, (int)fromXY.y + 1];
+                return;
+            }
+        }
+
+        if (TestADirectionFrom(fromXY, -1, 2, step)) // right
+        {
+            if (overWrite)
+            {
+                SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y), step);
+            } else
+            {
+                nextPathBit = localGridArray[(int)fromXY.x + 1, (int)fromXY.y];
+                return;
+            }
+        }     
+
+        if (TestADirectionFrom(fromXY, -1, 3, step)) // down
+        {
+            if (overWrite)
+            {
+                SetVisitedVarOnGridBit(new Vector2(fromXY.x, fromXY.y - 1), step);
+            } else
+            {
+                nextPathBit = localGridArray[(int)fromXY.x, (int)fromXY.y - 1];
+                return;
+            }
+        }
+
+        if (TestADirectionFrom(fromXY, -1, 4, step)) // left
+        {
+            if (overWrite)
+            {
+                SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y), step);
+            } else
+            {
+                nextPathBit = localGridArray[(int)fromXY.x - 1, (int)fromXY.y];
+                return;
+            }
+        }
+
+        if (TestADirectionFrom(fromXY, -1, 5, step)) // up + left
+        {
+            if (overWrite)
+            {
+                SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y + 1), step);
+            } else
+            {
+                nextPathBit = localGridArray[(int)fromXY.x - 1, (int)fromXY.y + 1];
+                return;
+            }
+        }
+
+        if (TestADirectionFrom(fromXY, -1, 6, step)) // up + right
+        {
+            if (overWrite)
+            {
+                SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y + 1), step);
+            } else
+            {
+                nextPathBit = localGridArray[(int)fromXY.x + 1, (int)fromXY.y + 1];
+                return;
+            }
+        }
+
+        if (TestADirectionFrom(fromXY, -1, 7, step)) // down + left
+        {
+            if (overWrite)
+            {
+                SetVisitedVarOnGridBit(new Vector2(fromXY.x - 1, fromXY.y - 1), step);
+            } else
+            {
+                nextPathBit = localGridArray[(int)fromXY.x - 1, (int)fromXY.y - 1];
+                return;
+            }
+        } 
+        if (TestADirectionFrom(fromXY, -1, 8, step)) // down + right
+        {
+            if (overWrite)
+            {
+                SetVisitedVarOnGridBit(new Vector2(fromXY.x + 1, fromXY.y - 1), step);
+            } else
+            {
+                nextPathBit = localGridArray[(int)fromXY.x + 1, (int)fromXY.y - 1];
+                return;
+            }
+        } 
     }
 
     private void SetVisitedVarOnGridBit(Vector2 particularGridbitXY, int step)
@@ -382,13 +479,14 @@ public class LUX_Grid : MonoBehaviour
             {
                 if(obj.GetComponent<LUX_GridBit>().visited == step - 1)
                 {
-                    TestAllDirections(obj.GetComponent<LUX_GridBit>().gridPos, step);
+                    TestAllDirections(obj.GetComponent<LUX_GridBit>().gridPos, step, true);
                 }
             }
         }
     }
 
-    public void CreatePath(Vector2 fromXY, Vector2 toXY, int MoveEnergy, int totalEnergy)
+    private GameObject nextPathBit;
+    public void CreatePath(Vector2 fromXY, Vector2 toXY)
     {
         #region Explanation
 
@@ -399,7 +497,42 @@ public class LUX_Grid : MonoBehaviour
         #endregion
 
         pathList.Clear();
-        pathList.Add(localGridArray[(int)toXY.x, (int)toXY.y]);
+
+        // Where the code should create a path to
+        int toX = (int) toXY.x;
+        int toY = (int) toXY.y;
+
+        // Where the path should end back up at
+        int fromX = (int) fromXY.x;
+        int fromY = (int) fromXY.y;
+
+        // Because the path is initially reversed, we do this backwards, then use the .Reverse() function
+
+        Debug.Log("Attempting to move from " + fromXY + " to " + toXY);
+
+        int maxSteps = localGridArray[toX, toY].GetComponent<LUX_GridBit>().visited; // maxSteps is set to how many steps it minimally takes to reach a specific gridbit
+        Debug.Log("jimbo jones from hit animated comedy sitcom: The Simpsons");
+        pathList.Add(localGridArray[toX, toY]); // !!ERROR HERE ARRAY OUTSIDE OF BOUNDS!!
+        Debug.Log("ERROR CODE 97 -jefferror");
+        nextPathBit = localGridArray[toX, toY];
+        Debug.Log("Added first gridbit successfully");
+
+        for(int step = maxSteps; step >= 0; step--)
+        {
+            Debug.Log("Step attempt number " + (maxSteps - step) + " is from " + nextPathBit.GetComponent<LUX_GridBit>().gridPos);
+            TestAllDirections(nextPathBit.GetComponent<LUX_GridBit>().gridPos, maxSteps, false);
+
+            if(pathList.Contains(nextPathBit))
+            {
+                Debug.Log("The gridbit at " + nextPathBit.GetComponent<LUX_GridBit>().gridPos + " is already inside of pathList");
+            }
+            else
+            {
+                pathList.Add(nextPathBit);
+            }
+        }
+        Debug.Log("Added last gridbit");
+        pathList.Add(localGridArray[fromX, fromY]);
     }
 
     private void Update()
@@ -409,6 +542,8 @@ public class LUX_Grid : MonoBehaviour
             hitIt= false;
             SetAllVisitedNegative(debugStartXY);
             SetDistance(debugStartXY);
+            CreatePath(debugEndXY, debugStartXY);
+
         }
     }
 
