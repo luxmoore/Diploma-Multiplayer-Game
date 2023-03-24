@@ -31,10 +31,10 @@ public class LUX_PathFollower : MonoBehaviour
         }
     }
 
-    IEnumerator STATE_MOVE()
+    public IEnumerator STATE_MOVE()
     {
-        //pathList.Clear();
-        //pathList = gridComp.pathList;
+        pathList.Clear();
+        pathList = gridComp.pathList;
 
         int totalSteps = pathList.Count;
         int stepsTaken = 0;
@@ -75,6 +75,8 @@ public class LUX_PathFollower : MonoBehaviour
             stepsTaken++;
             yield return new WaitForSecondsRealtime(0.5f);
         }
+
+        gameObject.GetComponentInChildren<PlayerStats>().gridPos = nextGoal_V2; Debug.Log("Updated recorded position to " + nextGoal_V2);
 
         StartCoroutine(STATE_IDLE());
         yield return new WaitForEndOfFrame();

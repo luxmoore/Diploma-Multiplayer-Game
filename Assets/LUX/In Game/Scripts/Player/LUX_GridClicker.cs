@@ -32,6 +32,7 @@ public class LUX_GridClicker : MonoBehaviour
 
         GameObject gcObj = GameObject.FindWithTag("GC");
         gc = gcObj.GetComponent<GameController>();
+        gridComp = gc.GetComponent<LUX_Grid>();
 
         playerAffecting = ps.playerNum;
         gridbits = gc.GetComponent<LUX_Grid>().localGridArray;
@@ -60,14 +61,14 @@ public class LUX_GridClicker : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            hoveredOverObj = hit.collider.gameObject;
+            GameObject hoveredOverObj = hit.collider.gameObject;
             if (hoveredOverObj != null && hoveredOverObj.tag == "GridBit" && hoveredOverObj.GetComponent<LUX_GridBit>().visited > 0) // if it there and good
             {
                 isObjGoodBoy = true;
             }
             else { isObjGoodBoy = false; }
 
-            Debug.Log("Goodboy test returned " + isObjGoodBoy);
+            //Debug.Log("Goodboy test returned " + isObjGoodBoy);
 
             #region Update The Cursor TMP
             if (isObjGoodBoy == true) // if it there and good
@@ -87,12 +88,12 @@ public class LUX_GridClicker : MonoBehaviour
             {
                 if (hoveredOverObj.GetComponent<LUX_GridBit>().visited <= energy)
                 {
-                    // do shit whit the selected object, provided that it is within movement energy capabilities
+                    // do things with the selected object, provided that it is within movement energy capabilities
 
-                    selectedObj = hoveredOverObj;
+                    GameObject selectedObj = hoveredOverObj;
 
                     Vector2 selectedGridBitGridPos = selectedObj.GetComponent<LUX_GridBit>().gridPos;
-                    gridComp.ReceiveSelection(selectedGridBitGridPos, gameObject.GetComponent<PlayerStats>().playerNum);
+                    gridComp.ReceiveSelection(selectedGridBitGridPos, gameObject.GetComponent<PlayerStats>().playerNum); // not set to reference of an object
                 }
                 else
                 {

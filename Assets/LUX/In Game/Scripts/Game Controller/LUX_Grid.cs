@@ -497,6 +497,7 @@ public class LUX_Grid : MonoBehaviour
         #endregion
 
         pathList.Clear();
+        nextPathBit = null;
 
         // Where the code should create a path to
         int toX = (int) toXY.x;
@@ -537,35 +538,35 @@ public class LUX_Grid : MonoBehaviour
         pathList.Reverse();
     }
 
-    private void Update()
-    {
-        if(hitIt == true)
-        {
-            hitIt= false;
-            SetAllVisitedNegative(debugStartXY);
-            SetDistance(debugStartXY);
-            CreatePath(debugEndXY, debugStartXY);
-
-        }
-    }
-
-    private void SetPathMat()
-    {
-        foreach(GameObject obj in pathList)
-        {
-            obj.GetComponent<MeshRenderer>().material = debugMatPATH;
-        }
-    }
-
+    // whoops incorrect naming convention
     #endregion
 
     #region Input Output
 
     public void ReceiveSelection(Vector2 selection, int playerNum)
     {
+        Vector2 playerPos = gameController.alivePlayers[playerNum - 1].GetComponentInChildren<PlayerStats>().gridPos;
 
+        Debug.Log("Selection recieved as being " + selection + " from player number " + playerNum + ", who is located at position " + playerPos);
+
+        SetAllVisitedNegative(playerPos);
+        SetDistance(playerPos);
+        CreatePath(selection, playerPos);
+
+        gameController.alivePlayers[playerNum - 1].GetComponent<LUX_PathFollower>().StartCoroutine("STATE_MOVE");
     }
 
+    private void Update()
+    {
+        if (hitIt == true)
+        {
+            hitIt = false;
+            SetAllVisitedNegative(debugStartXY);
+            SetDistance(debugStartXY);
+            CreatePath(debugEndXY, debugStartXY);
+            gameController.alivePlayers[0].GetComponent<LUX_PathFollower>().StartCoroutine("STATE_MOVE");
+        }
+    }
     #endregion
 
     // LUX
