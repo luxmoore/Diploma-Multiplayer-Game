@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -250,6 +250,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7531143826738013427, guid: 67fef8261d9e3d24a98443f788921b88,
         type: 3}
+      propertyPath: gridMap
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531143826738013427, guid: 67fef8261d9e3d24a98443f788921b88,
+        type: 3}
       propertyPath: gridGenMaxX
       value: 7
       objectReference: {fileID: 0}
@@ -267,7 +272,7 @@ PrefabInstance:
     - target: {fileID: 7531143826738013427, guid: 67fef8261d9e3d24a98443f788921b88,
         type: 3}
       propertyPath: gridHolesAmount
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7531143826738013427, guid: 67fef8261d9e3d24a98443f788921b88,
         type: 3}

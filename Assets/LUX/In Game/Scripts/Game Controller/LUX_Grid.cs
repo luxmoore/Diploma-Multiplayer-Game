@@ -486,7 +486,7 @@ public class LUX_Grid : MonoBehaviour
     }
 
     private GameObject nextPathBit;
-    public void CreatePath(Vector2 fromXY, Vector2 toXY)
+    public void CreatePath(Vector2 fromXY, Vector2 toXY) 
     {
         #region Explanation
 
@@ -495,6 +495,9 @@ public class LUX_Grid : MonoBehaviour
         // This repeats until the stepcount is zero, at which point we have a path
 
         #endregion
+
+        // Issues:
+        // Only runs once, then breaks.
 
         pathList.Clear();
         nextPathBit = null;
@@ -516,12 +519,12 @@ public class LUX_Grid : MonoBehaviour
 
         nextPathBit = localGridArray[fromX, fromY];
         pathList.Add(nextPathBit);
-        Debug.Log("Added first gridbit successfully");
+        Debug.Log("Added first gridbit successfully from position: " + nextPathBit.GetComponent<LUX_GridBit>().gridPos);
 
-        for(int step = maxSteps; step != 0; step--)
+        for(int step = maxSteps -1; step != 0; step--)
         {
             Debug.Log("Step attempt number " + (maxSteps - step) + " is from " + nextPathBit.GetComponent<LUX_GridBit>().gridPos);
-            TestAllDirections(nextPathBit.GetComponent<LUX_GridBit>().gridPos, maxSteps - 1, false, step); // always tries for -1???
+            TestAllDirections(nextPathBit.GetComponent<LUX_GridBit>().gridPos, maxSteps - 1, false, step);
 
             if(pathList.Contains(nextPathBit))
             {
@@ -530,7 +533,7 @@ public class LUX_Grid : MonoBehaviour
             else
             {
                 pathList.Add(nextPathBit);
-                Debug.Log("Added gridbit number " + step);
+                Debug.Log("Added gridbit number " + step + " at " + nextPathBit.GetComponent<LUX_GridBit>().gridPos);
             }
         }
         Debug.Log("Added last gridbit");
@@ -538,7 +541,6 @@ public class LUX_Grid : MonoBehaviour
         pathList.Reverse();
     }
 
-    // whoops incorrect naming convention
     #endregion
 
     #region Input Output

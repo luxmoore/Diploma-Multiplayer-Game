@@ -93,7 +93,7 @@ public class LUX_GridClicker : MonoBehaviour
                     GameObject selectedObj = hoveredOverObj;
 
                     Vector2 selectedGridBitGridPos = selectedObj.GetComponent<LUX_GridBit>().gridPos;
-                    gridComp.ReceiveSelection(selectedGridBitGridPos, gameObject.GetComponent<PlayerStats>().playerNum); // not set to reference of an object
+                    gridComp.ReceiveSelection(selectedGridBitGridPos, gameObject.GetComponent<PlayerStats>().playerNum);
                 }
                 else
                 {

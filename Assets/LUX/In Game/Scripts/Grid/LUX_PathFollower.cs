@@ -33,7 +33,6 @@ public class LUX_PathFollower : MonoBehaviour
 
     public IEnumerator STATE_MOVE()
     {
-        pathList.Clear();
         pathList = gridComp.pathList;
 
         int totalSteps = pathList.Count;
