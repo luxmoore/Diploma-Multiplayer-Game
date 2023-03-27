@@ -157,7 +157,7 @@ public class LUX_Grid : MonoBehaviour
 
     #region Pathfinding Functions
 
-    private void SetAllVisitedNegative(Vector2 currentXY)
+    public void SetAllVisitedNegative(Vector2 currentXY)
     {
         foreach(GameObject obj in localGridArray)
         {

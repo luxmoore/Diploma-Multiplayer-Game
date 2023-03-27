@@ -76,6 +76,8 @@ public class LUX_PathFollower : MonoBehaviour
         }
 
         gameObject.GetComponentInChildren<PlayerStats>().gridPos = nextGoal_V2; Debug.Log("Updated recorded position to " + nextGoal_V2);
+        gameControllerGameObj.GetComponent<LUX_Grid>().SetAllVisitedNegative(nextGoal_V2);
+        gameControllerGameObj.GetComponent<LUX_Grid>().SetDistance(nextGoal_V2);
 
         StartCoroutine(STATE_IDLE());
         yield return new WaitForEndOfFrame();

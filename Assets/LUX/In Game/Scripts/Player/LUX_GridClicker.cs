@@ -88,11 +88,16 @@ public class LUX_GridClicker : MonoBehaviour
             {
                 if (hoveredOverObj.GetComponent<LUX_GridBit>().visited <= energy)
                 {
-                    // do things with the selected object, provided that it is within movement energy capabilities
-
                     GameObject selectedObj = hoveredOverObj;
 
                     Vector2 selectedGridBitGridPos = selectedObj.GetComponent<LUX_GridBit>().gridPos;
+
+                    if(selectedGridBitGridPos == gameObject.GetComponent<PlayerStats>().gridPos || selectedObj.GetComponent<LUX_GridBit>().visited >= 0)
+                    {
+                        Debug.Log("Selection is fucked. DO NOT ALLOW ALGORITHM TO USE OR IT WILL STACK OVERFLOW.");
+                        return;
+                    }
+                    
                     gridComp.ReceiveSelection(selectedGridBitGridPos, gameObject.GetComponent<PlayerStats>().playerNum);
                 }
                 else

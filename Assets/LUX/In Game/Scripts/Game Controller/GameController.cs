@@ -24,10 +24,6 @@ public class GameController : MetaStats
             playerPreContr.playerNum = ticker + 1;
             playerPreContr.isAlive = true;
 
-            // GridClicker Variables
-            //LUX_GridClicker playerPreGridClick = playerPre.GetComponent<LUX_GridClicker>();
-            //playerPreGridClick.cam = Camera.main;
-
             alivePlayers.Add(playerPre);
         }
     }
