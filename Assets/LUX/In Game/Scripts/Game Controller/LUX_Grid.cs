@@ -137,7 +137,7 @@ public class LUX_Grid : MonoBehaviour
                     gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().gridPos = new Vector2(randX, randY);
                     gameController.alivePlayers[ticker].transform.position = new Vector3(randX, 1, randY);
 
-                    Debug.Log("Placed player number " + ticker + " at position " + randX + ", " + randY);
+                    Debug.Log("Placed player number " + ticker + " at position " + randX + ", " + randY + " after " + tries + " attempt(s)");
 
                     selectedGridBit.playerOnThis = true;
 
@@ -497,7 +497,7 @@ public class LUX_Grid : MonoBehaviour
         #endregion
 
         // Issues:
-        // Only runs once, then breaks.
+        // None. awesome code, great job!
 
         pathList.Clear();
         nextPathBit = null;
@@ -556,6 +556,12 @@ public class LUX_Grid : MonoBehaviour
         CreatePath(selection, playerPos);
 
         gameController.alivePlayers[playerNum - 1].GetComponent<LUX_PathFollower>().StartCoroutine("STATE_MOVE");
+    }
+
+    public void SetUpGo(Vector2 playerPos)
+    {
+        SetAllVisitedNegative(playerPos);
+        SetDistance(playerPos);
     }
 
     private void Update()

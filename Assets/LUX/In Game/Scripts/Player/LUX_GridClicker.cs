@@ -25,6 +25,9 @@ public class LUX_GridClicker : MonoBehaviour
     private FollowingText followingText;
     public int energy;
 
+    // Debug Vars
+    private string debugMsg = "Selection is fucked. DO NOT ALLOW ALGORITHM TO USE OR IT WILL STACK OVERFLOW.";
+
     private void Start()
     {
         ps = gameObject.GetComponent<PlayerStats>();
@@ -91,13 +94,18 @@ public class LUX_GridClicker : MonoBehaviour
                     GameObject selectedObj = hoveredOverObj;
 
                     Vector2 selectedGridBitGridPos = selectedObj.GetComponent<LUX_GridBit>().gridPos;
+                    Debug.Log("The gridbit at " + selectedGridBitGridPos);
 
-                    if(selectedGridBitGridPos == gameObject.GetComponent<PlayerStats>().gridPos || selectedObj.GetComponent<LUX_GridBit>().visited >= 0)
+                    if(selectedGridBitGridPos == gameObject.GetComponent<PlayerStats>().gridPos)
                     {
-                        Debug.Log("Selection is fucked. DO NOT ALLOW ALGORITHM TO USE OR IT WILL STACK OVERFLOW.");
+                        Debug.Log("Er1 - " + debugMsg);
                         return;
                     }
-                    
+                    if (selectedObj.GetComponent<LUX_GridBit>().visited <= 0)
+                    {
+                        Debug.Log("Er2 - " + debugMsg);
+                        return;
+                    }
                     gridComp.ReceiveSelection(selectedGridBitGridPos, gameObject.GetComponent<PlayerStats>().playerNum);
                 }
                 else
@@ -108,4 +116,6 @@ public class LUX_GridClicker : MonoBehaviour
             #endregion
         }
     }
+
+    //LUX
 }

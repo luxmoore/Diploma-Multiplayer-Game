@@ -1,8 +1,7 @@
-Current Version: 0.1.0
+Current Version: 0.2.2
 
-+ Add ability to spawn a player prefab onto grid that instantly knows where it is
-+ Added UI to display various values
-+ Added UI to display how many steps away from a set point a gridbit is
-+ Added 'Gridpos' to the 'PlayerStats' script and entirely removed the unused and non-functional 'PlayerController' script
-! Changed the requirements of 0.1.0 completion to make myself feel better
-! On an unrelated note, ZERO POINT ONE BABY!!!!
++ Began the turnsystem script properly
++ Added the attack diamond sprites
+! Fixed a bug with the pathfinding where selecting an inaccessible gridspot would crash the game.
++ Added my little "// LUX" signiture to the bottom of the scripts I have open right now.
++ Added the stats that are actually used for the end result of the game

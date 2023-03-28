@@ -42,5 +42,8 @@ public class GameController : MetaStats
         // Begin turn one, go one - turning on the appropiate player controller
 
         gridComp.GridGen(gridGenMaxX, gridGenMaxY, gridHolesAmount);
+        turnSystem.StartCoroutine("TURN");
     }
+
+    // LUX
 }

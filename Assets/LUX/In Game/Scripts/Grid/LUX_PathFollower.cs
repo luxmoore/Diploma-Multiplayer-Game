@@ -87,4 +87,6 @@ public class LUX_PathFollower : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
     }
+
+    // LUX
 }

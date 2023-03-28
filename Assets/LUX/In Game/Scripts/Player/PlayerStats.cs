@@ -9,6 +9,8 @@ public class PlayerStats : MonoBehaviour
     public int playerNum;
     [Tooltip("Dead players do not contribute to the player count. Players die when their health reaches zero.")]
     public bool isAlive;
+    [Tooltip("For personal flair! For a bit of pizzazz! For the hell of it! For additional entertainment!")]
+    public string givenName;
 
     [Header("Grid")]
     [Tooltip("The location that this player takes up on the grid.")]
