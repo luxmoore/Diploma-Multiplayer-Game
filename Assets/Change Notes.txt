@@ -1,7 +1,7 @@
-Current Version: 0.2.2
+Current Version: 0.2.3
 
-+ Began the turnsystem script properly
-+ Added the attack diamond sprites
-! Fixed a bug with the pathfinding where selecting an inaccessible gridspot would crash the game.
-+ Added my little "// LUX" signiture to the bottom of the scripts I have open right now.
-+ Added the stats that are actually used for the end result of the game
++ Worked on turn system. ETA for 1.0 is a few weeks max. I swear.
++ Added a few tags
+! Changed the turn incrementation system
++ Added UI
+! Changed the values in the playerstats of the basic pathfollower prefab.

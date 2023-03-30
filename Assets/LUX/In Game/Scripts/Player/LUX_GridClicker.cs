@@ -27,6 +27,7 @@ public class LUX_GridClicker : MonoBehaviour
 
     // Debug Vars
     private string debugMsg = "Selection is fucked. DO NOT ALLOW ALGORITHM TO USE OR IT WILL STACK OVERFLOW.";
+    public bool debugOut;
 
     private void Start()
     {
@@ -47,7 +48,7 @@ public class LUX_GridClicker : MonoBehaviour
 
         if(cam != null)
         {
-            Debug.Log("Main camera located");
+            if (debugOut == true) { Debug.Log("Main camera located"); }
         }
         else { Debug.Log("SUCK DICK BUDDY IT STILL DOESNT FIND THE CAMERA FUCKO"); }
         
@@ -94,8 +95,7 @@ public class LUX_GridClicker : MonoBehaviour
                     GameObject selectedObj = hoveredOverObj;
 
                     Vector2 selectedGridBitGridPos = selectedObj.GetComponent<LUX_GridBit>().gridPos;
-                    Debug.Log("The gridbit at " + selectedGridBitGridPos);
-
+                    if (debugOut == true) { Debug.Log("The gridbit at " + selectedGridBitGridPos); }
                     if(selectedGridBitGridPos == gameObject.GetComponent<PlayerStats>().gridPos)
                     {
                         Debug.Log("Er1 - " + debugMsg);

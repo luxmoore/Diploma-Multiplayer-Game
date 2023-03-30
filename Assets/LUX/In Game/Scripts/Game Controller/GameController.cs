@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameController : MetaStats
 {
-    public int[,] startPlayerList = new int[1,1]; // takes two ints, the first number is the player number and the second number is the player's class. Current values are temporary
+    public int[,] startPlayerList = new int[3,1]; // takes two ints, the first number is the player number and the second number is the player's class. Current values are temporary
     public List<GameObject> alivePlayers;
     private LUX_TurnSystem turnSystem;
     private LUX_Grid gridComp;
@@ -21,7 +21,7 @@ public class GameController : MetaStats
 
             // PlayerController variables
             PlayerStats playerPreContr = playerPre.GetComponentInChildren<PlayerStats>();
-            playerPreContr.playerNum = ticker + 1;
+            playerPreContr.playerNum = ticker;
             playerPreContr.isAlive = true;
 
             alivePlayers.Add(playerPre);
@@ -39,10 +39,9 @@ public class GameController : MetaStats
     {
         // At the start of the game:
         // Generate a grid (the function also places players on that grid)
-        // Begin turn one, go one - turning on the appropiate player controller
+        // Begin turn one, go one - turning on the appropiate player controller (this is done through the turnsystem script)
 
         gridComp.GridGen(gridGenMaxX, gridGenMaxY, gridHolesAmount);
-        turnSystem.StartCoroutine("TURN");
     }
 
     // LUX

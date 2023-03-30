@@ -8,6 +8,11 @@ TagManager:
   - Dead GridBit
   - GC
   - FollowingText
+  - HealthText
+  - AttackText
+  - MovementText
+  - TurnText
+  - GoText
   layers:
   - Default
   - TransparentFX

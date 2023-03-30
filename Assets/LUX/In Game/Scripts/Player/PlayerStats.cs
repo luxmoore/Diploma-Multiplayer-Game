@@ -12,6 +12,10 @@ public class PlayerStats : MonoBehaviour
     [Tooltip("For personal flair! For a bit of pizzazz! For the hell of it! For additional entertainment!")]
     public string givenName;
 
+    [Header("Tracked Stats")]
+    public int totalDamage;
+    public int totalHealthLost;
+
     [Header("Grid")]
     [Tooltip("The location that this player takes up on the grid.")]
     public Vector2 gridPos;
