@@ -8,7 +8,6 @@ public class LUX_GridClicker : MonoBehaviour
 {
     // PlayerController Vars
     private PlayerStats ps;
-    int playerAffecting;
 
     // GameController Vars
     public GameController gc;
@@ -38,7 +37,6 @@ public class LUX_GridClicker : MonoBehaviour
         gc = gcObj.GetComponent<GameController>();
         gridComp = gc.GetComponent<LUX_Grid>();
 
-        playerAffecting = ps.playerNum;
         gridbits = gc.GetComponent<LUX_Grid>().localGridArray;
 
         cam = Camera.main;
@@ -50,7 +48,7 @@ public class LUX_GridClicker : MonoBehaviour
         {
             if (debugOut == true) { Debug.Log("Main camera located"); }
         }
-        else { Debug.Log("SUCK DICK BUDDY IT STILL DOESNT FIND THE CAMERA FUCKO"); }
+        else { Debug.Log("ERROR - Main camera not located."); }
         
     }
 

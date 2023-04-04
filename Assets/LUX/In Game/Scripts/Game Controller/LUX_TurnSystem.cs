@@ -5,7 +5,7 @@ using TMPro;
 
 public class LUX_TurnSystem : MonoBehaviour
 {
-    // --------------------------------------- Variables ---------------------------------------
+    #region Variables
 
     private GameController gameController;
     private LUX_Grid gridComp;
@@ -22,27 +22,29 @@ public class LUX_TurnSystem : MonoBehaviour
     public int playerAmountAlive;
     public int currentTurn = 1;
     public int whoseGo = 0;
-    public bool goEnded = true;
+    public bool goEnded = false;
     public bool printResults;
 
-    //[Header("State Machine Variables")]
-    public enum STATES {TURN, LIMBO}
-    public STATES currentState = STATES.TURN;
+    #endregion
 
-    // --------------------------------------- Functions --------------------------------------- 
+    #region Functions 
 
     private void Start()
     {
+        goEnded = false; // this wont stop being true on start unless I do this. no clue why.
+
         gameController = gameObject.GetComponent<GameController>();
         gridComp = gameController.GetComponent<LUX_Grid>();
 
         playerEntities = gameController.alivePlayers;
         playerAmountAlive = playerEntities.Count;
 
+        playerAmount = playerAmountAlive;
+
         followingText = GameObject.FindWithTag("FollowingText").GetComponent<FollowingText>();
 
 
-        for (int ticker = 0; ticker < playerAmountAlive; ticker++)
+        for (int ticker = 0; ticker < playerAmountAlive; ticker++) // this turns off everybody's functionality.
         {
             ToggleFunc(ticker, false);
             Debug.Log("Player number " + ticker + " has had their functionality removed for initialization.");
@@ -56,6 +58,7 @@ public class LUX_TurnSystem : MonoBehaviour
         goDisplay = GameObject.FindGameObjectWithTag("GoText").GetComponent<TextMeshProUGUI>();
 
         StartCoroutine("TURN");
+        FirstGoChooser();
     }
 
     /// <summary>
@@ -75,6 +78,7 @@ public class LUX_TurnSystem : MonoBehaviour
         goEnded = true;
     }
 
+    #region Change UI Text
     private void ChangeStatText(int movementEnergy, int attackEnergy, int currentHealth, int maxHealth)
     {
         movementEnergyDisplay.SetText("MVM - " + movementEnergy.ToString());
@@ -95,8 +99,10 @@ public class LUX_TurnSystem : MonoBehaviour
         goDisplay.SetText("Go " + goAmount);
         goDisplay.ForceMeshUpdate();
     }
+    #endregion
+    #endregion
 
-    // --------------------------------------- Coroutines --------------------------------------- 
+    #region Turn System
 
     public IEnumerator TURN()
     {
@@ -110,7 +116,7 @@ public class LUX_TurnSystem : MonoBehaviour
                 ToggleFunc(whoseGo, false);
                 Debug.Log("Player number " + whoseGo + "has ended their turn.");
 
-                goEnded = false;
+                
                 playerEntities = gameController.alivePlayers;
 
                 if (printResults == true)
@@ -127,53 +133,69 @@ public class LUX_TurnSystem : MonoBehaviour
 
                 #region Go Exchange
 
+                // this for loop checks for the next available feller.
+                // after choosing the next feller, it changes the 'whoseGo' variable to that
+                // if the next feller is impossible without returning an out of bounds,
+                // it starts the 'FirstGoChooser' func and 
+
+                Debug.Log("Attempting to find next player from player number " + whoseGo);
+
+                
                 bool stopCheck = false;
-                int changeCheck = whoseGo;
-
-
-                for (int ticker = whoseGo + 1; stopCheck == true; ticker++)
+                for (int ticker = whoseGo + 1; stopCheck != true; ticker++)
                 {
-                    GameObject obj = playerEntities[ticker];
-                    if(obj.GetComponentInChildren<PlayerStats>().isAlive == true)
+                    Debug.Log("Checking player " + ticker);
+                    if(ticker >= playerAmount) // if the end of the amount of fellers in the array is reached, shut everything down and go into the 'firstgo' func.
                     {
                         stopCheck = true;
-                        whoseGo = ticker;
+                        currentTurn++;
+                        FirstGoChooser();
+                        goEnded = false;
+                        yield return null;
+                    }
+                    else
+                    {
+                        GameObject obj = playerEntities[ticker];
+                        if (obj.GetComponentInChildren<PlayerStats>().isAlive == true)
+                        {
+                            stopCheck = true;
+                            whoseGo = ticker;
+                            Go();
+                        }
                     }
                 }
-
-                if(stopCheck == true && whoseGo == changeCheck) // WARNING CODE FUCKERY DETECTED
-                {
-                    currentTurn++;
-                    FirstGo();
-                    yield break;
-                }
-
+                goEnded = false;
                 #endregion
 
-
-                Go();
             }
 
             yield return new WaitForEndOfFrame();
         }
     }
 
-    private void FirstGo()
-    {
-        // find the first alive player
-        // go from there.
 
-        // say the players at 0 and 1 are not alive, but player 2 is. Starting at 0 or 1 would cause the whole game to break.
+    /// <summary>
+    /// This function looks through all available fellers to determine who should go first.
+    /// </summary>
+    private void FirstGoChooser()
+    {
+        Debug.Log("Choosing the first player.");
 
         bool stopCheck = false;
-
-        for(int ticker = 0; stopCheck == true; ticker++)
+        for(int ticker = 0; stopCheck != true; ticker++)
         {
+            Debug.Log("Checking player " + ticker);
+
             GameObject obj = playerEntities[ticker];
             if (obj.GetComponentInChildren<PlayerStats>().isAlive == true)
             {
+                Debug.Log("Player number " + ticker + " is a suitable candidate for first go.");
                 stopCheck = true; // kills the loop
                 whoseGo = ticker;
+            }
+            else
+            {
+                Debug.Log("Player number " + ticker + "is not a suitable candidate for first go.");
             }
         }
 
@@ -182,6 +204,9 @@ public class LUX_TurnSystem : MonoBehaviour
 
     public void Go()
     {
+        Debug.Log("It is now player " + whoseGo + "'s turn.");
+        ChangeTurnText(currentTurn, whoseGo);
+
         ToggleFunc(whoseGo, true);
 
         PlayerStats currentStats = playerEntities[whoseGo].GetComponentInChildren<PlayerStats>();
@@ -189,6 +214,7 @@ public class LUX_TurnSystem : MonoBehaviour
 
         gridComp.SetUpGo(currentStats.gridPos);
     }
+    #endregion
 
     // LUX
 }

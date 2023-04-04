@@ -8,7 +8,6 @@ public class GameController : MetaStats
 {
     public int[,] startPlayerList = new int[3,1]; // takes two ints, the first number is the player number and the second number is the player's class. Current values are temporary
     public List<GameObject> alivePlayers;
-    private LUX_TurnSystem turnSystem;
     private LUX_Grid gridComp;
     [SerializeField] GameObject playerPrefab;
 
@@ -30,7 +29,6 @@ public class GameController : MetaStats
 
     private void Start()
     {
-        turnSystem = gameObject.GetComponent<LUX_TurnSystem>();
         gridComp = gameObject.GetComponent<LUX_Grid>();
         GameSetUp();
     }

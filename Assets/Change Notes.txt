@@ -1,7 +1,6 @@
-Current Version: 0.2.3
+Current Version: 0.3
 
-+ Worked on turn system. ETA for 1.0 is a few weeks max. I swear.
-+ Added a few tags
-! Changed the turn incrementation system
-+ Added UI
-! Changed the values in the playerstats of the basic pathfollower prefab.
++ The turnsystem is now completely functional!!!
+! Tidied up a few scripts.
++ Added some more stuff to the game completion checkpoints
++ Began on the 'CombatManager' script for the first half of 0.4 completion
