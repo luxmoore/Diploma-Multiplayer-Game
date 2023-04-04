@@ -7,7 +7,7 @@ public class PlayerStats : MonoBehaviour
     [Header("Meta")]
     [Tooltip("This signifies which player the following stats specifically affects.")]
     public int playerNum;
-    [Tooltip("Dead players do not contribute to the player count. Players die when their health reaches zero.")]
+    [Tooltip("Dead players do not contribute to the player go structure. Players die when their health reaches zero.")]
     public bool isAlive;
     [Tooltip("For personal flair! For a bit of pizzazz! For the hell of it! For additional entertainment!")]
     public string givenName;
@@ -33,8 +33,8 @@ public class PlayerStats : MonoBehaviour
     public int currentHealth;
     [Tooltip("The most damage that a strike can inflict.")]
     public int maxDamage;
-    [Tooltip("The least amount of damage that the player can inflict. To calculate damage dealt, a random value is interpolated between this and 1, which is then multiplied by the Max Damage variable above")]
-    public float currentDamageMinMultiple;
+    [Tooltip("The least amount of damage that the player can inflict.")]
+    public int minDamage;
 
     [Header("Affectors")]
     [Tooltip("All incoming affector values are multiplied by this.")]

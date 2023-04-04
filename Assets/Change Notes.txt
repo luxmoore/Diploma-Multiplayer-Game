@@ -1,6 +1,7 @@
-Current Version: 0.3
+Current Version: 0.3.1
 
-+ The turnsystem is now completely functional!!!
-! Tidied up a few scripts.
-+ Added some more stuff to the game completion checkpoints
-+ Began on the 'CombatManager' script for the first half of 0.4 completion
++ Added to the combat manager
+! Changed saved variables
++ Made the gridwidth and gridheight variables public
+/ Will need to change the pathfinding algorithm to both include a check for if there is somebody there and to also acknowledge when somebody is on a gridbit.
+/ Will need to change the pathfinding algorithm to stop checking after the energy limit is reached. Also to remove energy after movement.

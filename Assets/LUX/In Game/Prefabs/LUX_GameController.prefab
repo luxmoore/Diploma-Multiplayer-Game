@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1303578835986444480}
   - component: {fileID: 6701393834324026474}
   - component: {fileID: 4851414581703515478}
+  - component: {fileID: 4221693320802310451}
   m_Layer: 0
   m_Name: LUX_GameController
   m_TagString: GC
@@ -90,9 +91,12 @@ MonoBehaviour:
   pathList: []
   pathfindingObjective: {x: 0, y: 0}
   currentPathFollowingAgent: {fileID: 0}
+  gridWidth: 0
+  gridHeight: 0
   debugStartXY: {x: 0, y: 0}
   debugEndXY: {x: 0, y: 0}
   hitIt: 0
+  debugOut: 0
   debugMatBAD: {fileID: 0}
   debugMatGUY: {fileID: 0}
   debugMatPATH: {fileID: 0}
@@ -111,4 +115,23 @@ MonoBehaviour:
   playerEntities: []
   playerAmount: 0
   playerAmountAlive: 0
-  currentState: 0
+  currentTurn: 1
+  whoseGo: 0
+  goEnded: 0
+  printResults: 0
+--- !u!114 &4221693320802310451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352945940411781478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15968738abca47aca40a83bb8b0a46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  damMin: 0
+  damMax: 0
+  playerPos: {x: 0, y: 0}

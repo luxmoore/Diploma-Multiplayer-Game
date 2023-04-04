@@ -9,7 +9,10 @@ public class LUX_TurnSystem : MonoBehaviour
 
     private GameController gameController;
     private LUX_Grid gridComp;
+    private CombatManager combatManager;
+
     private FollowingText followingText;
+
     private TextMeshProUGUI movementEnergyDisplay;
     private TextMeshProUGUI attackEnergyDisplay;
     private TextMeshProUGUI healthDisplay;
@@ -35,6 +38,7 @@ public class LUX_TurnSystem : MonoBehaviour
 
         gameController = gameObject.GetComponent<GameController>();
         gridComp = gameController.GetComponent<LUX_Grid>();
+        combatManager = gameObject.GetComponent<CombatManager>();
 
         playerEntities = gameController.alivePlayers;
         playerAmountAlive = playerEntities.Count;
@@ -53,7 +57,6 @@ public class LUX_TurnSystem : MonoBehaviour
         movementEnergyDisplay = GameObject.FindGameObjectWithTag("MovementText").GetComponent<TextMeshProUGUI>();
         attackEnergyDisplay = GameObject.FindGameObjectWithTag("AttackText").GetComponent<TextMeshProUGUI>();
         healthDisplay = GameObject.FindGameObjectWithTag("HealthText").GetComponent<TextMeshProUGUI>();
-
         turnDisplay = GameObject.FindGameObjectWithTag("TurnText").GetComponent<TextMeshProUGUI>();
         goDisplay = GameObject.FindGameObjectWithTag("GoText").GetComponent<TextMeshProUGUI>();
 
@@ -211,6 +214,9 @@ public class LUX_TurnSystem : MonoBehaviour
 
         PlayerStats currentStats = playerEntities[whoseGo].GetComponentInChildren<PlayerStats>();
         ChangeStatText(currentStats.moveEnergy, currentStats.atckEnergy, currentStats.currentHealth, currentStats.maxHealth);
+
+        combatManager.damMin = currentStats.minDamage;
+        combatManager.damMax = currentStats.maxDamage;
 
         gridComp.SetUpGo(currentStats.gridPos);
     }

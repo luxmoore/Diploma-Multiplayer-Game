@@ -14,8 +14,7 @@ public class LUX_Grid : MonoBehaviour
     // Private
     private Vector3 x0y0Location = Vector3.zero;
     private int debugTicker = 0;
-    private int gridWidth;
-    private int gridHeight;
+
     private GameController gameController;
 
     // Public
@@ -31,6 +30,8 @@ public class LUX_Grid : MonoBehaviour
     [HideInInspector]
     public Vector2 pathfindingObjective = new Vector2();
     public GameObject currentPathFollowingAgent;
+    public int gridWidth;
+    public int gridHeight;
 
     [Header("Debug")]
     public Vector2 debugStartXY;
