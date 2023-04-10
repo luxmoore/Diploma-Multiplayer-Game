@@ -11,6 +11,7 @@ public class CombatManager : MonoBehaviour
     public int damMin; // changed by turn system
     public int damMax; // changed by turn system
     public Vector2 playerPos = Vector2.zero; // changed by turn system
+    public int playerNum = -69; // changed by turn system
 
     private LUX_Grid gridComp;
 
@@ -58,7 +59,7 @@ public class CombatManager : MonoBehaviour
 
         Vector2 playerAttacking = new Vector2(playerPos.x + xChange, playerPos.y + yChange);
 
-        if(playerAttacking.x == gridComp.gridWidth || playerAttacking.y == gridComp.gridHeight) // if out of bounds
+        if(playerAttacking.x >= gridComp.gridWidth || playerAttacking.y >= gridComp.gridHeight || playerAttacking.x == -1 || playerAttacking.y == -1) // if out of bounds
         {
             OutcomeMiss("because that spot was out of bounds.");
         }
@@ -75,11 +76,19 @@ public class CombatManager : MonoBehaviour
 
                 if(whoStats.currentHealth <= 0)
                 {
+                    if(debug) { Debug.Log("Player " + playerNum + " has killed and will kill again."); }
+
                     whoStats.isAlive = false;
 
                     whoGameObj.GetComponent<MeshRenderer>().enabled = false; //rip bozo
                     specificGridBit.playerOnThis = false;
-                    specificGridBit.playerNumOnThis = -1;
+                    specificGridBit.playerNumOnThis = -69;
+                }
+
+                if (debug)
+                {
+                    Debug.Log("Player number " + playerNum + " has attacked in the direction of " + direction + ".");
+                    Debug.Log("This attack has hit " + whoStats.playerNum + " for " + trueDam + ".");
                 }
             }
             else
@@ -92,6 +101,7 @@ public class CombatManager : MonoBehaviour
 
     private void OutcomeMiss(string reason)
     {
+        Debug.Log("The player missed " + reason);
 
     }
 
@@ -102,25 +112,34 @@ public class CombatManager : MonoBehaviour
     public void ReceiveSelectionAsUp()
     {
         string direction = "up";
+        if(debug) { DebugDirectional("up"); }
         ApplyDamage(direction);
     }
 
     public void ReceiveSelectionAsRight()
     {
         string direction = "right";
+        if (debug) { DebugDirectional("right"); }
         ApplyDamage(direction);
     }
 
     public void ReceiveSelectionAsDown()
     {
         string direction = "down";
+        if (debug) { DebugDirectional("down"); }
         ApplyDamage(direction);
     }
 
     public void ReceiveSelectionAsLeft()
     {
         string direction = "left";
+        if (debug) { DebugDirectional("left"); }
         ApplyDamage(direction);
+    }
+
+    private void DebugDirectional(string dir)
+    {
+        Debug.Log("Player has chosen to attack in the direction of " + dir);
     }
 
     #endregion

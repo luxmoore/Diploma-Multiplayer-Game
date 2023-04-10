@@ -11,9 +11,9 @@ public class UI_BigMan : MonoBehaviour
     public GameObject camCanvasGObj;
     [SerializeField] Canvas camCanvas;
 
-    public TextMeshProUGUI healthTMP;
-    public TextMeshProUGUI atkTMP;
-    public TextMeshProUGUI moveTMP;
+    private TextMeshProUGUI healthTMP;
+    private TextMeshProUGUI atkTMP;
+    private TextMeshProUGUI moveTMP;
 
     #endregion
 
@@ -22,13 +22,19 @@ public class UI_BigMan : MonoBehaviour
     private void Start()
     {
         camCanvas = camCanvas.GetComponent<Canvas>();
+
+        moveTMP = GameObject.FindGameObjectWithTag("MovementText").GetComponent<TextMeshProUGUI>();
+        atkTMP = GameObject.FindGameObjectWithTag("AttackText").GetComponent<TextMeshProUGUI>();
+        healthTMP = GameObject.FindGameObjectWithTag("HealthText").GetComponent<TextMeshProUGUI>();
+        //turnDisplay = GameObject.FindGameObjectWithTag("TurnText").GetComponent<TextMeshProUGUI>();
+        //goDisplay = GameObject.FindGameObjectWithTag("GoText").GetComponent<TextMeshProUGUI>();
     }
 
-    private void ChangeOver(int movementEnergy, int attackEnergy, int health)
+    public void ChangeOver(int movementEnergy, int attackEnergy, int health, int maxHealth)
     {
         atkTMP.SetText("ATK - " + attackEnergy.ToString()); atkTMP.ForceMeshUpdate();
         moveTMP.SetText("MVM - " + movementEnergy.ToString()); moveTMP.ForceMeshUpdate();
-        healthTMP.SetText("HTP - " + health.ToString()); healthTMP.ForceMeshUpdate();
+        healthTMP.SetText("HTP - " + health.ToString() + "/" + maxHealth.ToString()); healthTMP.ForceMeshUpdate();
     }
     #endregion
 }

@@ -7,6 +7,10 @@ public class LUX_PathFollower : MonoBehaviour
     public GameObject gameControllerGameObj;
     private GameController gameController;
     private LUX_Grid gridComp;
+    private PlayerStats playerRepresentative;
+    private LUX_GridClicker gridClicker;
+    private UI_BigMan UIman;
+
     private enum STATE { STATE_MOVE, STATE_IDLE };
     private Transform moveThis;
 
@@ -20,6 +24,9 @@ public class LUX_PathFollower : MonoBehaviour
         gameController = gameControllerGameObj.GetComponent<GameController>();
         gridComp = gameController.GetComponent<LUX_Grid>();
         moveThis = gameObject.GetComponent<Transform>();
+        playerRepresentative = gameObject.GetComponentInChildren<PlayerStats>();
+        gridClicker = gameObject.GetComponentInChildren<LUX_GridClicker>();
+        UIman = gameControllerGameObj.GetComponent<UI_BigMan>();
     }
 
     private void Update()
@@ -56,7 +63,10 @@ public class LUX_PathFollower : MonoBehaviour
             stepsTaken = 1;
         }
 
-        while( stepsTaken != totalSteps )
+        pathList[0].GetComponent<LUX_GridBit>().playerOnThis = false;
+        pathList[0].GetComponent<LUX_GridBit>().playerNumOnThis = -69;
+
+        while ( stepsTaken != totalSteps )
         {
             // set currentPos as last goal's vector2
             // set the next goal to pathList[stepstaken]
@@ -71,20 +81,25 @@ public class LUX_PathFollower : MonoBehaviour
 
             moveThis.position = nextGoal_V3;
 
+            playerRepresentative.moveEnergy = playerRepresentative.moveEnergy - 1;
+            playerRepresentative.gridPos = nextGoal_V2;
+
+            gridClicker.energy = playerRepresentative.moveEnergy;
+            UIman.ChangeOver(playerRepresentative.moveEnergy, playerRepresentative.atckEnergy, playerRepresentative.currentHealth, playerRepresentative.maxHealth);
+
             stepsTaken++;
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
-        gameObject.GetComponentInChildren<PlayerStats>().gridPos = nextGoal_V2; Debug.Log("Updated recorded position to " + nextGoal_V2);
+        pathList[pathList.Count - 1].GetComponent<LUX_GridBit>().playerOnThis = true;
+        pathList[pathList.Count - 1].GetComponent<LUX_GridBit>().playerNumOnThis = gameObject.GetComponentInChildren<PlayerStats>().playerNum;
+
+        playerRepresentative.gridPos = nextGoal_V2; Debug.Log("Updated recorded position to " + nextGoal_V2);
         gameControllerGameObj.GetComponent<LUX_Grid>().SetAllVisitedNegative(nextGoal_V2);
         gameControllerGameObj.GetComponent<LUX_Grid>().SetDistance(nextGoal_V2);
 
-        StartCoroutine(STATE_IDLE());
-        yield return new WaitForEndOfFrame();
-    }
+        gameControllerGameObj.GetComponent<CombatManager>().playerPos = nextGoal_V2;
 
-    IEnumerator STATE_IDLE()
-    {
         yield return new WaitForEndOfFrame();
     }
 

@@ -84,14 +84,20 @@ public class LUX_TurnSystem : MonoBehaviour
     #region Change UI Text
     private void ChangeStatText(int movementEnergy, int attackEnergy, int currentHealth, int maxHealth)
     {
+        Debug.Log("Attempting to change the UI text for movement energy.");
         movementEnergyDisplay.SetText("MVM - " + movementEnergy.ToString());
         movementEnergyDisplay.ForceMeshUpdate();
+        Debug.Log("Successfully changed the UI text for movement energy to " + movementEnergy);
 
+        Debug.Log("Attempting to change the UI text for attacking energy.");
         attackEnergyDisplay.SetText("ATK - " + attackEnergy.ToString());
         attackEnergyDisplay.ForceMeshUpdate();
+        Debug.Log("Successfully changed the UI text for the attacking energy to " + attackEnergy);
 
+        Debug.Log("Attempting to change the UI text for health / maxhealth");
         healthDisplay.SetText("HTP - " + currentHealth + "/" + maxHealth);
         healthDisplay.ForceMeshUpdate();
+        Debug.Log("Successfully changed the UI text for health / maxhealth to " + currentHealth + "/" + maxHealth);
     }
 
     private void ChangeTurnText(int turnAmount, int goAmount)
@@ -217,6 +223,11 @@ public class LUX_TurnSystem : MonoBehaviour
 
         combatManager.damMin = currentStats.minDamage;
         combatManager.damMax = currentStats.maxDamage;
+
+        combatManager.damMax = currentStats.maxDamage;
+        combatManager.damMin = currentStats.minDamage;
+        combatManager.playerPos = currentStats.gridPos;
+        combatManager.playerNum = currentStats.playerNum;
 
         gridComp.SetUpGo(currentStats.gridPos);
     }
