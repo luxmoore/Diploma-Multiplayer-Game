@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    #region Functions
+    #region Variables
 
     public bool debug;
 
@@ -74,22 +74,57 @@ public class CombatManager : MonoBehaviour
                 PlayerStats whoStats = whoGameObj.GetComponentInChildren<PlayerStats>();
                 whoStats.currentHealth = whoStats.currentHealth - trueDam;
 
-                if(whoStats.currentHealth <= 0)
-                {
-                    if(debug) { Debug.Log("Player " + playerNum + " has killed and will kill again."); }
-
-                    whoStats.isAlive = false;
-
-                    whoGameObj.GetComponent<MeshRenderer>().enabled = false; //rip bozo
-                    specificGridBit.playerOnThis = false;
-                    specificGridBit.playerNumOnThis = -69;
-                }
-
                 if (debug)
                 {
                     Debug.Log("Player number " + playerNum + " has attacked in the direction of " + direction + ".");
                     Debug.Log("This attack has hit " + whoStats.playerNum + " for " + trueDam + ".");
                 }
+
+                #region HIT
+                int whoHealth = whoStats.currentHealth;
+                int tempHealthVar = whoHealth;
+                whoHealth = whoHealth - trueDam;
+               
+                if(debug) { Debug.Log("Player number " + who + " has taken " + trueDam + " damage."); }
+                #endregion
+
+                bool didKill = false;
+
+                #region KILL
+                if (whoStats.currentHealth <= 0)
+                {
+                    if (debug) { Debug.Log("Player " + playerNum + " has killed and will kill again."); }
+
+                    didKill = true;
+                    whoStats.isAlive = false;
+
+                    whoGameObj.GetComponent<MeshRenderer>().enabled = false; //rip bozo
+                    specificGridBit.playerOnThis = false;
+                    specificGridBit.playerNumOnThis = -69;
+
+                    gameObject.GetComponent<LUX_Grid>().SetAllVisitedNegative(playerPos);
+                    gameObject.GetComponent<LUX_Grid>().SetDistance(playerPos);
+                }
+                #endregion
+
+                #region ACCREDATION
+
+                PlayerStats attacker = gameObject.GetComponent<GameController>().alivePlayers[playerNum].GetComponentInChildren<PlayerStats>();
+
+                if(didKill)
+                {
+                    // only give the players the old current health. Damage taken in excess of health will not count.
+
+                    attacker.totalDamage = attacker.totalDamage + tempHealthVar;
+                    whoStats.totalHealthLost = whoStats.totalHealthLost + tempHealthVar;
+                }
+                else
+                {
+                    attacker.totalDamage = attacker.totalDamage + trueDam;
+                    whoStats.totalHealthLost = whoStats.totalHealthLost + trueDam;
+                }
+
+                #endregion
             }
             else
             {
@@ -111,30 +146,26 @@ public class CombatManager : MonoBehaviour
 
     public void ReceiveSelectionAsUp()
     {
-        string direction = "up";
         if(debug) { DebugDirectional("up"); }
-        ApplyDamage(direction);
+        ApplyDamage("up");
     }
 
     public void ReceiveSelectionAsRight()
     {
-        string direction = "right";
         if (debug) { DebugDirectional("right"); }
-        ApplyDamage(direction);
+        ApplyDamage("right");
     }
 
     public void ReceiveSelectionAsDown()
     {
-        string direction = "down";
         if (debug) { DebugDirectional("down"); }
-        ApplyDamage(direction);
+        ApplyDamage("down");
     }
 
     public void ReceiveSelectionAsLeft()
     {
-        string direction = "left";
         if (debug) { DebugDirectional("left"); }
-        ApplyDamage(direction);
+        ApplyDamage("left");
     }
 
     private void DebugDirectional(string dir)

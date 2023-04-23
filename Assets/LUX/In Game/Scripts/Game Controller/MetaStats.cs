@@ -21,7 +21,7 @@ public class MetaStats : MonoBehaviour
     [Tooltip("The amount of players in the game")]
     public int playerAmount;
     [Tooltip("The order in which players go in a turn.")]
-    public List<int> playerTurnStructure;
+    public int[] playerTurnStructure;
 
     // LUX
 }

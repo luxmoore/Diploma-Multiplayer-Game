@@ -31,7 +31,6 @@ public class LUX_GridClicker : MonoBehaviour
     private void Start()
     {
         ps = gameObject.GetComponent<PlayerStats>();
-        energy = ps.moveEnergy;
 
         GameObject gcObj = GameObject.FindWithTag("GC");
         gc = gcObj.GetComponent<GameController>();
@@ -56,10 +55,10 @@ public class LUX_GridClicker : MonoBehaviour
     {
         // cast out a ray to check what the player is mousing over
 
-        cam = Camera.main;
-
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        energy = ps.moveEnergy;
 
         if (Physics.Raycast(ray, out hit))
         {

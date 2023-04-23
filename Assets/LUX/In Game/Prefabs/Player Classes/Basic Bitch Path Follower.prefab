@@ -172,9 +172,9 @@ MonoBehaviour:
   moveEnergy: 3
   atckEnergy: 3
   maxHealth: 100
-  currentHealth: 35
-  maxDamage: 0
-  currentDamageMinMultiple: 0
+  currentHealth: 100
+  maxDamage: 10
+  minDamage: 40
   affectorInMultiples: 0
   affectorsInflicted: []
   affectorOutMultiples: 0

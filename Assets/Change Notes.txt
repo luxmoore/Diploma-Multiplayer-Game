@@ -4,11 +4,10 @@ Current Version: 0.3.2
 
 Change Notes:
 
-+ Changed the pathfinding algorithm to both include a check for if there is somebody there 
-+ The 'LUX_Grid' script now will also acknowledge when somebody is on a gridbit. This is essential for interplayer interaction.
-+ Dramatically increased the amount of information in my change notes, since thats the only place I constantly update each time.
-+ The player is now actually limited by their energy
-+ The UI updates as the player moves to show the current energy count of the player
++ Players are now able to attack eachother and deal damage
++ On killing, the pathfinding algorithm re-evaulates the grid
++ The player's total damage and total health lost are updated by the game
++ Added the start for the end game scenario
 
 -----------
 
@@ -18,13 +17,14 @@ Immediate Goals and Suggestions:
 
 Current Known Issues:
 ! For some reason, there is an extra step when attempting to move a player diagonally D+L. This exclusively happens when the first selection is D+L from the player.
+! Players may be unable to reach eachother by placement on the grid
 
 -----------
 
-Current Date: 10/04/2023
+Current Date: 23/04/2023
 
 Assess 1 Submission Date - 29/04/2023
-Days left to finish - 19 
+Days left to finish - 6 
 
 Assess 2 Submission Date - 16/06/2023
-Days left to finish - 67
+Days left to finish - 54

@@ -210,6 +210,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c870a2a123b1f4c4ea4764a40071bba2, type: 2}
     - target: {fileID: 6701393834324026474, guid: 67fef8261d9e3d24a98443f788921b88,
         type: 3}
+      propertyPath: debugOut
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6701393834324026474, guid: 67fef8261d9e3d24a98443f788921b88,
+        type: 3}
       propertyPath: debugMatBAD
       value: 
       objectReference: {fileID: 2100000, guid: 4af9fa688cd3d19489cd06c37d506b13, type: 2}

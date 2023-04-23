@@ -143,6 +143,7 @@ public class LUX_Grid : MonoBehaviour
                     if (debugOut == true) { Debug.Log("Placed player number " + ticker + " at position " + randX + ", " + randY + " after " + tries + " attempt(s)"); }
 
                     selectedGridBit.playerOnThis = true;
+                    selectedGridBit.playerNumOnThis = gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().playerNum;
 
                     cont = false;
                 }

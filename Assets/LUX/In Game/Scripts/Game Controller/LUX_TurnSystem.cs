@@ -27,6 +27,8 @@ public class LUX_TurnSystem : MonoBehaviour
     public int whoseGo = 0;
     public bool goEnded = false;
     public bool printResults;
+    public int[] energyAtkIndexer;
+    public int[] energyMoveIndexer;
 
     #endregion
 
@@ -47,11 +49,19 @@ public class LUX_TurnSystem : MonoBehaviour
 
         followingText = GameObject.FindWithTag("FollowingText").GetComponent<FollowingText>();
 
+        energyAtkIndexer = new int[playerEntities.Count];
+        energyMoveIndexer = new int[playerEntities.Count];
 
         for (int ticker = 0; ticker < playerAmountAlive; ticker++) // this turns off everybody's functionality.
         {
             ToggleFunc(ticker, false);
             Debug.Log("Player number " + ticker + " has had their functionality removed for initialization.");
+
+            PlayerStats jimbo = playerEntities[ticker].GetComponentInChildren<PlayerStats>();
+
+            energyAtkIndexer[ticker] = jimbo.atckEnergy;
+            energyMoveIndexer[ticker] = jimbo.moveEnergy;
+            Debug.Log("Player number " + ticker + "'s energy has been recorded as: Movement = " + jimbo.moveEnergy + ", Attack = " + jimbo.atckEnergy);
         }
 
         movementEnergyDisplay = GameObject.FindGameObjectWithTag("MovementText").GetComponent<TextMeshProUGUI>();
@@ -124,7 +134,6 @@ public class LUX_TurnSystem : MonoBehaviour
             {
                 ToggleFunc(whoseGo, false);
                 Debug.Log("Player number " + whoseGo + "has ended their turn.");
-
                 
                 playerEntities = gameController.alivePlayers;
 
@@ -228,6 +237,9 @@ public class LUX_TurnSystem : MonoBehaviour
         combatManager.damMin = currentStats.minDamage;
         combatManager.playerPos = currentStats.gridPos;
         combatManager.playerNum = currentStats.playerNum;
+
+        currentStats.moveEnergy = energyMoveIndexer[currentStats.playerNum];
+        currentStats.atckEnergy = energyAtkIndexer[currentStats.playerNum];
 
         gridComp.SetUpGo(currentStats.gridPos);
     }
