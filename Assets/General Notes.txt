@@ -23,10 +23,10 @@ Goals for 0.6.0 completion:
 - Able to save the game
 - Able to load a saved game
 
-Goals for 1.0.0 completion:
+Goals for 0.7.0 completion:
 - Final call for checking that all of the boxes are ticked for assessment
 
-Goals for 1.0.1 completion:
+Goals for 1.0.0 completion:
 - Passed the assessment.
 
 Goals for 1.1.0 completion:

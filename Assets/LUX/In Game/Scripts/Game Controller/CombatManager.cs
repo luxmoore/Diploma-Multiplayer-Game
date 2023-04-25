@@ -35,7 +35,7 @@ public class CombatManager : MonoBehaviour
 
         #endregion
 
-        #region Apply Damage
+        #region Attempt to Apply Damage
 
         int xChange = 0;
         int yChange = 0;
@@ -80,6 +80,8 @@ public class CombatManager : MonoBehaviour
                     Debug.Log("This attack has hit " + whoStats.playerNum + " for " + trueDam + ".");
                 }
 
+                bool didKill = false;
+
                 #region HIT
                 int whoHealth = whoStats.currentHealth;
                 int tempHealthVar = whoHealth;
@@ -87,8 +89,6 @@ public class CombatManager : MonoBehaviour
                
                 if(debug) { Debug.Log("Player number " + who + " has taken " + trueDam + " damage."); }
                 #endregion
-
-                bool didKill = false;
 
                 #region KILL
                 if (whoStats.currentHealth <= 0)
@@ -104,6 +104,9 @@ public class CombatManager : MonoBehaviour
 
                     gameObject.GetComponent<LUX_Grid>().SetAllVisitedNegative(playerPos);
                     gameObject.GetComponent<LUX_Grid>().SetDistance(playerPos);
+
+                    gameObject.GetComponent<GameFinisher>().deadFellers++;
+                    gameObject.GetComponent<GameFinisher>().CheckForEndQualifications();
                 }
                 #endregion
 

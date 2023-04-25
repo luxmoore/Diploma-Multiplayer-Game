@@ -4,10 +4,6 @@ Current Version: 0.3.2
 
 Change Notes:
 
-+ Players are now able to attack eachother and deal damage
-+ On killing, the pathfinding algorithm re-evaulates the grid
-+ The player's total damage and total health lost are updated by the game
-+ Added the start for the end game scenario
 
 -----------
 
@@ -17,7 +13,7 @@ Immediate Goals and Suggestions:
 
 Current Known Issues:
 ! For some reason, there is an extra step when attempting to move a player diagonally D+L. This exclusively happens when the first selection is D+L from the player.
-! Players may be unable to reach eachother by placement on the grid
+! Players may be unable to reach eachother by placement on the grid thanks to generation not accounting for player to player accessability
 
 -----------
 
