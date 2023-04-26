@@ -3937,9 +3937,15 @@ MonoBehaviour:
   debugOut: 1
   deadFellers: 0
   totalFellers: -69
-  playerScores: 
+  playerScores: []
   uiCanvasToDisable: {fileID: 2036575128}
   uiCanvasToEnable: {fileID: 1910477295}
+  firstName: {fileID: 1562780687}
+  firstScore: {fileID: 454323807}
+  secondName: {fileID: 581325509}
+  secondScore: {fileID: 638797456}
+  thirdName: {fileID: 1784418202}
+  thirdScore: {fileID: 705046860}
   uiButtonToEnable: {fileID: 836604557}
 --- !u!1 &1910477295
 GameObject:

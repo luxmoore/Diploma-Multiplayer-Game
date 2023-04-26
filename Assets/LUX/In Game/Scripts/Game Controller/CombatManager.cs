@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
@@ -27,120 +28,133 @@ public class CombatManager : MonoBehaviour
 
     private void ApplyDamage(string direction)
     {
-        #region Generate Damage Amount
-
-        float tempDam = Random.Range(damMin, damMax);
-        int trueDam = Mathf.RoundToInt(tempDam);
-        if (debug) { Debug.Log("Used " + damMin + " and " + damMax + " to generate " + tempDam + " (rounded to " + trueDam + ")"); }
-
-        #endregion
-
-        #region Attempt to Apply Damage
-
-        int xChange = 0;
-        int yChange = 0;
-
-        if(direction == "up")
+        if(gameObject.GetComponent<GameController>().alivePlayers[playerNum].GetComponentInChildren<PlayerStats>().atckEnergy != 0)
         {
-            yChange = 1;
-        }
-        else if(direction == "right")
-        {
-            xChange = 1;
-        }
-        else if(direction == "down")
-        {
-            yChange = -1;
-        }
-        else if(direction == "left")
-        {
-            xChange = -1;
-        }
+            #region Deduct Energy
 
-        Vector2 playerAttacking = new Vector2(playerPos.x + xChange, playerPos.y + yChange);
+            gameObject.GetComponent<GameController>().alivePlayers[playerNum].GetComponentInChildren<PlayerStats>().atckEnergy--;
+            GameObject.FindGameObjectWithTag("AttackText").GetComponent<TextMeshProUGUI>().SetText("ATK - " + gameObject.GetComponent<GameController>().alivePlayers[playerNum].GetComponentInChildren<PlayerStats>().atckEnergy.ToString());
 
-        if(playerAttacking.x >= gridComp.gridWidth || playerAttacking.y >= gridComp.gridHeight || playerAttacking.x == -1 || playerAttacking.y == -1) // if out of bounds
-        {
-            OutcomeMiss("because that spot was out of bounds.");
-        }
-        else
-        {
-            LUX_GridBit specificGridBit = gridComp.localGridArray[(int)playerAttacking.x, (int)playerAttacking.y].GetComponent<LUX_GridBit>();
+            #endregion
 
-            if (specificGridBit.playerOnThis == true)
+            #region Generate Damage Amount
+
+            float tempDam = Random.Range(damMin, damMax);
+            int trueDam = Mathf.RoundToInt(tempDam);
+            if (debug) { Debug.Log("Used " + damMin + " and " + damMax + " to generate " + tempDam + " (rounded to " + trueDam + ")"); }
+
+            #endregion
+
+            #region Attempt to Apply Damage
+
+            int xChange = 0;
+            int yChange = 0;
+
+            if (direction == "up")
             {
-                int who = specificGridBit.playerNumOnThis;
-                GameObject whoGameObj = gameObject.GetComponent<GameController>().alivePlayers[who];
-                PlayerStats whoStats = whoGameObj.GetComponentInChildren<PlayerStats>();
-                whoStats.currentHealth = whoStats.currentHealth - trueDam;
+                yChange = 1;
+            }
+            else if (direction == "right")
+            {
+                xChange = 1;
+            }
+            else if (direction == "down")
+            {
+                yChange = -1;
+            }
+            else if (direction == "left")
+            {
+                xChange = -1;
+            }
 
-                if (debug)
-                {
-                    Debug.Log("Player number " + playerNum + " has attacked in the direction of " + direction + ".");
-                    Debug.Log("This attack has hit " + whoStats.playerNum + " for " + trueDam + ".");
-                }
+            Vector2 playerAttacking = new Vector2(playerPos.x + xChange, playerPos.y + yChange);
 
-                bool didKill = false;
-
-                #region HIT
-                int whoHealth = whoStats.currentHealth;
-                int tempHealthVar = whoHealth;
-                whoHealth = whoHealth - trueDam;
-               
-                if(debug) { Debug.Log("Player number " + who + " has taken " + trueDam + " damage."); }
-                #endregion
-
-                #region KILL
-                if (whoStats.currentHealth <= 0)
-                {
-                    if (debug) { Debug.Log("Player " + playerNum + " has killed and will kill again."); }
-
-                    didKill = true;
-                    whoStats.isAlive = false;
-
-                    whoGameObj.GetComponent<MeshRenderer>().enabled = false; //rip bozo
-                    specificGridBit.playerOnThis = false;
-                    specificGridBit.playerNumOnThis = -69;
-
-                    gameObject.GetComponent<LUX_Grid>().SetAllVisitedNegative(playerPos);
-                    gameObject.GetComponent<LUX_Grid>().SetDistance(playerPos);
-
-                    gameObject.GetComponent<GameFinisher>().deadFellers++;
-                    gameObject.GetComponent<GameFinisher>().CheckForEndQualifications();
-                }
-                #endregion
-
-                #region ACCREDATION
-
-                PlayerStats attacker = gameObject.GetComponent<GameController>().alivePlayers[playerNum].GetComponentInChildren<PlayerStats>();
-
-                if(didKill)
-                {
-                    // only give the players the old current health. Damage taken in excess of health will not count.
-
-                    attacker.totalDamage = attacker.totalDamage + tempHealthVar;
-                    whoStats.totalHealthLost = whoStats.totalHealthLost + tempHealthVar;
-                }
-                else
-                {
-                    attacker.totalDamage = attacker.totalDamage + trueDam;
-                    whoStats.totalHealthLost = whoStats.totalHealthLost + trueDam;
-                }
-
-                #endregion
+            if (playerAttacking.x >= gridComp.gridWidth || playerAttacking.y >= gridComp.gridHeight || playerAttacking.x == -1 || playerAttacking.y == -1) // if out of bounds
+            {
+                OutcomeMiss("because that spot was out of bounds.");
             }
             else
             {
-                OutcomeMiss("because nobody was on that spot.");
+                LUX_GridBit specificGridBit = gridComp.localGridArray[(int)playerAttacking.x, (int)playerAttacking.y].GetComponent<LUX_GridBit>();
+
+                if (specificGridBit.playerOnThis == true)
+                {
+                    int who = specificGridBit.playerNumOnThis;
+                    GameObject whoGameObj = gameObject.GetComponent<GameController>().alivePlayers[who];
+                    PlayerStats whoStats = whoGameObj.GetComponentInChildren<PlayerStats>();
+                    whoStats.currentHealth = whoStats.currentHealth - trueDam;
+
+                    if (debug)
+                    {
+                        Debug.Log("Player number " + playerNum + " has attacked in the direction of " + direction + ".");
+                        Debug.Log("This attack has hit " + whoStats.playerNum + " for " + trueDam + ".");
+                    }
+
+                    bool didKill = false;
+
+                    #region HIT
+                    int whoHealth = whoStats.currentHealth;
+                    int tempHealthVar = whoHealth;
+                    whoHealth = whoHealth - trueDam;
+
+                    if (debug) { Debug.Log("Player number " + who + " has taken " + trueDam + " damage."); }
+                    #endregion
+
+                    #region KILL
+                    if (whoStats.currentHealth <= 0)
+                    {
+                        if (debug) { Debug.Log("Player " + playerNum + " has killed and will kill again."); }
+
+                        didKill = true;
+                        whoStats.isAlive = false;
+
+                        whoGameObj.GetComponent<MeshRenderer>().enabled = false; //rip bozo
+                        specificGridBit.playerOnThis = false;
+                        specificGridBit.playerNumOnThis = -69;
+
+                        gameObject.GetComponent<LUX_Grid>().SetAllVisitedNegative(playerPos);
+                        gameObject.GetComponent<LUX_Grid>().SetDistance(playerPos);
+
+                        gameObject.GetComponent<GameFinisher>().deadFellers++;
+                        gameObject.GetComponent<GameFinisher>().CheckForEndQualifications();
+                    }
+                    #endregion
+
+                    #region ACCREDATION
+
+                    PlayerStats attacker = gameObject.GetComponent<GameController>().alivePlayers[playerNum].GetComponentInChildren<PlayerStats>();
+
+                    if (didKill)
+                    {
+                        // only give the players the old current health. Damage taken in excess of health will not count.
+
+                        attacker.totalDamage = attacker.totalDamage + tempHealthVar;
+                        whoStats.totalHealthLost = whoStats.totalHealthLost + tempHealthVar;
+                    }
+                    else
+                    {
+                        attacker.totalDamage = attacker.totalDamage + trueDam;
+                        whoStats.totalHealthLost = whoStats.totalHealthLost + trueDam;
+                    }
+
+                    #endregion
+                }
+                else
+                {
+                    OutcomeMiss("because nobody was on that spot.");
+                }
             }
+            #endregion
         }
-        #endregion
+        else
+        {
+            OutcomeMiss("because you had no energy.");
+        }
     }
 
     private void OutcomeMiss(string reason)
     {
         Debug.Log("The player missed " + reason);
-
     }
 
     #endregion

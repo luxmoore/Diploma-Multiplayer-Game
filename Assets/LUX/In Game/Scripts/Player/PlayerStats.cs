@@ -10,11 +10,15 @@ public class PlayerStats : MonoBehaviour
     [Tooltip("Dead players do not contribute to the player go structure. Players die when their health reaches zero.")]
     public bool isAlive;
     [Tooltip("For personal flair! For a bit of pizzazz! For the hell of it! For additional entertainment!")]
-    public string givenName;
+    public string givenName = "Jimbo Jones"; // default name
 
     [Header("Tracked Stats")]
+    [Tooltip("This is used exclusively by the combat manager and game finisher.")]
     public int totalDamage;
+    [Tooltip("This is used exclusively by the combat manager and game finisher.")]
     public int totalHealthLost;
+    [Tooltip("This is used  and calculated exclusively at the end of the game.")]
+    public int score;
 
     [Header("Grid")]
     [Tooltip("The location that this player takes up on the grid.")]
@@ -35,16 +39,6 @@ public class PlayerStats : MonoBehaviour
     public int maxDamage;
     [Tooltip("The least amount of damage that the player can inflict.")]
     public int minDamage;
-
-    [Header("Affectors")]
-    [Tooltip("All incoming affector values are multiplied by this.")]
-    public float affectorInMultiples;
-    [Tooltip("The list of affectors currently on this player.")]
-    public List<string> affectorsInflicted;
-    [Tooltip("All outgoing affector values are multiplied by this.")]
-    public float affectorOutMultiples;
-    [Tooltip("The list of affectors currently inflicted by this player on strike.")]
-    public List<string> affectorsInflicting;
 
     // LUX
 }

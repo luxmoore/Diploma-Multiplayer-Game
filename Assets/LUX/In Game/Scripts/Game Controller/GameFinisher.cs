@@ -12,8 +12,7 @@ public class GameFinisher : MonoBehaviour
 
     public int deadFellers = 0;
     public int totalFellers = -69;
-    public List<int> playerScores;
-    public List<int> indexer;
+    public List<PlayerStats> playerScores = new List<PlayerStats>();
 
     public GameObject uiCanvasToDisable;
     public GameObject uiCanvasToEnable;
@@ -31,6 +30,7 @@ public class GameFinisher : MonoBehaviour
     private void Start()
     {
         totalFellers = gameObject.GetComponent<GameController>().alivePlayers.Count;
+        if (debugOut) { Debug.Log("GameFinisher script has detected a total of " + totalFellers + " in the game."); }
         gameController= gameObject.GetComponent<GameController>();
     }
     #endregion
@@ -48,31 +48,65 @@ public class GameFinisher : MonoBehaviour
         }
     }
 
+    int SortPlayerFunc(PlayerStats a, PlayerStats b) 
+    {
+        if(a.score < b.score)
+        {
+            return +1;
+        }
+        else if(a.score > b.score)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public void AddPlayerScoreToList(PlayerStats data)
+    {
+        if(playerScores.Contains(data))
+        {
+            return;
+        }
+        else
+        {
+            playerScores.Add(data);
+        }
+    }
+
     IEnumerator EndGame()
     {
-        // kill all function
-        foreach(GameObject feller in gameController.alivePlayers)
+        // kill all function and calculate all player's "score"
+        foreach (GameObject feller in gameController.alivePlayers)
         {
-            feller.SetActive(false);
+            feller.GetComponent<MeshRenderer>().enabled = false;
+            feller.GetComponentInChildren<LUX_GridClicker>().enabled = false;
+
+            PlayerStats fellerStats = feller.GetComponentInChildren<PlayerStats>();
+            if (debugOut) { Debug.Log("Adding player number " + fellerStats.playerNum + " who has the name of " + fellerStats.givenName + " who has dealt and received " + fellerStats.totalDamage + "/" + fellerStats.totalHealthLost + " damage."); }
+            playerScores.Add(fellerStats);
+            fellerStats.score = fellerStats.totalDamage - fellerStats.totalHealthLost;
         }
 
         // kill all UI
         uiCanvasToDisable.SetActive(false);
 
-        // calculate all player's "score"
-        foreach (GameObject feller in gameController.alivePlayers)
-        {
-            PlayerStats fellerStats = feller.GetComponentInChildren<PlayerStats>();
-            playerScores[fellerStats.playerNum] = fellerStats.totalDamage - fellerStats.totalHealthLost;
-        }
+        // sort the players scores and change the text to reflect the players
+        playerScores.Sort(SortPlayerFunc);
 
-        // sort the players scores
-        playerScores.Sort();
+        firstName.SetText(playerScores[0].givenName); firstName.ForceMeshUpdate();
+        firstScore.SetText(playerScores[0].score.ToString()); firstScore.ForceMeshUpdate();
+
+        secondName.SetText(playerScores[1].givenName); secondName.ForceMeshUpdate();
+        secondScore.SetText(playerScores[1].score.ToString()); secondScore.ForceMeshUpdate();
+
+        thirdName.SetText(playerScores[2].givenName); thirdName.ForceMeshUpdate();
+        thirdScore.SetText(playerScores[2].score.ToString()); thirdScore.ForceMeshUpdate();
 
         // enable screen showing the top 3 players
         uiCanvasToEnable.SetActive(true);
-
-        // change the text to reflect the players
 
         // after a few seconds enable the continue button
         yield return new WaitForSecondsRealtime(3);

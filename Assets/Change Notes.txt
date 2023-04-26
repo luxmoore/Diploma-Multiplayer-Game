@@ -4,12 +4,16 @@ Current Version: 0.3.2
 
 Change Notes:
 
++ Has an end to the game
++ Sorts the player's scores at the end of the game
++ Displays those player's scores at the final screen.
++ Players no longer have infinite attack energy
 
 -----------
 
 Immediate Goals and Suggestions:
 ! Could change the pathfinding algorithm to stop checking after the energy limit is reached. (Less checks on grid step update, which happens often)
-! Display player names above/around the players. Also something to show what player is being controlled.
+!! Display player names above/around the players. Also something to show what player is being controlled.
 
 Current Known Issues:
 ! For some reason, there is an extra step when attempting to move a player diagonally D+L. This exclusively happens when the first selection is D+L from the player.
