@@ -28,7 +28,18 @@ public class MetaStats : MonoBehaviour
     public int[] playerHealth;
     [Tooltip("The class of each player.")]
     public int[] playerClass; // INOPERATIONAL
+    [Tooltip("The amount of damage that a player has dealt.")]
+    public int[] playerDamageDealt;
+    [Tooltip("The amount of damage that a player has taken.")]
+    public int[] playerHealthLost;
 
+    [Header("Turn")]
+    [Tooltip("The current turn")]
+    public int[] turnAmount;
+    [Tooltip("The current go")]
+    public int[] turnGoAmount;
+    [Tooltip("The current amount of energy of player whose turn it is. 0 = movement, 1 = attack.")]
+    public int[] playerEnergy;
 
     // LUX
 }

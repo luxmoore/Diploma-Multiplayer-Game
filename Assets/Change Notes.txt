@@ -1,13 +1,14 @@
-Current Version: 0.3.2
+Current Version: 0.4.1
 
 -----------
 
 Change Notes:
 
-+ Has an end to the game
-+ Sorts the player's scores at the end of the game
-+ Displays those player's scores at the final screen.
-+ Players no longer have infinite attack energy
++ Added variables to the MetaStats.cs for post gamestart initialization
++ Added menu scenes folder with the main menu and lobby scenes. These were added to the build.
+! The sample scene is now the main game thing. Also there is only a max of three players currently.
+$$$ well that was fucking easy
++ Added full menu functionality. Heres to the 'Crunch' passive perk we all get when we develop games. Not sure I should've made my build around it but it is what it is.
 
 -----------
 
@@ -21,10 +22,10 @@ Current Known Issues:
 
 -----------
 
-Current Date: 23/04/2023
+Current Date: 26/04/2023
 
 Assess 1 Submission Date - 29/04/2023
-Days left to finish - 6 
+Days left to finish - 3.
 
 Assess 2 Submission Date - 16/06/2023
-Days left to finish - 54
+Days left to finish - 50
