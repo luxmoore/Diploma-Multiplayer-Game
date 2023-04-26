@@ -1,20 +1,18 @@
-Current Version: 0.4.1
+Current Version: 0.5.1
 
 -----------
 
 Change Notes:
 
-+ Added variables to the MetaStats.cs for post gamestart initialization
-+ Added menu scenes folder with the main menu and lobby scenes. These were added to the build.
-! The sample scene is now the main game thing. Also there is only a max of three players currently.
-$$$ well that was fucking easy
-+ Added full menu functionality. Heres to the 'Crunch' passive perk we all get when we develop games. Not sure I should've made my build around it but it is what it is.
+! Moved around the save system data into a folder in the LUX main folder instead of being tucked away in god knows how many subfolders.
++ Added variables to the class 'SAVEHardData.cs' as well as 'MetaStats.cs'
+!!!! I seriously gotta ask dan about saving and loading wtf am i doing
 
 -----------
 
 Immediate Goals and Suggestions:
 ! Could change the pathfinding algorithm to stop checking after the energy limit is reached. (Less checks on grid step update, which happens often)
-!! Display player names above/around the players. Also something to show what player is being controlled.
+!!! Display player names above/around the players. Also something to show what player is being controlled.
 
 Current Known Issues:
 ! For some reason, there is an extra step when attempting to move a player diagonally D+L. This exclusively happens when the first selection is D+L from the player.

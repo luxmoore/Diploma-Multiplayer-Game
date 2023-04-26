@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MetaStats : MonoBehaviour
+[System.Serializable]
+
+public class MetaStats
 {
     // All of the things that the player specifies in the lobby will be passed through to this script.
     // This script is used exclusively by the G.C for startup
 
+    [Header("The Important Quesiton")]
+    public bool isLoadedFromSave;
+
     [Header("Grid Generation")]
+    [Tooltip("This contains all of the information needed to generate a grid from existing data.")]
+    public LUX_GridBit[] gridbits;
     [Tooltip("The height of the grid generated.")]
     public int gridGenMaxX;
     [Tooltip("The width of the grid generated.")]

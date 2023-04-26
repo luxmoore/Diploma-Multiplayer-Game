@@ -31,4 +31,9 @@ public class UIDirector : MonoBehaviour
     {
 
     }
+
+    private void CreateMetaStats()
+    {
+
+    }
 }

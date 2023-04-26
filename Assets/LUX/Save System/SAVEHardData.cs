@@ -15,7 +15,10 @@ public class SAVEHardData
 
     public string[] playerName;
     public int[] playerHealth;
+    public int[] playerDamDealt;
+    public int[] playerDamRecieved;
 
     public int goAmount;
     public int turnAmount;
+    public int[] playerEnergy;
 }
