@@ -22,6 +22,11 @@ public class GameController : MetaStats
             PlayerStats playerPreContr = playerPre.GetComponentInChildren<PlayerStats>();
             playerPreContr.playerNum = ticker;
             playerPreContr.isAlive = true;
+            playerPreContr.givenName = ticker.ToString();
+
+            Text_HandlingFeller textStuff = playerPreContr.GetComponentInChildren<Text_HandlingFeller>();
+            textStuff.playerName.SetText(playerPreContr.givenName);
+            textStuff.playerName.ForceMeshUpdate();
 
             alivePlayers.Add(playerPre);
         }

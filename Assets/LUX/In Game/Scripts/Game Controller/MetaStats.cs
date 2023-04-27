@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-
-public class MetaStats
+public class MetaStats : MonoBehaviour
 {
     // All of the things that the player specifies in the lobby will be passed through to this script.
     // This script is used exclusively by the G.C for startup

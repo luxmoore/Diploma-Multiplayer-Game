@@ -97,6 +97,7 @@ public class CombatManager : MonoBehaviour
                     int tempHealthVar = whoHealth;
                     whoHealth = whoHealth - trueDam;
 
+
                     if (debug) { Debug.Log("Player number " + who + " has taken " + trueDam + " damage."); }
                     #endregion
 
@@ -109,6 +110,7 @@ public class CombatManager : MonoBehaviour
                         whoStats.isAlive = false;
 
                         whoGameObj.GetComponent<MeshRenderer>().enabled = false; //rip bozo
+                        whoGameObj.GetComponentInChildren<Text_HandlingFeller>().playerName.gameObject.SetActive(false);
                         specificGridBit.playerOnThis = false;
                         specificGridBit.playerNumOnThis = -69;
 
@@ -130,11 +132,13 @@ public class CombatManager : MonoBehaviour
 
                         attacker.totalDamage = attacker.totalDamage + tempHealthVar;
                         whoStats.totalHealthLost = whoStats.totalHealthLost + tempHealthVar;
+                        StartCoroutine(whoGameObj.GetComponentInChildren<Text_HandlingFeller>().TookDam(trueDam.ToString() + " KILLED!"));
                     }
                     else
                     {
                         attacker.totalDamage = attacker.totalDamage + trueDam;
                         whoStats.totalHealthLost = whoStats.totalHealthLost + trueDam;
+                        StartCoroutine(whoGameObj.GetComponentInChildren<Text_HandlingFeller>().TookDam(trueDam.ToString()));
                     }
 
                     #endregion
@@ -187,7 +191,7 @@ public class CombatManager : MonoBehaviour
 
     private void DebugDirectional(string dir)
     {
-        Debug.Log("Player has chosen to attack in the direction of " + dir);
+        Debug.Log("Player has chosen to attack in the direction of " + dir + ".");
     }
 
     #endregion

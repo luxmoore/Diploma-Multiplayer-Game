@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+
     [Header("Meta")]
     [Tooltip("This signifies which player the following stats specifically affects.")]
     public int playerNum;
