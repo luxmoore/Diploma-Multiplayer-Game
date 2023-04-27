@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 // An explanation of the WaveFront Pathfinding Algorithm on a square based grid.
