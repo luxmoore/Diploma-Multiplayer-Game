@@ -10,6 +10,7 @@ public class GameController : MetaStats
     public List<GameObject> alivePlayers;
     private LUX_Grid gridComp;
     [SerializeField] GameObject playerPrefab;
+    private UI_BigMan ui_bigBoy;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class GameController : MetaStats
     private void Start()
     {
         gridComp = gameObject.GetComponent<LUX_Grid>();
+        ui_bigBoy = gameObject.GetComponent<UI_BigMan>();
         GameSetUp();
     }
 
@@ -44,7 +46,12 @@ public class GameController : MetaStats
         // Generate a grid (the function also places players on that grid)
         // Begin turn one, go one - turning on the appropiate player controller (this is done through the turnsystem script)
 
+        PlayerStats playerRep = alivePlayers[turnGoAmount].GetComponentInChildren<PlayerStats>();
+
         gridComp.GridGen(gridGenMaxX, gridGenMaxY, gridHolesAmount);
+        gridComp.SetAllVisitedNegative(playerRep.gridPos);
+
+        ui_bigBoy.ChangeOver(playerRep.moveEnergy, playerRep.atckEnergy, playerRep.currentHealth, playerRep.maxHealth);
     }
 
     // LUX

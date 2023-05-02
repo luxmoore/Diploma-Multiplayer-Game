@@ -40,9 +40,9 @@ public class MetaStats : MonoBehaviour
 
     [Header("Turn")]
     [Tooltip("The current turn")]
-    public int[] turnAmount;
+    public int turnAmount;
     [Tooltip("The current go")]
-    public int[] turnGoAmount;
+    public int turnGoAmount;
     [Tooltip("The current amount of energy of player whose turn it is. 0 = movement, 1 = attack.")]
     public int[] playerEnergy;
 

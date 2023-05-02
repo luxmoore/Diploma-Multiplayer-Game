@@ -154,7 +154,6 @@ public class LUX_Grid : MonoBehaviour
                 }
             }
         }
-
     }
 
     #endregion
@@ -319,6 +318,7 @@ public class LUX_Grid : MonoBehaviour
             #endregion
 
             #region 7 - DOWN + LEFT
+            // down left my behated
             case 7:
                 if (debugOut == true) { debugTicker++; Debug.Log("Check number " + debugTicker + " is:"); }
                 if
@@ -337,7 +337,7 @@ public class LUX_Grid : MonoBehaviour
                     &&
                     localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().isWalkable == true
                     &&
-                    localGridArray[(int)fromXY.x, ((int)fromXY.y)].GetComponent<LUX_GridBit>().playerOnThis == false
+                    localGridArray[(int)fromXY.x, ((int)fromXY.y - 1)].GetComponent<LUX_GridBit>().playerOnThis == false
 
                     &&
 
@@ -394,7 +394,7 @@ public class LUX_Grid : MonoBehaviour
                 return false;
         }
 
-        Debug.Log("WARNING. TestFourDirectionsFrom() has fucked up.");
+        Debug.Log("WARNING. TestADirectionFrom() has fucked up.");
         return false; // failsafe
     }
 

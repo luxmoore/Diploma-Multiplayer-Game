@@ -10,12 +10,10 @@ public class LUX_TurnSystem : MonoBehaviour
     private GameController gameController;
     private LUX_Grid gridComp;
     private CombatManager combatManager;
+    private UI_BigMan ui_bigBoy;
 
     private FollowingText followingText;
 
-    private TextMeshProUGUI movementEnergyDisplay;
-    private TextMeshProUGUI attackEnergyDisplay;
-    private TextMeshProUGUI healthDisplay;
     private TextMeshProUGUI turnDisplay;
     private TextMeshProUGUI goDisplay;
 
@@ -41,6 +39,7 @@ public class LUX_TurnSystem : MonoBehaviour
         gameController = gameObject.GetComponent<GameController>();
         gridComp = gameController.GetComponent<LUX_Grid>();
         combatManager = gameObject.GetComponent<CombatManager>();
+        ui_bigBoy = gameController.GetComponent<UI_BigMan>();
 
         playerEntities = gameController.alivePlayers;
         playerAmountAlive = playerEntities.Count;
@@ -64,9 +63,6 @@ public class LUX_TurnSystem : MonoBehaviour
             Debug.Log("Player number " + ticker + "'s energy has been recorded as: Movement = " + jimbo.moveEnergy + ", Attack = " + jimbo.atckEnergy);
         }
 
-        movementEnergyDisplay = GameObject.FindGameObjectWithTag("MovementText").GetComponent<TextMeshProUGUI>();
-        attackEnergyDisplay = GameObject.FindGameObjectWithTag("AttackText").GetComponent<TextMeshProUGUI>();
-        healthDisplay = GameObject.FindGameObjectWithTag("HealthText").GetComponent<TextMeshProUGUI>();
         turnDisplay = GameObject.FindGameObjectWithTag("TurnText").GetComponent<TextMeshProUGUI>();
         goDisplay = GameObject.FindGameObjectWithTag("GoText").GetComponent<TextMeshProUGUI>();
 
@@ -92,24 +88,6 @@ public class LUX_TurnSystem : MonoBehaviour
     }
 
     #region Change UI Text
-    private void ChangeStatText(int movementEnergy, int attackEnergy, int currentHealth, int maxHealth)
-    {
-        Debug.Log("Attempting to change the UI text for movement energy.");
-        movementEnergyDisplay.SetText("MVM - " + movementEnergy.ToString());
-        movementEnergyDisplay.ForceMeshUpdate();
-        Debug.Log("Successfully changed the UI text for movement energy to " + movementEnergy);
-
-        Debug.Log("Attempting to change the UI text for attacking energy.");
-        attackEnergyDisplay.SetText("ATK - " + attackEnergy.ToString());
-        attackEnergyDisplay.ForceMeshUpdate();
-        Debug.Log("Successfully changed the UI text for the attacking energy to " + attackEnergy);
-
-        Debug.Log("Attempting to change the UI text for health / maxhealth");
-        healthDisplay.SetText("HTP - " + currentHealth + "/" + maxHealth);
-        healthDisplay.ForceMeshUpdate();
-        Debug.Log("Successfully changed the UI text for health / maxhealth to " + currentHealth + "/" + maxHealth);
-    }
-
     private void ChangeTurnText(int turnAmount, int goAmount)
     {
         turnDisplay.SetText("Turn " + turnAmount);
@@ -228,7 +206,6 @@ public class LUX_TurnSystem : MonoBehaviour
         ToggleFunc(whoseGo, true);
 
         PlayerStats currentStats = playerEntities[whoseGo].GetComponentInChildren<PlayerStats>();
-        ChangeStatText(currentStats.moveEnergy, currentStats.atckEnergy, currentStats.currentHealth, currentStats.maxHealth);
 
         combatManager.damMin = currentStats.minDamage;
         combatManager.damMax = currentStats.maxDamage;
@@ -240,6 +217,8 @@ public class LUX_TurnSystem : MonoBehaviour
 
         currentStats.moveEnergy = energyMoveIndexer[currentStats.playerNum];
         currentStats.atckEnergy = energyAtkIndexer[currentStats.playerNum];
+
+        ui_bigBoy.ChangeOver(currentStats.moveEnergy, currentStats.atckEnergy, currentStats.currentHealth, currentStats.maxHealth);
 
         gridComp.SetUpGo(currentStats.gridPos);
     }
