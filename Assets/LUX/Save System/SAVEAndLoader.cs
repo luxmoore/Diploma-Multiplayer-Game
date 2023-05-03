@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SAVEAndLoader : MonoBehaviour
 {
-    string filePath;
-    public string fileName = "save";
+    #region Singleton Statement
+    static public SaveTestScript instance;
+    #endregion
 }

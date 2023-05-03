@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>This script is like the referee, taking in all of the rules of the game and ensuring that all play abides by them. Only holds functions to activate other functions in separate scripts.</summary>
 
-public class GameController : MetaStats
+public class GameController : MonoBehaviour
 {
     public int[,] startPlayerList = new int[3,1]; // takes two ints, the first number is the player number and the second number is the player's class. Current values are temporary
     public List<GameObject> alivePlayers;
