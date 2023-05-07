@@ -1763,9 +1763,9 @@ MonoBehaviour:
   chooseMenu: {fileID: 44671729}
   newMenu: {fileID: 903902535}
   loadMenu: {fileID: 0}
-  playerOne: {fileID: 0}
-  playerTwo: {fileID: 0}
-  playerThree: {fileID: 0}
+  playerOne: {fileID: 1436163080}
+  playerTwo: {fileID: 900843689}
+  playerThree: {fileID: 1949154880}
 --- !u!4 &893219186
 Transform:
   m_ObjectHideFlags: 0
