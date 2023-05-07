@@ -107,11 +107,6 @@ public class GameFinisher : MonoBehaviour
 
         // enable screen showing the top 3 players
         uiCanvasToEnable.SetActive(true);
-
-        // after a few seconds enable the continue button
-        yield return new WaitForSecondsRealtime(3);
-        uiButtonToEnable.SetActive(true);
-
         yield break;
     }
 }

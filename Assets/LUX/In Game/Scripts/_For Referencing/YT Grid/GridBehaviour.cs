@@ -17,7 +17,7 @@ using UnityEngine;
 // - The generation of the grid and the way that the particular gridbit is stored
 
 
-public class GridBehaviour : MetaStats
+public class GridBehaviour : MonoBehaviour
 {
     public bool findDistance = false;
     private int gridWidth;

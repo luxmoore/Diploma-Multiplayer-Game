@@ -53,7 +53,7 @@ public class LUX_Grid : MonoBehaviour
         gameController = gameObject.GetComponent<GameController>();
     }
 
-    public GameObject[,] GridGen(int width, int height, int holesAmount)
+    public void GridGen(int width, int height, int holesAmount)
     {
         GameObject[,] funcReturnVal = new GameObject[width, height];
 
@@ -86,8 +86,53 @@ public class LUX_Grid : MonoBehaviour
 
         if (debugOut == true) { Debug.Log("Placing players"); }
         PlacePlayersOnGrid();
+    }
 
-        return (funcReturnVal);
+    public void GridReInit(bool[] gridGen, int localWidth)
+    {
+        // this function is used to recreate a grid from MetaStats, using saved data
+
+        int sideWaysGenCounter = 0;
+        int placementX = 0;
+        int placementY = 0;
+        int foundHeight = gridGen.Length / localWidth;
+
+        GameObject[,] tempGridStuff = new GameObject[localWidth, foundHeight];
+
+        for(int i = 0; i >= gridGen.Length; i++)
+        {
+            if (sideWaysGenCounter == localWidth) {
+                sideWaysGenCounter = 0;
+                placementX++;
+                placementY = 0;
+            }
+            else
+            {
+                sideWaysGenCounter++;
+                placementY++;
+            }
+
+            GameObject obj = Instantiate(gridBitPrefab, new Vector3(x0y0Location.x + placementX, x0y0Location.y, x0y0Location.z + placementY), Quaternion.identity);
+            obj.transform.SetParent(gridHolderEmpty.transform);
+            obj.GetComponent<LUX_GridBit>().gridPos.x = placementX;
+            obj.GetComponent<LUX_GridBit>().gridPos.y = placementY;
+            tempGridStuff[placementX, placementY] = obj;
+            if (debugOut == true) { Debug.Log("Generated grid bit, position " + placementX + ", " + placementY); }
+            obj.name = "GridBit " + placementX + ", " + placementY;
+            obj.GetComponent<LUX_GridBit>().playerNumOnThis = -69;
+
+            if (gridGen[i] == false)
+            {
+                obj.GetComponent<LUX_GridBit>().isWalkable = false;
+                obj.GetComponent<MeshRenderer>().enabled = false;
+                obj.tag = "Dead GridBit";
+            }
+            else
+            {
+                obj.GetComponent<LUX_GridBit>().isWalkable = true;
+                obj.tag = "GridBit";
+            }
+        }
     }
 
     private void PokeRandomHole(int amount)

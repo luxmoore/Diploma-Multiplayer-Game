@@ -18,12 +18,21 @@ public class GameController : MonoBehaviour
         {
             // first create the correct amount of player prefabs, then assign variables to them.
             GameObject playerPre = Instantiate(playerPrefab);
-
-            // PlayerController variables
             PlayerStats playerPreContr = playerPre.GetComponentInChildren<PlayerStats>();
-            playerPreContr.playerNum = ticker;
-            playerPreContr.isAlive = true;
-            playerPreContr.givenName = ticker.ToString();
+
+            if (MetaStats.isLoadedFromSave)
+            {
+                // load
+
+            }
+            else
+            {
+                // create new
+
+                playerPreContr.playerNum = ticker;
+                playerPreContr.isAlive = true;
+                playerPreContr.givenName = ticker.ToString();
+            }
 
             Text_HandlingFeller textStuff = playerPreContr.GetComponentInChildren<Text_HandlingFeller>();
             textStuff.playerName.SetText(playerPreContr.givenName);
@@ -46,9 +55,15 @@ public class GameController : MonoBehaviour
         // Generate a grid (the function also places players on that grid)
         // Begin turn one, go one - turning on the appropiate player controller (this is done through the turnsystem script)
 
-        PlayerStats playerRep = alivePlayers[turnGoAmount].GetComponentInChildren<PlayerStats>();
-
-        gridComp.GridGen(gridGenMaxX, gridGenMaxY, gridHolesAmount);
+        PlayerStats playerRep = alivePlayers[MetaStats.turnGoAmount].GetComponentInChildren<PlayerStats>();
+        if(MetaStats.isLoadedFromSave)
+        {
+            gridComp.GridReInit(MetaStats.gridbitGen, MetaStats.gridGenMaxX);
+        }
+        else
+        {
+            gridComp.GridGen(MetaStats.gridGenMaxX, MetaStats.gridGenMaxY, MetaStats.gridHolesAmount);
+        }
         gridComp.SetAllVisitedNegative(playerRep.gridPos);
 
         ui_bigBoy.ChangeOver(playerRep.moveEnergy, playerRep.atckEnergy, playerRep.currentHealth, playerRep.maxHealth);

@@ -12,6 +12,7 @@ public class UIDirector : MonoBehaviour
     public GameObject gameUI;
     public GameObject followerText;
     private bool helpSwitch = false;
+    public SAVEMaster saveMaster;
 
     [Header("Lobby Screen")]
     public GameObject chooseMenu;
@@ -44,18 +45,6 @@ public class UIDirector : MonoBehaviour
     }
     #endregion
 
-    #region Save System Buttons
-    public void LoadLUXData()
-    {
-
-    }
-
-    public void SaveLUXData()
-    {
-
-    }
-    #endregion
-
     public void ToggleHelpScreen()
     {
         if(helpSwitch == false)
@@ -78,19 +67,60 @@ public class UIDirector : MonoBehaviour
     {
         chooseMenu.SetActive(false);
         newMenu.SetActive(true);
+        MetaStats.isLoadedFromSave = false; // game will create a new save file in lobby, which just maintains player names and class.
+                                            // Grid generation and player placement etc. will occur in Game Loop
+        saveMaster.CreateNew();
     }
+
+    private string input;
+    public void ReadStringInput(string s)
+    {
+        input = s;
+        Debug.Log(input);
+    }
+
+    #region Naming
+    public void ChangeNamePlayerOne(string chosenName)
+    {
+        Debug.Log("UIDirector : Player one's choice of name is " + chosenName);
+        saveMaster.ChangePlayerName(1, chosenName);
+    }
+
+    public void ChangeNamePlayerTwo(string chosenName)
+    {
+        Debug.Log("UIDirector : Player two's choice of name is " + chosenName);
+        saveMaster.ChangePlayerName(2, chosenName);
+    }
+
+    public void ChangeNamePlayerThree(string chosenName)
+    {
+        Debug.Log("UIDirector : Player three's choice of name is " + chosenName);
+        saveMaster.ChangePlayerName(3, chosenName);
+    }
+    #endregion
 
     public void ChooseLoadGame()
     {
+        Debug.Log("Load game chosen.");
+
         // check whether or not there is a loaded game. if so:
+        if(saveMaster.saveWasFound == true)
+        {
+            Debug.Log("Save file was found.");
 
-        chooseMenu.SetActive(false);
-        loadMenu.SetActive(true);
+            chooseMenu.SetActive(false);
+            loadMenu.SetActive(true);
 
-        playerOne.SetText("");
-        playerTwo.SetText("");
-        playerThree.SetText("");
+            playerOne.SetText("");
+            playerTwo.SetText("");
+            playerThree.SetText("");
+        }
+        else
+        {
+            Debug.Log("Save file was not found.");
 
-        // else grey out button and display text showing that there is no data to load
+            // grey out button and display text showing that there is no data to load
+
+        }
     }
 }

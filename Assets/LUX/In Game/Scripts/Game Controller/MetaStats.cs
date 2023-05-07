@@ -8,15 +8,15 @@ public static class MetaStats
     // This script is used exclusively by the G.C for startup
 
     [Header("The Important Quesiton")]
-    static bool isLoadedFromSave;
+    public static bool isLoadedFromSave;
 
     [Header("Grid Generation")]
     [Tooltip("This contains all of the information needed to generate a grid. false = hole, true = walkable gridbit.")]
     public static bool[] gridbitGen;
     [Tooltip("The height of the grid generated.")]
-    public static int gridGenMaxX = 10;
+    public static int gridGenMaxX = 6; // NONCHANGING CURRENTLY
     [Tooltip("The width of the grid generated.")]
-    public static int gridGenMaxY = 10;
+    public static int gridGenMaxY = 6; // NONCHANGING CURRENTLY
     [Tooltip("The gridbits that are essential are set to differing 'maps'. Like paths that have to exist or the players will not be able to reach one another.")]
     public static int gridMap; // INOPERATIONAL
     [Tooltip("The amount of holes present in a generated grid. They are chosen at random.")]
@@ -28,7 +28,7 @@ public static class MetaStats
     [Tooltip("The order in which players go in a turn.")]
     public static int[] playerTurnStructure; // INOPERATIONAL
     [Tooltip("The names given by players.")]
-    public static int[] playerNames;
+    public static string[] playerNames;
     [Tooltip("The life amount of players.")]
     public static int[] playerHealth;
     [Tooltip("The class of each player.")]

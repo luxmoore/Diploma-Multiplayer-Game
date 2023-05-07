@@ -4,34 +4,30 @@ Current Version: 0.5.3
 
 Change Notes:
 
-! Name changing is done through the save system.
-+ Fixed a bug that didn't allow for the first person in a match to move
-+ The health UI now shows properly.
-+ Created a help menu that is only accessible from the game loop
-+ Fixed the D+L movement bug with Dan's help (it was returning an false negative in the diagonal check for one of the monodirections)
-+ Fixed main menu UI
++ Added extra UI to the ingame loop - specifically the 'ATK' inside the diamond, a save button and an exit button.
 
 -----------
 
 Immediate Goals and Suggestions:
-!!!!! SAVE SYSTEM RIGHT FUCKING NOW YOU HAVE THREE DAYS YOU TROGLODYTE GET THAT SHIT OPERATIONAL !!!!!!
+!!!!! SAVE SYSTEM RIGHT FUCKING NOW YOU HAVE ONE DAY YOU TROGLODYTE GET THAT SHIT OPERATIONAL !!!!!!
 !!!!! Animate the balls (add particle effects on hit with a bit of squash and stretch) (required) (lol balls) !!!!!
 ! Could change the pathfinding algorithm to stop checking after the energy limit is reached. (Less checks on grid step update, which happens often)
 ! Display what player is being controlled.
 ! Display where a player can move to using the canvases already set up
 
 Current Known Issues Bounty Board:
-- Sometimes the UI for energy doesn't update properly
+- Sometimes the UI for both energies don't update properly
 - Players may be unable to reach eachother by placement on the grid thanks to generation not accounting for player to player accessability
 - Score isn't counting damage that result in kills properly (works well enough to score each player i guess)
 - Sometimes the first player in a new game will not be given any pathing. This is because of line 52 in 'GameController.cs' not updating when finishing on a non-0 player.
+- 'GridBehaviour.cs' contains a lot of shit variables and functions used as actual ones. Please clean this up.
 
 -----------
 
-Current Date: 02/05/2023
+Current Date: 04/05/2023 - 5:18PM
 
-Assess 1 Submission Date - 5/05/2023
-Days left to finish - 3
+Assess 1 Submission Date: 7/05/2023 - 11:59PM
+Time left to finish: -2 days
 
-Assess 2 Submission Date - 16/06/2023
-Days left to finish - 45
+Assess 2 Submission Date: 16/06/2023 - 11:59PM
+Days left to finish: 41

@@ -7,16 +7,15 @@ using UnityEngine;
 public class SAVEHardData
 {
     public int gridWidth;
-    public int gridHeight;
 
-    public int[] gridBitX; // is indexed through a 'for' loop.
-    public int[] gridBitY; // when reread by the computer, prints in a line until reaching the specified gridWidth. No need to check for gridHeight.
-    public bool[] gridBitWalkable;
+    public bool[] gridBit; // is indexed through a 'for' loop.
 
     public string[] playerName;
     public int[] playerHealth;
     public int[] playerDamDealt;
     public int[] playerDamRecieved;
+    public int[] playerPosX;
+    public int[] playerPosY;
 
     public int goAmount;
     public int turnAmount;
