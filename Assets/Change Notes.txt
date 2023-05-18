@@ -1,33 +1,22 @@
-Current Version: 0.5.3
+Current Version: b0.2
 
 -----------
 
 Change Notes:
-
-+ Added extra UI to the ingame loop - specifically the 'ATK' inside the diamond, a save button and an exit button.
++ Created and added scenes to build: 'Launcher', 'CreateOrJoin' and 'Waiting'
++ Created scripts: 'LUX_PHOTON_Launcher.cs' and 'LU_PHOTON_CreateAndJoin.cs'
 
 -----------
 
 Immediate Goals and Suggestions:
-!!!!! SAVE SYSTEM RIGHT FUCKING NOW YOU HAVE ONE DAY YOU TROGLODYTE GET THAT SHIT OPERATIONAL !!!!!!
-!!!!! Animate the balls (add particle effects on hit with a bit of squash and stretch) (required) (lol balls) !!!!!
-! Could change the pathfinding algorithm to stop checking after the energy limit is reached. (Less checks on grid step update, which happens often)
-! Display what player is being controlled.
-! Display where a player can move to using the canvases already set up
+- UI looks like shit
 
 Current Known Issues Bounty Board:
-- Sometimes the UI for both energies don't update properly
-- Players may be unable to reach eachother by placement on the grid thanks to generation not accounting for player to player accessability
-- Score isn't counting damage that result in kills properly (works well enough to score each player i guess)
-- Sometimes the first player in a new game will not be given any pathing. This is because of line 52 in 'GameController.cs' not updating when finishing on a non-0 player.
-- 'GridBehaviour.cs' contains a lot of shit variables and functions used as actual ones. Please clean this up.
+- Campus macs dont work with photon. everywhere else does.
 
 -----------
 
-Current Date: 04/05/2023 - 5:18PM
-
-Assess 1 Submission Date: 7/05/2023 - 11:59PM
-Time left to finish: -2 days
+Current Date: 18/05/2023
 
 Assess 2 Submission Date: 16/06/2023 - 11:59PM
-Days left to finish: 41
+Days left to finish: 29

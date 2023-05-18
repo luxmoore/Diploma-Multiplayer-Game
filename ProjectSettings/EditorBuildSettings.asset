@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/LUX/Scenes/For Compile/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/LUX/Online/Scenes/Launcher.unity
+    guid: 2d5a202f1972045388d9a7d3fef8bc36
+  - enabled: 1
+    path: Assets/LUX/Online/Scenes/Waiting.unity
+    guid: f670ccd2eb45d4767843fb5dd4edc3c2
+  - enabled: 1
+    path: Assets/LUX/Online/Scenes/CreateOrJoin.unity
+    guid: 3a5c72f6b97754885ac86a759e505c7c
   m_configObjects: {}
