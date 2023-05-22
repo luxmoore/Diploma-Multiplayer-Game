@@ -7,7 +7,6 @@ using UnityEngine;
 public class SAVEHardData
 {
     public int gridWidth;
-
     public bool[] gridBit; // is indexed through a 'for' loop.
 
     public string[] playerName;

@@ -1759,7 +1759,7 @@ MonoBehaviour:
   helpMenu: {fileID: 0}
   gameUI: {fileID: 0}
   followerText: {fileID: 0}
-  saveMaster: {fileID: 0}
+  saveMaster: {fileID: 683873945}
   chooseMenu: {fileID: 44671729}
   newMenu: {fileID: 903902535}
   loadMenu: {fileID: 380116252}
