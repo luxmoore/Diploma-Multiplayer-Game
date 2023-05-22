@@ -26,7 +26,7 @@ public class SAVEAndLoader : MonoBehaviour
         }
         #endregion
 
-        string filePath = Application.persistentDataPath + "/save.LUX_data";
+        filePath = Application.persistentDataPath + "/save.Ldata";
     }
 
     public void SaveGame(SAVEHardData saveData)

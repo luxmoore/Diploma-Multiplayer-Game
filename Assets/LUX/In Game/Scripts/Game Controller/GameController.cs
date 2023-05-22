@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour
 
                 playerPreContr.playerNum = ticker;
                 playerPreContr.isAlive = true;
-                playerPreContr.givenName = ticker.ToString();
+                playerPreContr.givenName = MetaStats.playerNames[ticker];
             }
 
             Text_HandlingFeller textStuff = playerPreContr.GetComponentInChildren<Text_HandlingFeller>();

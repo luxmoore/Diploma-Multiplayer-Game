@@ -14,10 +14,10 @@ public class SAVEMaster : MonoBehaviour
 
     private void Awake()
     {
-        if (MetaStats.isLoadedFromSave == false)
-        {
-            saveData = new SAVEHardData();
-        }
+        //if (MetaStats.isLoadedFromSave == false)
+        //{
+            //saveData = new SAVEHardData();
+       //}
     }
 
     public void Load()
@@ -43,28 +43,31 @@ public class SAVEMaster : MonoBehaviour
 
     public void Save()
     {
-        SAVEHardData tempSaveData = new SAVEHardData();
+        //SAVEHardData tempSaveData = new SAVEHardData();
 
-        tempSaveData.gridBit = MetaStats.gridbitGen;
-        tempSaveData.playerName = MetaStats.playerNames;
-        tempSaveData.playerDamDealt = MetaStats.playerDamageDealt;
-        tempSaveData.playerDamRecieved = MetaStats.playerHealthLost;
-        tempSaveData.goAmount = MetaStats.turnGoAmount;
-        tempSaveData.turnAmount = MetaStats.turnAmount;
+        saveData.gridBit = MetaStats.gridbitGen;
+        saveData.playerName = MetaStats.playerNames;
+        saveData.playerDamDealt = MetaStats.playerDamageDealt;
+        saveData.playerDamRecieved = MetaStats.playerHealthLost;
+        saveData.goAmount = MetaStats.turnGoAmount;
+        saveData.turnAmount = MetaStats.turnAmount;
 
-        SAVEAndLoader.instance.SaveGame(tempSaveData);
+        SAVEAndLoader.instance.SaveGame(saveData);
     }
 
     public void ChangePlayerName(int playerNum, string chosenName)
     {
         Debug.Log("SAVEMaster : Player number " + playerNum + " has chosen " + chosenName);
-        SAVEAndLoader.instance.SetName(playerNum, chosenName);
+        MetaStats.playerNames[playerNum] = chosenName;
+        Debug.Log("SAVEAndLoader : Player number " + playerNum + " has saved their name to be " + chosenName);
+        Save();
+        //SAVEAndLoader.instance.SetName(playerNum, chosenName);
     }
 
     public void CreateNew()
     {
         SAVEHardData newSave = new SAVEHardData(); // creates new
         SAVEAndLoader.instance.SaveGame(newSave); // overwrites whatever is inside with new
-
+        saveData = newSave;
     }
 }

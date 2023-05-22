@@ -28,7 +28,7 @@ public static class MetaStats
     [Tooltip("The order in which players go in a turn.")]
     public static int[] playerTurnStructure; // INOPERATIONAL
     [Tooltip("The names given by players.")]
-    public static string[] playerNames;
+    public static string[] playerNames = new string[3];
     [Tooltip("The life amount of players.")]
     public static int[] playerHealth;
     [Tooltip("The class of each player.")]

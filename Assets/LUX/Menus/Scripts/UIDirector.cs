@@ -83,19 +83,19 @@ public class UIDirector : MonoBehaviour
     public void ChangeNamePlayerOne(string chosenName)
     {
         Debug.Log("UIDirector : Player one's choice of name is " + chosenName);
-        saveMaster.ChangePlayerName(1, chosenName);
+        saveMaster.ChangePlayerName(0, chosenName);
     }
 
     public void ChangeNamePlayerTwo(string chosenName)
     {
         Debug.Log("UIDirector : Player two's choice of name is " + chosenName);
-        saveMaster.ChangePlayerName(2, chosenName);
+        saveMaster.ChangePlayerName(1, chosenName);
     }
 
     public void ChangeNamePlayerThree(string chosenName)
     {
         Debug.Log("UIDirector : Player three's choice of name is " + chosenName);
-        saveMaster.ChangePlayerName(3, chosenName);
+        saveMaster.ChangePlayerName(2, chosenName);
     }
     #endregion
 
