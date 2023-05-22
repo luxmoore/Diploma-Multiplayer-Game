@@ -207,9 +207,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 893219185}
-        m_TargetAssemblyTypeName: UIDirector, Assembly-CSharp
-        m_MethodName: ChooseLoadGame
+      - m_Target: {fileID: 683873945}
+        m_TargetAssemblyTypeName: SAVEMaster, Assembly-CSharp
+        m_MethodName: Load
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -219,9 +219,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 683873945}
-        m_TargetAssemblyTypeName: SAVEMaster, Assembly-CSharp
-        m_MethodName: Load
+      - m_Target: {fileID: 893219185}
+        m_TargetAssemblyTypeName: UIDirector, Assembly-CSharp
+        m_MethodName: ChooseLoadGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1762,7 +1762,7 @@ MonoBehaviour:
   saveMaster: {fileID: 0}
   chooseMenu: {fileID: 44671729}
   newMenu: {fileID: 903902535}
-  loadMenu: {fileID: 0}
+  loadMenu: {fileID: 380116252}
   playerOne: {fileID: 1436163080}
   playerTwo: {fileID: 900843689}
   playerThree: {fileID: 1949154880}
