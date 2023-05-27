@@ -18,5 +18,5 @@ public class SAVEHardData
 
     public int goAmount;
     public int turnAmount;
-    public int[] playerEnergy = new int[3];
+    public int[] playerEnergy = new int[2];
 }

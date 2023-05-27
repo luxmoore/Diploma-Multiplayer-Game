@@ -37,6 +37,10 @@ public static class MetaStats
     public static int[] playerDamageDealt;
     [Tooltip("The amount of damage that a player has taken.")]
     public static int[] playerHealthLost;
+    [Tooltip("The X of the player's location on the grid.")]
+    public static int[] playerGridPosX;
+    [Tooltip("The Y of the player's location on the grid.")]
+    public static int[] playerGridPosY;
 
     [Header("Turn")]
     [Tooltip("The current turn")]

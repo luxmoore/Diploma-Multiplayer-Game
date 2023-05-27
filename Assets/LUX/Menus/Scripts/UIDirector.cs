@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIDirector : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class UIDirector : MonoBehaviour
     [Header("Lobby Screen")]
     public GameObject chooseMenu;
     public GameObject newMenu;
+
+    public GameObject canLoadText;
+    public GameObject loadButton;
+
     public GameObject loadMenu;
     public TextMeshProUGUI playerOne;
     public TextMeshProUGUI playerTwo;
@@ -70,6 +75,7 @@ public class UIDirector : MonoBehaviour
         MetaStats.isLoadedFromSave = false; // game will create a new save file in lobby, which just maintains player names and class.
                                             // Grid generation and player placement etc. will occur in Game Loop
         saveMaster.CreateNew();
+        canLoadText.GetComponent<TextMeshProUGUI>().SetText("");
     }
 
     private string input;
@@ -107,18 +113,22 @@ public class UIDirector : MonoBehaviour
         if(saveMaster.saveWasFound == true)
         {
             Debug.Log("Save file was found.");
+            canLoadText.GetComponent<TextMeshProUGUI>().SetText("Save file was found.");
 
             chooseMenu.SetActive(false);
             loadMenu.SetActive(true);
 
-            playerOne.SetText("");
-            playerTwo.SetText("");
-            playerThree.SetText("");
+            playerOne.SetText("Player 1, AKA " + MetaStats.playerNames[0] + ", is at grid location " + MetaStats.playerGridPosX[0] + ", " + MetaStats.playerGridPosY[0] + " and is at " + MetaStats.playerHealth[0] + "/100 health. Their ratio is: " + MetaStats.playerDamageDealt[0] + " dealt  to " + MetaStats.playerHealthLost[0] + "lost.");
+            playerTwo.SetText("Player 2, AKA " + MetaStats.playerNames[1] + ", is at grid location " + MetaStats.playerGridPosX[1] + ", " + MetaStats.playerGridPosY[1] + " and is at " + MetaStats.playerHealth[1] + "/100 health. Their ratio is: " + MetaStats.playerDamageDealt[1] + " dealt  to " + MetaStats.playerHealthLost[1] + "lost.");
+            playerThree.SetText("Player 3, AKA " + MetaStats.playerNames[2] + ", is at grid location " + MetaStats.playerGridPosX[2] + ", " + MetaStats.playerGridPosY[2] + " and is at " + MetaStats.playerHealth[2] + "/100 health. Their ratio is: " + MetaStats.playerDamageDealt[2] + " dealt  to " + MetaStats.playerHealthLost[2] + "lost.");
         }
         else
         {
             Debug.Log("Save file was not found.");
+            canLoadText.GetComponent<TextMeshProUGUI>().SetText("Save file not found.");
 
+            loadButton.GetComponent<Button>().interactable = false;
+            loadButton.GetComponent<Image>().color = Color.grey;
             // grey out button and display text showing that there is no data to load
 
         }
