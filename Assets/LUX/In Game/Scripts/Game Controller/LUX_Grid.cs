@@ -1,3 +1,4 @@
+using MK.Toon;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -99,7 +100,7 @@ public class LUX_Grid : MonoBehaviour
 
         GameObject[,] tempGridStuff = new GameObject[localWidth, foundHeight];
 
-        for(int i = 0; i >= gridGen.Length; i++)
+        for(int i = 0; i <= gridGen.Length; i++)
         {
             if (sideWaysGenCounter == localWidth) {
                 sideWaysGenCounter = 0;
@@ -137,6 +138,14 @@ public class LUX_Grid : MonoBehaviour
 
     private void PokeRandomHole(int amount)
     {
+        // bool array for metastats
+        bool[] metaStatsBool = new bool[(gridWidth * gridHeight)];
+
+        for(int uni = 0; uni < metaStatsBool.Length; uni++)
+        {
+            metaStatsBool[uni] = true;
+        }
+
         Vector2 pokeoutSpot = Vector2.zero;
         GameObject obj;
 
@@ -152,7 +161,21 @@ public class LUX_Grid : MonoBehaviour
             obj.GetComponent<MeshRenderer>().enabled = false;
             obj.GetComponent<LUX_GridBit>().canvasObj.SetActive(false);
             obj.tag = "Dead GridBit";
+
+            #region MetaStats Stuff
+            // variables
+            
+
+            // find location of 2d array piece in 1d array
+
+
+            // save as false
+
+
+            #endregion
         }
+
+        MetaStats.gridbitGen = metaStatsBool;
     }
 
     private void PlacePlayersOnGrid()

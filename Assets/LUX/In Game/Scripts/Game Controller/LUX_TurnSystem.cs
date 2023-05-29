@@ -136,7 +136,24 @@ public class LUX_TurnSystem : MonoBehaviour
 
                 Debug.Log("Attempting to find next player from player number " + whoseGo);
 
-                
+                #region MetaStats Interaction
+
+                // player data
+                for (int uni = 0; uni < 3; uni++)
+                {
+                    Debug.Log("Saving player data (" + uni + ") to MetaStats");
+                    PlayerStats jimbo = playerEntities[uni].GetComponentInChildren<PlayerStats>();
+
+                    MetaStats.playerHealth[uni] = jimbo.currentHealth;
+                    MetaStats.playerDamageDealt[uni] = jimbo.totalDamage;
+                    MetaStats.playerHealthLost[uni] = jimbo.totalHealthLost;
+                    MetaStats.playerGridPosX[uni] = (int)jimbo.gridPos.x;
+                    MetaStats.playerGridPosY[uni] = (int)jimbo.gridPos.y;
+                    Debug.Log("Data of player " + uni + "saved to MetaStats successfully");
+                }
+
+                #endregion
+
                 bool stopCheck = false;
                 for (int ticker = whoseGo + 1; stopCheck != true; ticker++)
                 {
@@ -147,6 +164,10 @@ public class LUX_TurnSystem : MonoBehaviour
                         currentTurn++;
                         FirstGoChooser();
                         goEnded = false;
+
+                        MetaStats.turnAmount = currentTurn;
+                        MetaStats.turnGoAmount = whoseGo;
+
                         yield return null;
                     }
                     else
@@ -161,6 +182,8 @@ public class LUX_TurnSystem : MonoBehaviour
                     }
                 }
                 goEnded = false;
+                MetaStats.turnAmount = currentTurn;
+                MetaStats.turnGoAmount = whoseGo;
                 #endregion
 
             }

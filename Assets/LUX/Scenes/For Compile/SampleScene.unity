@@ -211,7 +211,7 @@ PrefabInstance:
     - target: {fileID: 6701393834324026474, guid: 67fef8261d9e3d24a98443f788921b88,
         type: 3}
       propertyPath: debugOut
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6701393834324026474, guid: 67fef8261d9e3d24a98443f788921b88,
         type: 3}
@@ -5208,6 +5208,8 @@ MonoBehaviour:
   saveMaster: {fileID: 1763131369}
   chooseMenu: {fileID: 0}
   newMenu: {fileID: 0}
+  canLoadText: {fileID: 0}
+  loadButton: {fileID: 0}
   loadMenu: {fileID: 0}
   playerOne: {fileID: 0}
   playerTwo: {fileID: 0}
