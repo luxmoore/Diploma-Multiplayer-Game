@@ -124,13 +124,12 @@ public class UIDirector : MonoBehaviour
         }
         else
         {
+            // grey out button and display text showing that there is no data to load
             Debug.Log("Save file was not found.");
             canLoadText.GetComponent<TextMeshProUGUI>().SetText("Save file not found.");
 
             loadButton.GetComponent<Button>().interactable = false;
             loadButton.GetComponent<Image>().color = Color.grey;
-            // grey out button and display text showing that there is no data to load
-
         }
     }
 }

@@ -24,23 +24,23 @@ public static class MetaStats
 
     [Header("Players")]
     [Tooltip("The amount of players in the game")]
-    public static int playerAmount; // INOPERATIONAL
+    public static int playerAmount = 3; // INOPERATIONAL
     [Tooltip("The order in which players go in a turn.")]
-    public static int[] playerTurnStructure; // INOPERATIONAL
+    public static int[] playerTurnStructure = new int[3]; // INOPERATIONAL
     [Tooltip("The names given by players.")]
     public static string[] playerNames = new string[3];
     [Tooltip("The life amount of players.")]
-    public static int[] playerHealth;
+    public static int[] playerHealth = new int[3];
     [Tooltip("The class of each player.")]
-    public static int[] playerClass; // INOPERATIONAL
+    public static int[] playerClass = new int[3]; // INOPERATIONAL
     [Tooltip("The amount of damage that a player has dealt.")]
-    public static int[] playerDamageDealt;
+    public static int[] playerDamageDealt = new int[3];
     [Tooltip("The amount of damage that a player has taken.")]
-    public static int[] playerHealthLost;
+    public static int[] playerHealthLost = new int[3];
     [Tooltip("The X of the player's location on the grid.")]
-    public static int[] playerGridPosX;
+    public static int[] playerGridPosX = new int[3];
     [Tooltip("The Y of the player's location on the grid.")]
-    public static int[] playerGridPosY;
+    public static int[] playerGridPosY = new int[3];
 
     [Header("Turn")]
     [Tooltip("The current turn")]
@@ -48,7 +48,7 @@ public static class MetaStats
     [Tooltip("The current go")]
     public static int turnGoAmount;
     [Tooltip("The current amount of energy of player whose turn it is. 0 = movement, 1 = attack.")]
-    public static int[] playerEnergy;
+    public static int playerEnergy;
 
     // LUX
 }

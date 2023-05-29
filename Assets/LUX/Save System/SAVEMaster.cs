@@ -30,6 +30,8 @@ public class SAVEMaster : MonoBehaviour
         }
         else
         {
+            saveWasFound = true;
+
             MetaStats.isLoadedFromSave = true;
             MetaStats.gridbitGen = saveData.gridBit;
             MetaStats.playerNames = saveData.playerName;
@@ -61,7 +63,6 @@ public class SAVEMaster : MonoBehaviour
         MetaStats.playerNames[playerNum] = chosenName;
         Debug.Log("SAVEAndLoader : Player number " + playerNum + " has saved their name to be " + chosenName);
         Save();
-        //SAVEAndLoader.instance.SetName(playerNum, chosenName);
     }
 
     public void CreateNew()
