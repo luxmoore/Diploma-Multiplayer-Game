@@ -541,7 +541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 0
   isAlive: 1
-  givenName: Jimbo Jones
+  givenName: Jimbo Jones (DEFAULT NAME)
   totalDamage: 0
   totalHealthLost: 0
   score: 0
@@ -566,4 +566,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: {fileID: 5391337445410123110}
   playerDam: {fileID: 590355929433587417}
-  playerDamDefaultPos: {x: 0, y: 0}
+  playerDamDefaultPos: {x: 0, y: 0, z: 0}

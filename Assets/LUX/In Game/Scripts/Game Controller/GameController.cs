@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
     private LUX_Grid gridComp;
     [SerializeField] GameObject playerPrefab;
     private UI_BigMan ui_bigBoy;
+    public bool[] tempBullShitGridGen = new bool[(MetaStats.gridGenMaxX * MetaStats.gridGenMaxY)]; // TEMP
+
 
     private void Awake()
     {
@@ -19,19 +21,20 @@ public class GameController : MonoBehaviour
             // first create the correct amount of player prefabs, then assign variables to them.
             GameObject playerPre = Instantiate(playerPrefab);
             PlayerStats playerPreContr = playerPre.GetComponentInChildren<PlayerStats>();
+            playerPreContr.playerNum = ticker;
+            playerPreContr.givenName = MetaStats.playerNames[ticker]; // used regardless of loading or not, as it is the only way the data is saved between scenes
 
             if (MetaStats.isLoadedFromSave)
             {
                 // load
+                playerPreContr.gridPos = new Vector2(MetaStats.playerGridPosX[ticker], MetaStats.playerGridPosY[ticker]);
 
             }
             else
             {
                 // create new
-
-                playerPreContr.playerNum = ticker;
                 playerPreContr.isAlive = true;
-                playerPreContr.givenName = MetaStats.playerNames[ticker];
+
             }
 
             Text_HandlingFeller textStuff = playerPreContr.GetComponentInChildren<Text_HandlingFeller>();
@@ -58,13 +61,24 @@ public class GameController : MonoBehaviour
         PlayerStats playerRep = alivePlayers[MetaStats.turnGoAmount].GetComponentInChildren<PlayerStats>();
         if(MetaStats.isLoadedFromSave)
         {
-            gridComp.GridReInit(MetaStats.gridbitGen, MetaStats.gridGenMaxX);
+            Debug.Log("Attempting to load a grid");
+
+            #region TEMP - FAKING WHOLLY WALKABLE GRID
+            for (int i = 0; i < tempBullShitGridGen.Length; i++)
+            {
+                tempBullShitGridGen[i] = true;
+                Debug.Log("Set bit " + i + " to be true");
+            }
+            #endregion
+
+            gridComp.GridReInit(tempBullShitGridGen, MetaStats.gridGenMaxX);
         }
         else
         {
+            // create new
             gridComp.GridGen(MetaStats.gridGenMaxX, MetaStats.gridGenMaxY, MetaStats.gridHolesAmount);
         }
-        gridComp.SetAllVisitedNegative(playerRep.gridPos);
+        gridComp.SetAllVisitedNegative(playerRep.gridPos); // error here
 
         ui_bigBoy.ChangeOver(playerRep.moveEnergy, playerRep.atckEnergy, playerRep.currentHealth, playerRep.maxHealth);
     }
