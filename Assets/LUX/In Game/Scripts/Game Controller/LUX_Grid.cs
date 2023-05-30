@@ -188,36 +188,43 @@ public class LUX_Grid : MonoBehaviour
 
         for(int ticker = 0; ticker < playerAmount; ticker++)
         {
-            bool cont = true;
-            tries = 0;
-
-            while(cont == true)
+            if (MetaStats.isLoadedFromSave)
             {
-                tries++;
-                randX = Random.Range(0, gridWidth);
-                randY = Random.Range(0, gridHeight);
-                LUX_GridBit selectedGridBit = localGridArray[randX, randY].GetComponent<LUX_GridBit>();
-                if (selectedGridBit.isWalkable == true && selectedGridBit.playerOnThis == false)
+                bool cont = true;
+                tries = 0;
+
+                while (cont == true)
                 {
-                    // place already spawned player on gridbit
-                    // set playerOnThis to be true
-                    // allow the for-loop to progress by one
+                    tries++;
+                    randX = Random.Range(0, gridWidth);
+                    randY = Random.Range(0, gridHeight);
+                    LUX_GridBit selectedGridBit = localGridArray[randX, randY].GetComponent<LUX_GridBit>();
+                    if (selectedGridBit.isWalkable == true && selectedGridBit.playerOnThis == false)
+                    {
+                        // place already spawned player on gridbit
+                        // set playerOnThis to be true
+                        // allow the for-loop to progress by one
 
-                    gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().gridPos = new Vector2(randX, randY);
-                    gameController.alivePlayers[ticker].transform.position = new Vector3(randX, 1, randY);
+                        gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().gridPos = new Vector2(randX, randY);
+                        gameController.alivePlayers[ticker].transform.position = new Vector3(randX, 1, randY);
 
-                    if (debugOut == true) { Debug.Log("Placed player number " + ticker + " at position " + randX + ", " + randY + " after " + tries + " attempt(s)"); }
+                        if (debugOut == true) { Debug.Log("Placed player number " + ticker + " at position " + randX + ", " + randY + " after " + tries + " attempt(s)"); }
 
-                    selectedGridBit.playerOnThis = true;
-                    selectedGridBit.playerNumOnThis = gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().playerNum;
-
-                    cont = false;
+                        selectedGridBit.playerOnThis = true;
+                        selectedGridBit.playerNumOnThis = gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().playerNum;
+                        
+                        cont = false;
+                    }
+                    if (tries == 50)
+                    {
+                        Debug.Log("NO SPAWN FOR YOU >:)");
+                        cont = false;
+                    }
                 }
-                if(tries == 50)
-                {
-                    Debug.Log("NO SPAWN FOR YOU >:)");
-                    cont = false;
-                }
+            }
+            else
+            {
+                //jimbolol
             }
         }
     }
