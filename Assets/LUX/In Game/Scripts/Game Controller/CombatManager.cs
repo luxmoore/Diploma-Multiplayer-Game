@@ -139,6 +139,7 @@ public class CombatManager : MonoBehaviour
                         attacker.totalDamage = attacker.totalDamage + trueDam;
                         whoStats.totalHealthLost = whoStats.totalHealthLost + trueDam;
                         StartCoroutine(whoGameObj.GetComponentInChildren<Text_HandlingFeller>().TookDam(trueDam.ToString()));
+                        StartCoroutine(whoGameObj.GetComponent<WibbleWobblah>().OnHit());
                     }
 
                     #endregion
