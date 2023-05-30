@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class SAVEMaster : MonoBehaviour
 {
-    SAVEHardData saveData;
+    SAVEHardData saveData = new SAVEHardData();
     public bool saveWasFound = false;
 
     private void Awake()
@@ -38,6 +38,8 @@ public class SAVEMaster : MonoBehaviour
             MetaStats.playerHealth = saveData.playerHealth;
             MetaStats.playerDamageDealt = saveData.playerDamDealt;
             MetaStats.playerHealthLost = saveData.playerDamRecieved;
+            MetaStats.playerGridPosX = saveData.playerPosX;
+            MetaStats.playerGridPosY = saveData.playerPosY;
             MetaStats.turnGoAmount = saveData.goAmount;
             MetaStats.turnAmount = saveData.turnAmount;
         }
@@ -49,8 +51,12 @@ public class SAVEMaster : MonoBehaviour
 
         saveData.gridBit = MetaStats.gridbitGen;
         saveData.playerName = MetaStats.playerNames;
+        saveData.playerHealth = MetaStats.playerHealth;
+        Debug.Log("Player ratios are being loaded saved as: 0 - " + MetaStats.playerDamageDealt[0] + "/" + MetaStats.playerHealthLost[0] + " 1 - " + MetaStats.playerDamageDealt[1] + "/" + MetaStats.playerHealthLost[1] + " 2 - " + MetaStats.playerDamageDealt[2] + "/" + MetaStats.playerHealthLost[2]);
         saveData.playerDamDealt = MetaStats.playerDamageDealt;
         saveData.playerDamRecieved = MetaStats.playerHealthLost;
+        saveData.playerPosX = MetaStats.playerGridPosX;
+        saveData.playerPosY = MetaStats.playerGridPosY;
         saveData.goAmount = MetaStats.turnGoAmount;
         saveData.turnAmount = MetaStats.turnAmount;
 

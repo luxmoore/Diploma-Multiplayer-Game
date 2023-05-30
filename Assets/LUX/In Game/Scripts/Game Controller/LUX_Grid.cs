@@ -188,7 +188,7 @@ public class LUX_Grid : MonoBehaviour
 
         for(int ticker = 0; ticker < playerAmount; ticker++)
         {
-            if (MetaStats.isLoadedFromSave)
+            if (MetaStats.isLoadedFromSave == false)
             {
                 bool cont = true;
                 tries = 0;
@@ -212,7 +212,7 @@ public class LUX_Grid : MonoBehaviour
 
                         selectedGridBit.playerOnThis = true;
                         selectedGridBit.playerNumOnThis = gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>().playerNum;
-                        
+
                         cont = false;
                     }
                     if (tries == 50)
@@ -224,7 +224,19 @@ public class LUX_Grid : MonoBehaviour
             }
             else
             {
-                //jimbolol
+                #region PLAYER
+                PlayerStats jimbo = gameController.alivePlayers[ticker].GetComponentInChildren<PlayerStats>();
+
+                Debug.Log("Moving player number " + ticker + " to world position " + jimbo.gridPos.x + ", 1, " + jimbo.gridPos.y);
+                gameController.alivePlayers[ticker].transform.position = new Vector3(jimbo.gridPos.x, 1, jimbo.gridPos.y); // physical positioning
+                #endregion
+
+                #region GRIDBIT
+                LUX_GridBit gridBitUnderneathPlayer = localGridArray[(int)jimbo.gridPos.x, (int)jimbo.gridPos.y].GetComponentInChildren<LUX_GridBit>();
+
+                gridBitUnderneathPlayer.playerOnThis = true;
+                gridBitUnderneathPlayer.playerNumOnThis = ticker;
+                #endregion
             }
         }
     }

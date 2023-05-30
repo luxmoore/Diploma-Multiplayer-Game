@@ -142,13 +142,16 @@ public class LUX_TurnSystem : MonoBehaviour
                 for (int uni = 0; uni < 3; uni++)
                 {
                     Debug.Log("Saving player data (" + uni + ") to MetaStats");
-                    PlayerStats jimbo = playerEntities[uni].GetComponentInChildren<PlayerStats>();
+                    PlayerStats jimbo = gameController.alivePlayers[uni].GetComponentInChildren<PlayerStats>();
 
                     MetaStats.playerHealth[uni] = jimbo.currentHealth;
+                    Debug.Log("Player " + uni + " has had their health saved as " + jimbo.currentHealth);
                     MetaStats.playerDamageDealt[uni] = jimbo.totalDamage;
                     MetaStats.playerHealthLost[uni] = jimbo.totalHealthLost;
+                    Debug.Log("Player " + uni + " has had their ratio saved as " + jimbo.totalDamage + "/" + jimbo.totalHealthLost);
                     MetaStats.playerGridPosX[uni] = (int)jimbo.gridPos.x;
                     MetaStats.playerGridPosY[uni] = (int)jimbo.gridPos.y;
+                    Debug.Log("Player " + uni + " has had their grid position saved as " + jimbo.gridPos.x + "," + jimbo.gridPos.x);
                     Debug.Log("Data of player " + uni + "saved to MetaStats successfully");
                 }
 

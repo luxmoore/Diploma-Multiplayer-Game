@@ -118,9 +118,9 @@ public class UIDirector : MonoBehaviour
             chooseMenu.SetActive(false);
             loadMenu.SetActive(true);
 
-            playerOne.SetText("Player 1, AKA " + MetaStats.playerNames[0] + ", is at grid location " + MetaStats.playerGridPosX[0] + ", " + MetaStats.playerGridPosY[0] + " and is at " + MetaStats.playerHealth[0] + "/100 health. Their ratio is: " + MetaStats.playerDamageDealt[0] + " dealt  to " + MetaStats.playerHealthLost[0] + "lost.");
-            playerTwo.SetText("Player 2, AKA " + MetaStats.playerNames[1] + ", is at grid location " + MetaStats.playerGridPosX[1] + ", " + MetaStats.playerGridPosY[1] + " and is at " + MetaStats.playerHealth[1] + "/100 health. Their ratio is: " + MetaStats.playerDamageDealt[1] + " dealt  to " + MetaStats.playerHealthLost[1] + "lost.");
-            playerThree.SetText("Player 3, AKA " + MetaStats.playerNames[2] + ", is at grid location " + MetaStats.playerGridPosX[2] + ", " + MetaStats.playerGridPosY[2] + " and is at " + MetaStats.playerHealth[2] + "/100 health. Their ratio is: " + MetaStats.playerDamageDealt[2] + " dealt  to " + MetaStats.playerHealthLost[2] + "lost.");
+            playerOne.SetText("Player 1, " + MetaStats.playerNames[0] + ", is at " + MetaStats.playerGridPosX[0] + ", " + MetaStats.playerGridPosY[0] + " with " + MetaStats.playerHealth[0] + "/100 health. Ratio is: " + MetaStats.playerDamageDealt[0] + "/" + MetaStats.playerHealthLost[0]);
+            playerTwo.SetText("Player 2, " + MetaStats.playerNames[1] + ", is at " + MetaStats.playerGridPosX[1] + ", " + MetaStats.playerGridPosY[1] + " with " + MetaStats.playerHealth[1] + "/100 health. Ratio is: " + MetaStats.playerDamageDealt[1] + "/" + MetaStats.playerHealthLost[1]);
+            playerThree.SetText("Player 3, " + MetaStats.playerNames[2] + ", is at " + MetaStats.playerGridPosX[2] + ", " + MetaStats.playerGridPosY[2] + " with " + MetaStats.playerHealth[2] + "/100 health. Ratio is: " + MetaStats.playerDamageDealt[2] + "/" + MetaStats.playerHealthLost[2]);
         }
         else
         {
@@ -131,5 +131,11 @@ public class UIDirector : MonoBehaviour
             loadButton.GetComponent<Button>().interactable = false;
             loadButton.GetComponent<Image>().color = Color.grey;
         }
+    }
+
+    public void SaveGame()
+    {
+        Debug.Log("Save button pressed");
+        saveMaster.Save();
     }
 }
