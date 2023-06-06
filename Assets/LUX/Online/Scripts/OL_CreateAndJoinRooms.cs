@@ -9,7 +9,7 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class LUX_PHOTON_CreateAndJoinRooms : MonoBehaviourPunCallbacks
+public class OL_CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
     #region Fields
     public TMP_InputField joinRoomName;

@@ -1,1 +1,36 @@
-Goals for 1.0 Completion:
+
+---- PLAN ----
+
+Rough Go-Through of an Online Game:
+- All players join into a lobby and 'ready up'
+- A grid is generated and shared across the network
+- All players are instantiated on the grid
+- Player 0 goes first, all others have no functionality
+- After finishing the game, the player's scores are displayed.
+- All players are returned to the lobby together
+-
+
+What is sent to the network during the lobby:
+- Name change calls for each player
+- Ready calls for each player
+- Drop out calls for each player
+-
+
+What is sent to the network during init of the game innit:
+- each player's feller's names
+- The grid, in the form of a bool[gridwidth * gridlength]
+- each player's feller's randomised positions
+- 
+
+What is sent to the network during the game:
+- whose turn and go it is
+- end go call of current player
+- the movement calls, attack calls and """animation""" calls of all fellers
+- Damage, health and mortality of the fellers
+- UI calls
+- Whether or not all players are present (potential for somebody to drop out). Dropping out instantly kills their feller and sets their score to -9999. (0 dd / 9999 hl)
+-
+
+---- 1.0 ----
+
+All of plan works

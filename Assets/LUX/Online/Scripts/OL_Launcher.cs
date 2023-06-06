@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class LUX_PHOTON_Launcher : MonoBehaviourPunCallbacks
+public class OL_Launcher : MonoBehaviourPunCallbacks
 {
     #region Serializable Fields
     #endregion
