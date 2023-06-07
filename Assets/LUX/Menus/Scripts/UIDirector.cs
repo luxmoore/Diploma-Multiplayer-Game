@@ -14,13 +14,15 @@ public class UIDirector : MonoBehaviour
     private bool helpSwitch = false;
     public SAVEMaster saveMaster;
 
-    [Header("Lobby Screen")]
+    [Header("Game Set Up Screen")]
     public GameObject chooseMenu;
     public GameObject newMenu;
     public GameObject loadMenu;
     public TextMeshProUGUI playerOne;
     public TextMeshProUGUI playerTwo;
     public TextMeshProUGUI playerThree;
+
+    public GameObject onlineMenu;
     #endregion
 
     #region Boring Scene Thoroughfares
@@ -99,6 +101,13 @@ public class UIDirector : MonoBehaviour
     }
     #endregion
 
+    public void BackToRoot()
+    {
+        chooseMenu.SetActive(true);
+        onlineMenu.SetActive(false);
+        loadMenu.SetActive(false);
+    }
+
     public void ChooseLoadGame()
     {
         Debug.Log("Load game chosen.");
@@ -122,5 +131,11 @@ public class UIDirector : MonoBehaviour
             // grey out button and display text showing that there is no data to load
 
         }
+    }
+
+    public void ChooseOnline()
+    {
+        chooseMenu.SetActive(false);
+        onlineMenu.SetActive(true);
     }
 }
