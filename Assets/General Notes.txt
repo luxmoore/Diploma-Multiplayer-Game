@@ -31,6 +31,17 @@ What is sent to the network during the game:
 - Whether or not all players are present (potential for somebody to drop out). Dropping out instantly kills their feller and sets their score to -9999. (0 dd / 9999 hl)
 -
 
----- 1.0 ----
+---- GOALS ----
 
-All of plan works
+1 - Players are able to show up in a lobby together, able to change name
+2 - Players are able to agree on a grid
+3 - Players are able to load into a grid on randomised positions that are synced
+4 - Players are able to move around on the grid
+5 - Players are able to attack
+6 - Players are able to die
+7 - The final score is calculated and displayed to all players
+8 - Players are able to return to the lobby
+
+The maybe territory
+
+9 - a visual of a crown is placed on the player name that won

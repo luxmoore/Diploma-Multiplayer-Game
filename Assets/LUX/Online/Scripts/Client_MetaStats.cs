@@ -9,6 +9,7 @@ public static class Client_MetaStats
 {
     // Network
     public static string networkCode;
+    public static bool amHost;
 
     // MetaStats adjacent
     public static bool[] gridGen = new bool[36]; //rewrite as bool[gridGenWidth * gridGenHeight] when not just trying to get over line

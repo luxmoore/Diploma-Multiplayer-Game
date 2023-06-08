@@ -18,6 +18,7 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
     {
         if(IsFilledOut())
         {
+            Client_MetaStats.networkCode = inputFieldText;
             PhotonNetwork.CreateRoom(inputFieldText);
         }
         else
@@ -35,6 +36,7 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
     {
         if (IsFilledOut())
         {
+            Client_MetaStats.networkCode = inputFieldText;
             PhotonNetwork.JoinRoom(inputFieldText);
         }
         else
