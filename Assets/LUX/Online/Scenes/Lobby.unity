@@ -1139,6 +1139,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38b2d6c22ce6449f865cb65439b8099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridBitViewBits:
+  - {fileID: 1991030950}
+  - {fileID: 1406913076}
+  - {fileID: 1912222463}
+  - {fileID: 1214817610}
+  - {fileID: 616571475}
+  - {fileID: 2037083409}
+  - {fileID: 130534813}
+  - {fileID: 1006299094}
+  - {fileID: 2055536217}
+  - {fileID: 1824670214}
+  - {fileID: 325450888}
+  - {fileID: 1097861606}
+  - {fileID: 2086490534}
+  - {fileID: 1031291926}
+  - {fileID: 1435564778}
+  - {fileID: 2024318732}
+  - {fileID: 2023177833}
+  - {fileID: 1470625002}
+  - {fileID: 1856534436}
+  - {fileID: 242338254}
+  - {fileID: 1063391160}
+  - {fileID: 548610211}
+  - {fileID: 537396786}
+  - {fileID: 1560128505}
+  - {fileID: 316777960}
+  - {fileID: 1043841433}
+  - {fileID: 1337358331}
+  - {fileID: 1482868243}
+  - {fileID: 867428654}
+  - {fileID: 89036763}
+  - {fileID: 1800376733}
+  - {fileID: 1763722056}
+  - {fileID: 899710313}
+  - {fileID: 126696523}
+  - {fileID: 1597749971}
+  - {fileID: 591395937}
+  gridVoteIcon: {fileID: 606681733}
+  gridVoteEnabledFromOther: 0
+  gridVoteEnabledFromSelf: 0
 --- !u!4 &276831580
 Transform:
   m_ObjectHideFlags: 0
@@ -3509,7 +3549,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0037b0a0649bb4fcd8ffbd7a3bfe1a06, type: 2}
+  - {fileID: 2100000, guid: da612f111e72240f7a20f1c0d2a3a136, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3818,7 +3858,7 @@ Canvas:
   m_GameObject: {fileID: 934856392}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
