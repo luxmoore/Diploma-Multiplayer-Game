@@ -135,6 +135,9 @@ public class UIDirector : MonoBehaviour
 
     public void ChooseOnline()
     {
+        // this does not do anything online.
+        // all server functionality is through 'GameSetup_UiDirector.cs'
+
         chooseMenu.SetActive(false);
         onlineMenu.SetActive(true);
     }

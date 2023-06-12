@@ -12,6 +12,23 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
 
     public TextMeshProUGUI errorText;
 
+    #region SERVER STUFF
+
+    public void ButtonOnline()
+    {
+        // this function plays when the user clicks "Online" in the game setup's first menu
+
+        // attempt to connect to master server
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        gameObject.GetComponent<UIDirector>().ChooseOnline();
+    }
+
+    #endregion
+
     #region ROOM CREATION
 
     public void ButtonCreateRoom()
