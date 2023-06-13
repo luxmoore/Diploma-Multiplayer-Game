@@ -10,6 +10,14 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
     public GameObject inputFieldObj;
     public string inputFieldText = null;
 
+    public string textRoomName;
+    public string textPlayerName;
+
+    public GameObject onlineMenu;
+    public GameObject nameSetMenu;
+
+    public bool createRoom; // this bool determines whether or not you are the host
+
     public TextMeshProUGUI errorText;
 
     #region SERVER STUFF
@@ -31,12 +39,14 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
 
     #region ROOM CREATION
 
-    public void ButtonCreateRoom()
+    public void CreateRoom()
     {
+        Client_MetaStats.amHost = true;
+
         if(IsFilledOut())
         {
             Client_MetaStats.networkCode = inputFieldText;
-            PhotonNetwork.CreateRoom(inputFieldText);
+            PhotonNetwork.CreateRoom(textRoomName);
         }
         else
         {
@@ -45,16 +55,21 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnCreatedRoom()
+    {
+        PhotonNetwork.LoadLevel("Lobby");
+    }
+
     #endregion
 
     #region ROOM JOIN
 
-    public void ButtonJoinRoom()
+    public void JoinRoom()
     {
         if (IsFilledOut())
         {
             Client_MetaStats.networkCode = inputFieldText;
-            PhotonNetwork.JoinRoom(inputFieldText);
+            PhotonNetwork.JoinRoom(textRoomName);
         }
         else
         {
@@ -70,10 +85,12 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
 
     #endregion
 
-    #region Input Field
+    #region Input Fields
 
     public void UpdateTheText(string text)
     {
+        // this is used both by the room name and player name
+
         inputFieldText = text;
     }
 
@@ -90,6 +107,55 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
         {
             Debug.Log("The input field is empty. Returning false.");
             return false; 
+        }
+    }
+
+    #endregion
+
+    #region Buttons
+
+    public void ButtonCreateRoom()
+    {
+        if (IsFilledOut())
+        {
+            textRoomName = inputFieldText;
+
+            createRoom = true;
+
+            onlineMenu.SetActive(false);
+            nameSetMenu.SetActive(true);
+        }
+    }
+
+    public void ButtonJoinRoom()
+    {
+        if (IsFilledOut())
+        {
+            textRoomName = inputFieldText;
+
+            createRoom = false;
+
+            onlineMenu.SetActive(false);
+            nameSetMenu.SetActive(true);
+        }
+    }
+
+    public void ButtonStart()
+    {
+        if (IsFilledOut())
+        {
+            textPlayerName = inputFieldText;
+
+            PhotonNetwork.LocalPlayer.NickName = textPlayerName;
+
+            if (createRoom)
+            {
+                CreateRoom();
+            }
+            else
+            {
+                JoinRoom();
+            }
         }
     }
 

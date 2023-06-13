@@ -106,6 +106,8 @@ public class UIDirector : MonoBehaviour
         chooseMenu.SetActive(true);
         onlineMenu.SetActive(false);
         loadMenu.SetActive(false);
+
+        gameObject.GetComponent<GameSetup_UiDirector>().createRoom = false;
     }
 
     public void ChooseLoadGame()

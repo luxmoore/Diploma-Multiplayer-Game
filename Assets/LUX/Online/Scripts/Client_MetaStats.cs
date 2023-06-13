@@ -13,6 +13,7 @@ public static class Client_MetaStats
 
     // MetaStats adjacent
     public static bool[] gridGen = new bool[36]; //rewrite as bool[gridGenWidth * gridGenHeight] when not just trying to get over line
+    public static bool[] gridGenHoleLocations = new bool[6];
     public static int gridGenWidth = 6;
     public static int gridGenHeight = 6;
 

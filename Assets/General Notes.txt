@@ -44,4 +44,4 @@ What is sent to the network during the game:
 
 The maybe territory
 
-9 - a visual of a crown is placed on the player name that won
+9 - a visual of a crown is placed on the player name that won last round
