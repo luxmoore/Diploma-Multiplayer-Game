@@ -15,6 +15,9 @@ public class UIDirector : MonoBehaviour
     private bool helpSwitch = false;
     public SAVEMaster saveMaster;
 
+    public GameObject hotfixText;
+    public GameObject hotfixButtons;
+
     [Header("Lobby Screen")]
     public GameObject chooseMenu;
     public GameObject newMenu;

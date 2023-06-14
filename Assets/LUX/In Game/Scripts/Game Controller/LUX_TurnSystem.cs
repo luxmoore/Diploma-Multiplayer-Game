@@ -85,6 +85,9 @@ public class LUX_TurnSystem : MonoBehaviour
     {
         Debug.Log("Request to end go recieved.");
         goEnded = true;
+
+        gameObject.GetComponent<UIDirector>().hotfixText.SetActive(false);
+        gameObject.GetComponent<UIDirector>().hotfixButtons.SetActive(true);
     }
 
     #region Change UI Text
