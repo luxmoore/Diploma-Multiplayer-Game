@@ -28,6 +28,8 @@ public class LUX_TurnSystem : MonoBehaviour
     public int[] energyAtkIndexer;
     public int[] energyMoveIndexer;
 
+    public GameObject hotFixName;
+
     #endregion
 
     #region Functions 
@@ -246,6 +248,10 @@ public class LUX_TurnSystem : MonoBehaviour
 
         currentStats.moveEnergy = energyMoveIndexer[currentStats.playerNum];
         currentStats.atckEnergy = energyAtkIndexer[currentStats.playerNum];
+
+        Debug.Log("name of current guy is " + currentStats.name);
+        hotFixName.GetComponent<TextMeshProUGUI>().SetText(currentStats.givenName);
+        hotFixName.GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
 
         ui_bigBoy.ChangeOver(currentStats.moveEnergy, currentStats.atckEnergy, currentStats.currentHealth, currentStats.maxHealth);
 
