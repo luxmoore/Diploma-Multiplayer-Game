@@ -1,3 +1,12 @@
+---- RPC vs Raise Events ----
+
+RPC
+- call to end go, this is checked for 'amHost'. if not host, forget about it. If am host, start the logic behind ending turns.
+  after the logic is finished, send out an RPC to set the turn to be something across the board.
+
+Raise Event
+- call out to send message via lobby. After receiving, then read the message and display as being said by the specific guy
+
 
 ---- PLAN ----
 
