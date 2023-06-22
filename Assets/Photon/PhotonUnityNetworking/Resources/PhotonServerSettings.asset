@@ -39,6 +39,10 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - ButtonReadyClientA
+  - ButtonReadyClientB
+  - ButtonReadyHost
+  - SomeOneElseJoined
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -8,10 +8,12 @@ using TMPro;
 
 public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInRoomCallbacks
 {
+    #region Variables
+
     public GameObject[] gridBitViewBits;
     public int[,] gridBitHoles = { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }; // six holes
     public GameObject gridVoteIcon;
-    public bool[] readyStatus = { false, false, false };
+
 
     public string lobbyMessage;
 
@@ -19,9 +21,15 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
     public GameObject[] lobbyMessageBoxes;
     public GameObject[] lobbyPlayerNames;
     public GameObject[] readyButtons;
+    public GameObject[] readyDisplayer;
+    public bool[] whoHere = { true, false, false };
+    public string[] playerNamesStringArray = { "host", "client1", "client2" };
+    public bool[] readyStatus = { false, false, false };
 
     public bool gridVoteEnabledFromOther = false;
     public bool gridVoteEnabledFromSelf = false;
+
+    #endregion
 
     #region Network Event Set Up
 
@@ -80,7 +88,7 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         PhotonNetwork.RaiseEvent(netMessage, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
     }
      
-    public void ButtonVoteGridChange()
+    public void ButtonVoteGridChange() // unimplemented in current plan
     {
         if (gridVoteEnabledFromSelf)
         {
@@ -114,6 +122,17 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         {
             GridChangeUp();
         }
+        else
+        {
+            // send and recieve all data about players currently in lobby
+            // add self to all current player's data
+
+            object[] dataSent = { PhotonNetwork.LocalPlayer.ActorNumber, PhotonNetwork.LocalPlayer.NickName };
+            PhotonNetwork.RaiseEvent(playerJoined, dataSent, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+
+        }
+
+        playerNamesStringArray[PhotonNetwork.LocalPlayer.ActorNumber] = PhotonNetwork.LocalPlayer.NickName; // add self to the player names variable
 
         readyButtons[PhotonNetwork.LocalPlayer.ActorNumber].SetActive(true); // activates only the player's ready button
     }
@@ -124,10 +143,18 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         {
             Debug.Log("Player has joined and am host, sending them all data on current players");
 
+            // get a refresh on all info
+            PhotonNetwork.RaiseEvent(demandAllInfo, null, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+
+            // send all updated data to the player that joined
+            object[] dataSent = { whoHere, lobbyPlayerNames, readyButtons };
+            PhotonNetwork.RaiseEvent(sendAllInfo, dataSent, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+
         }
         else
         {
             Debug.Log("Player has joined, but I dont care, thats the hosts problem.");
+            UpdateAllInfo();
         }
     }
 
@@ -180,6 +207,34 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         }
     }
 
+    private void UpdateAllInfo() // changes all of the information displayed to be accurate to last recieved data
+    {
+        for(int i = 0; i >= 3; i++)
+        {
+            if(whoHere[i]) // if they are in the game
+            {
+                lobbyPlayerNames[i].GetComponent<TextMeshProUGUI>().SetText(playerNamesStringArray[i]);
+                lobbyPlayerNames[i].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
+
+                if(readyStatus[i]) // if they are ready
+                {
+                    readyDisplayer[i].SetActive(true);
+                }
+                else
+                {
+                    readyDisplayer[i].SetActive(false);
+                }
+            }
+            else
+            {
+                lobbyPlayerNames[i].GetComponent<TextMeshProUGUI>().SetText("[SERVER] NOBODY");
+                lobbyPlayerNames[i].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
+
+                readyDisplayer[i].SetActive(false);
+            }
+        }
+    }
+
     private void ReadyUp(int whichGuy)
     {
         if(readyStatus[whichGuy])
@@ -206,6 +261,9 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
     public const byte netMessage = 1;
     public const byte playerLeft = 2;
     public const byte gridShakeUp = 3;
+    public const byte demandAllInfo = 4;
+    public const byte sendAllInfo = 5;
+    public const byte sendSelfInfoToHost = 6;
 
     // runs when a network event happens
     public void OnEvent(EventData eventData)
@@ -213,10 +271,15 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         byte eventCode = eventData.Code;
         object[] receivedData = (object[])eventData.CustomData;
 
+        Debug.Log("This client has received an event with the eventNo of " + eventCode);
+
         switch(eventCode)
         {
-            // event code = 0
+            #region event code = 0
             case playerJoined:
+
+                // when sending,
+                // when receiving, 
 
                 // recieve data
                 int playerNum = (int)receivedData[0];
@@ -230,10 +293,16 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
                 // change the name to that of the appropiate player
                 lobbyPlayerNames[playerNum].GetComponent<TextMeshProUGUI>().SetText(playerName);
 
-            return;
+                // set the arrays to contain player data
 
-            // event code = 1
+            return;
+            #endregion
+
+            #region event code = 1
             case netMessage:
+
+                // when sending,
+                // when receiving, 
 
                 // recieve data
                 string msgEventSpeech = (string)receivedData[0];
@@ -245,9 +314,13 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
                 StartCoroutine(lobbyMessageBoxes[msgEventGuy].GetComponent<TextFader>().FADE());
 
             return;
+            #endregion
 
-            // event code = 2
+            #region event code = 2
             case playerLeft:
+
+                // when sending, client tells the host that they have left the game
+                // when recieving, the host is informed of a player leaving and displays for all.
 
                 // recieve data
                 int whoLeft = (int)receivedData[0];
@@ -261,11 +334,68 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
                 lobbyPlayerNames[whoLeft].GetComponent<TextMeshProUGUI>().SetText("[SERVER] NOBODY");
 
             return;
+            #endregion
 
-            // event code = 3
+            #region event code = 3
             case gridShakeUp:
 
+                // too ambitious
+
             return;
+            #endregion
+
+            #region event code = 4
+            case demandAllInfo:
+
+                // when sending, the host gets all the info on all of the players
+                // when recieving, the client gives the host all of the info that they have on themselves via a function
+
+                if(PhotonNetwork.LocalPlayer.IsMasterClient)
+                {
+                    return;
+                }
+                else
+                {
+                    object[] sendData = { PhotonNetwork.LocalPlayer.ActorNumber, PhotonNetwork.LocalPlayer.NickName, readyStatus[PhotonNetwork.LocalPlayer.ActorNumber] };
+                    PhotonNetwork.RaiseEvent(sendSelfInfoToHost, sendData, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+                }
+
+            return;
+            #endregion
+
+            #region event code = 5
+            case sendAllInfo:
+
+                // when sending, the host sends all the info on all of the players
+                // when receiving, the client receives all of the information on all other players in the room currently, including the host
+
+                whoHere = (bool[])receivedData[0];
+                playerNamesStringArray = (string[])receivedData[1];
+                readyStatus = (bool[])receivedData[2];
+
+
+
+            return;
+            #endregion
+
+            #region event code = 6
+            case sendSelfInfoToHost:
+
+                // when sending, the client gives all the info they have on themselves
+                // when receiving, check if am host, if not, forget about about it, if am, add the data to the arrays
+
+                if (PhotonNetwork.LocalPlayer.IsMasterClient)
+                {
+                    playerNamesStringArray[(int)receivedData[0]] = (string)receivedData[1];
+                    readyStatus[(int)receivedData[0]] = (bool)receivedData[2];
+                }
+                else
+                {
+                    return;
+                }
+
+                return;
+            #endregion
         }
     }
 
