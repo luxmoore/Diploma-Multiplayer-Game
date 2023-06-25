@@ -1179,9 +1179,9 @@ MonoBehaviour:
   gridVoteIcon: {fileID: 606681733}
   lobbyMessage: 
   lobbyMessageBoxes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 895507467}
+  - {fileID: 1308739147}
+  - {fileID: 1524576606}
   lobbyPlayerNames:
   - {fileID: 260661265}
   - {fileID: 929552719}
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   - {fileID: 960714286}
   - {fileID: 396215773}
   - {fileID: 1745154214}
-  whoHere: 010000
+  whoHere: 000000
   playerNamesStringArray:
   - host
   - client1
@@ -1202,6 +1202,8 @@ MonoBehaviour:
   readyStatus: 000000
   gridVoteEnabledFromOther: 0
   gridVoteEnabledFromSelf: 0
+  myActorNum: 0
+  myArrayNum: 0
 --- !u!4 &276831580
 Transform:
   m_ObjectHideFlags: 0
@@ -1712,7 +1714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &396215774
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1753,7 +1755,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: IS NOT READY
+  m_text: IS READY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
@@ -4145,7 +4147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &960714287
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4186,7 +4188,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: IS NOT READY
+  m_text: IS READY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
@@ -4684,7 +4686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1134801666
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5641,7 +5643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1408020710
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6190,7 +6192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1560719910
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6423,7 +6425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1745154215
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6464,7 +6466,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: IS NOT READY
+  m_text: IS READY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}

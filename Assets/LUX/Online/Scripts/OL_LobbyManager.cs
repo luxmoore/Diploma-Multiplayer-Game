@@ -28,6 +28,10 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
     public bool gridVoteEnabledFromOther = false;
     public bool gridVoteEnabledFromSelf = false;
 
+    [Header("Debug Vars")]
+    public int myActorNum;
+    public int myArrayNum;
+
     #endregion
 
     #region Network Event Set Up
@@ -131,9 +135,24 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
 
         }
 
-        playerNamesStringArray[PhotonNetwork.LocalPlayer.ActorNumber] = PhotonNetwork.LocalPlayer.NickName; // add self to the player names variable
+        playerNamesStringArray[PhotonNetwork.LocalPlayer.ActorNumber - 1] = PhotonNetwork.LocalPlayer.NickName; // add self to the player names variable
 
-        readyButtons[PhotonNetwork.LocalPlayer.ActorNumber].SetActive(true); // activates only the player's ready button
+        readyButtons[PhotonNetwork.LocalPlayer.ActorNumber - 1].SetActive(true); // activates only the player's ready button
+
+        UpdateAllInfo();
+
+        // these are just used to see in inspector
+        myActorNum = PhotonNetwork.LocalPlayer.ActorNumber;
+        myArrayNum = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+    }
+
+    private void Update()
+    {
+        if (readyStatus[0] && readyStatus[1] && readyStatus[2])
+        {
+            // move to scene 7
+            PhotonNetwork.LoadLevel("OnlineGameLoop");
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newGuy)
@@ -157,6 +176,7 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         }
     }
 
+    #region Grid Stuff
     private void GridChangeUp()
     {
         int tempA;
@@ -168,9 +188,9 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         }
 
         // poke out new holes
-        for(int iterator = 0; iterator >= 6; iterator++)
+        for (int iterator = 0; iterator >= 6; iterator++)
         {
-            tempA = Random.Range(0,6);
+            tempA = Random.Range(0, 6);
 
             gridBitHoles[iterator, 0] = tempA;
             Debug.Log("Poking out hole number " + iterator + " at " + iterator + ", " + tempA);
@@ -178,7 +198,7 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         }
 
         // turn hole locations into 1D array of bool
-        for(int iterator = 0; iterator >= 6; iterator++)
+        for (int iterator = 0; iterator >= 6; iterator++)
         {
             // add iterator x 6 to 0 (then minus one to account for array numbering), thats the start pos of the line
             // add the tempA from the above for loop
@@ -194,17 +214,19 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         }
 
         // display changes
-        for(int iterator = 0; iterator >= 36; iterator++)
+        for (int iterator = 0; iterator >= 36; iterator++)
         {
-            if(Client_MetaStats.gridGen[iterator] == false)
+            if (Client_MetaStats.gridGen[iterator] == false)
             {
                 gridBitViewBits[iterator].SetActive(false);
-            } else
+            }
+            else
             {
                 gridBitViewBits[iterator].SetActive(true);
             }
         }
     }
+    #endregion
 
     private void UpdateAllInfo() // changes all of the information displayed to be accurate to last recieved data
     {
@@ -285,12 +307,12 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
                 string playerName = (string)receivedData[1];
 
                 // inform players via the already built in message stuff
-                lobbyMessageBoxes[playerNum].GetComponent<TextMeshProUGUI>().SetText("[SERVER] Player has joined.");
-                lobbyMessageBoxes[playerNum].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
-                StartCoroutine(lobbyMessageBoxes[playerNum].GetComponent<TextFader>().FADE());
+                lobbyMessageBoxes[playerNum - 1].GetComponent<TextMeshProUGUI>().SetText("[SERVER] Player has joined.");
+                lobbyMessageBoxes[playerNum - 1].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
+                StartCoroutine(lobbyMessageBoxes[playerNum - 1].GetComponent<TextFader>().FADE());
 
                 // change the name to that of the appropiate player
-                lobbyPlayerNames[playerNum].GetComponent<TextMeshProUGUI>().SetText(playerName);
+                lobbyPlayerNames[playerNum - 1].GetComponent<TextMeshProUGUI>().SetText(playerName);
 
                 // set the arrays to contain player data
 
@@ -308,9 +330,9 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
                 int msgEventGuy = (int)receivedData[1];
 
                 // show text and then make it slowly float to under screen
-                lobbyMessageBoxes[msgEventGuy].GetComponent<TextMeshProUGUI>().SetText(msgEventSpeech);
-                lobbyMessageBoxes[msgEventGuy].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
-                StartCoroutine(lobbyMessageBoxes[msgEventGuy].GetComponent<TextFader>().FADE());
+                lobbyMessageBoxes[msgEventGuy - 1].GetComponent<TextMeshProUGUI>().SetText(msgEventSpeech);
+                lobbyMessageBoxes[msgEventGuy - 1].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
+                StartCoroutine(lobbyMessageBoxes[msgEventGuy - 1].GetComponent<TextFader>().FADE());
 
             return;
             #endregion
@@ -325,12 +347,12 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
                 int whoLeft = (int)receivedData[0];
 
                 // inform players via the already built in message stuff
-                lobbyMessageBoxes[whoLeft].GetComponent<TextMeshProUGUI>().SetText("[SERVER] Player has left.");
-                lobbyMessageBoxes[whoLeft].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
-                StartCoroutine(lobbyMessageBoxes[whoLeft].GetComponent<TextFader>().FADE());
+                lobbyMessageBoxes[whoLeft - 1].GetComponent<TextMeshProUGUI>().SetText("[SERVER] Player has left.");
+                lobbyMessageBoxes[whoLeft - 1].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
+                StartCoroutine(lobbyMessageBoxes[whoLeft - 1].GetComponent<TextFader>().FADE());
 
                 // set name to '[SERVER] NOBODY'
-                lobbyPlayerNames[whoLeft].GetComponent<TextMeshProUGUI>().SetText("[SERVER] NOBODY");
+                lobbyPlayerNames[whoLeft - 1].GetComponent<TextMeshProUGUI>().SetText("[SERVER] NOBODY");
 
             return;
             #endregion
@@ -385,8 +407,8 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
 
                 if (PhotonNetwork.LocalPlayer.IsMasterClient)
                 {
-                    playerNamesStringArray[(int)receivedData[0]] = (string)receivedData[1];
-                    readyStatus[(int)receivedData[0]] = (bool)receivedData[2];
+                    playerNamesStringArray[(int)receivedData[0] - 1] = (string)receivedData[1];
+                    readyStatus[(int)receivedData[0] - 1] = (bool)receivedData[2];
                 }
                 else
                 {

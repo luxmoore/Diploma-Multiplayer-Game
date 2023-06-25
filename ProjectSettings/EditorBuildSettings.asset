@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/LUX/Online/Scenes/Lobby.unity
     guid: 9e971a16e50934a22afbf4d2d4c6d6d4
+  - enabled: 1
+    path: Assets/LUX/Online/Scenes/OnlineGameLoop.unity
+    guid: d828c994f6c2e4be1898dcb258823fdb
   m_configObjects: {}
