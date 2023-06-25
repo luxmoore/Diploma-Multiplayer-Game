@@ -31,6 +31,8 @@ public static class Client_MetaStats
     public static string myPlayerName;
     public static int myPlayerColour;
 
+    public static int[] myLocation;
+
     public static int myPlayerHealth;
     public static int myPlayerMaxHealth = 100;
 

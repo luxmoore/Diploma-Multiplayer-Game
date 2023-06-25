@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class OL_GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Variables
+    // prefabs
+    public GameObject playerPrefab;
+
+    // arrays
+    public GameObject[] players;
+
+    // non-online
+    public LUX_Grid gridComp;
+
+    #endregion
+
+    #region Game Set Up
+    private void Awake()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    #endregion
 }

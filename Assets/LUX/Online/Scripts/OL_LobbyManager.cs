@@ -14,7 +14,6 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
     public int[,] gridBitHoles = { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }; // six holes
     public GameObject gridVoteIcon;
 
-
     public string lobbyMessage;
 
     [Header("Player Changables")]
