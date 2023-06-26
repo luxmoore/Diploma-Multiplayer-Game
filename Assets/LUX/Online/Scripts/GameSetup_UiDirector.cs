@@ -66,8 +66,10 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
 
     public void JoinRoom()
     {
+        Debug.Log("Attempting to call join");
         if (IsFilledOut())
         {
+            Debug.Log("joining");
             Client_MetaStats.networkCode = inputFieldText;
             PhotonNetwork.JoinRoom(textRoomName);
         }
@@ -80,6 +82,7 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("Joined a room");
         PhotonNetwork.LoadLevel("Lobby");
     }
 
@@ -142,6 +145,7 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
 
     public void ButtonStart()
     {
+        Debug.Log("Attempting to start");
         if (IsFilledOut())
         {
             textPlayerName = inputFieldText;
@@ -154,6 +158,7 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
             }
             else
             {
+                Debug.Log("Attempting to join");
                 JoinRoom();
             }
         }

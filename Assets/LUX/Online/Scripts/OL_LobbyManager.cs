@@ -65,11 +65,15 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
     }
 
     // the following buttons only exist for the specific client
+    void ReadyUpButtonFunction(int playerNum)
+    {
+        GetComponent<PhotonView>().RPC("ButtonReadyHost", RpcTarget.All, playerNum);
+    }
 
     [PunRPC]
-    public void ButtonReadyHost()
+    public void ButtonReadyHost(int playernum)
     {
-        ReadyUp(0);
+        ReadyUp(playernum);
     }
 
     [PunRPC]
@@ -238,6 +242,9 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
 
             if(PhotonNetwork.CurrentRoom.Players.Count > i) // if they are in the game
             {
+
+                PhotonNetwork.CurrentRoom.Players[i].NickName;
+
                 lobbyPlayerNames[i].GetComponent<TextMeshProUGUI>().SetText(playerNamesStringArray[i]);
                 lobbyPlayerNames[i].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
 
