@@ -31,6 +31,7 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
     [Header("Debug Vars")]
     public int myActorNum;
     public int myArrayNum;
+    public string networkCode;
 
     #endregion
 
@@ -148,6 +149,7 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         // these are just used to see in inspector
         myActorNum = PhotonNetwork.LocalPlayer.ActorNumber;
         myArrayNum = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+        //networkCode = PhotonNetwork.
     }
 
     private void Update()
@@ -269,6 +271,8 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
 
     private void ReadyUp(int whichGuy)
     {
+        Debug.Log("Player number " + whichGuy + " has readied up");
+
         if(readyStatus[whichGuy])
         {
             readyStatus[whichGuy] = false;
@@ -277,11 +281,9 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
         {
             readyStatus[whichGuy] = true;
         }
+        
+        // startgame check done in update loop
 
-        if(readyStatus[0] && readyStatus[1] && readyStatus[2])
-        {
-            // start game
-        }
     }
 
     #endregion
