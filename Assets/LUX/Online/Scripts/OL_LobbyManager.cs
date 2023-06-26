@@ -157,7 +157,7 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
 
     public override void OnPlayerEnteredRoom(Player newGuy)
     {
-        if(Client_MetaStats.amHost)
+        if(PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             Debug.Log("Player has joined and am host, sending them all data on current players");
 
@@ -230,9 +230,13 @@ public class OL_LobbyManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInR
 
     private void UpdateAllInfo() // changes all of the information displayed to be accurate to last recieved data
     {
-        for(int i = 0; i >= 3; i++)
+        Debug.Log("UpdateAllInfo running");
+
+        for(int i = 0; i < 3; i++)
         {
-            if(whoHere[i]) // if they are in the game
+            Debug.Log("UpdateAllInfo run number: " + i);
+
+            if(PhotonNetwork.CurrentRoom.Players.Count > i) // if they are in the game
             {
                 lobbyPlayerNames[i].GetComponent<TextMeshProUGUI>().SetText(playerNamesStringArray[i]);
                 lobbyPlayerNames[i].GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
