@@ -11,16 +11,28 @@ public class DualPlayerLobby : MonoBehaviour
 {
     #region Variables
 
-    [Header("Host Info")]
+    [Header("Game Info")]
+    [Tooltip("This variable does not change anything, it is just here for debug purposes.")]
+    public string gameLobbyName;
+    [Tooltip("This variable does not change anything, it is just here for debug purposes.")]
+    public bool amHost;
+
+    [Header("Scene Variables")]
+    public TextMeshProUGUI lobbyDisplayName;
+
+    [Header("Host Variables")]
     public bool hostReady = false;
-    public GameObject hostReadyGameObject;
+    public GameObject hostReadyButtonGameObject;
+    public GameObject hostReadyShower;
     public string hostName = "";
     public TextMeshProUGUI hostNameGameObject;
     public Vector2 hostSpawn = new Vector2(-69, -69);
 
-    [Header("Client Info")]
+    [Header("Client Variables")]
+    public bool clientHere = false;
     public bool clientReady = false;
-    public GameObject clientReadyGameObject;
+    public GameObject clientReadyButtonGameObject;
+    public GameObject clientReadyShower;
     public string clientName = "";
     public TextMeshProUGUI clientNameGameObject;
     public Vector2 clientSpawn = new Vector2(-69, -69);
@@ -35,14 +47,14 @@ public class DualPlayerLobby : MonoBehaviour
     {
         HostReady();
 
-        hostReadyGameObject.SetActive(false);
+        hostReadyButtonGameObject.SetActive(false);
     }
 
     public void ButtonClientReady()
     {
         ClientReady();
 
-        clientReadyGameObject.SetActive(false);
+        clientReadyButtonGameObject.SetActive(false);
     }
 
     #endregion
@@ -51,19 +63,21 @@ public class DualPlayerLobby : MonoBehaviour
 
     private void Awake() // essential set up
     {
-        
+        Debug.Log("Begginning of AWAKE");
     }
 
     private void Start() // aux set up
     {
-        
+        Debug.Log("Begginning of START");
     }
 
     private void Update()
     {
+        UpdateInfo();
+
         if(hostReady && clientReady)
         {
-
+            PhotonNetwork.LoadLevel("DualPlayerGameLoop");
         }
     }
 
@@ -110,6 +124,28 @@ public class DualPlayerLobby : MonoBehaviour
         }
     }
 
+    private void UpdateInfo()
+    {
+        // This runs every frame.
+
+        // scene section
+        lobbyDisplayName.SetText(gameLobbyName);
+        lobbyDisplayName.ForceMeshUpdate();
+
+        // host section
+        hostName = PhotonNetwork.PlayerList[0].NickName;
+        hostNameGameObject.SetText(hostName);
+        hostNameGameObject.ForceMeshUpdate();
+
+        // client section
+        if (clientHere)
+        {
+            clientName = PhotonNetwork.PlayerList[1].NickName;
+            clientNameGameObject.SetText(clientName);
+            clientNameGameObject.ForceMeshUpdate();
+        }
+    }
+
     #endregion
 
     #region (NESTED) RPC Functions
@@ -131,6 +167,10 @@ public class DualPlayerLobby : MonoBehaviour
     #endregion
 
     #region Network
+
+    #region (NESTED) Photon Network Functions
+
+    #endregion
 
     #region (NESTED) Network Event Set Up
 
