@@ -40,6 +40,12 @@ What is sent to the network during the game:
 - Whether or not all players are present (potential for somebody to drop out). Dropping out instantly kills their feller and sets their score to -9999. (0 dd / 9999 hl)
 -
 
+---- BETTER PLAN ----
+
+1. Two guys, chilling in a grid, two gridbits apart cause they're not gay.
+2. NO CLIENT_METASTATS WHERE POSSIBLE
+3. No grid generation. Pulling the same sneaky trick I did with the save system. No holes. All grid. Set size.
+
 ---- GOALS ----
 
 1 - Players are able to show up in a lobby together, able to change name
