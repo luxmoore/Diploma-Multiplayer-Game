@@ -45,6 +45,8 @@ MonoBehaviour:
   - SomeOneElseJoined
   - ReadyPlayer
   - ButtonReady
+  - ClientReady
+  - HostReady
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

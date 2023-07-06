@@ -27,6 +27,7 @@ public class DualPlayerLobby : MonoBehaviour
     public string hostName = "";
     public TextMeshProUGUI hostNameGameObject;
     public Vector2 hostSpawn = new Vector2(-69, -69);
+    public TextMeshProUGUI hostSpawnGameObject;
 
     [Header("Client Variables")]
     public bool clientHere = false;
@@ -36,6 +37,7 @@ public class DualPlayerLobby : MonoBehaviour
     public string clientName = "";
     public TextMeshProUGUI clientNameGameObject;
     public Vector2 clientSpawn = new Vector2(-69, -69);
+    public TextMeshProUGUI clientSpawnGameObject;
 
     #endregion
 
@@ -69,6 +71,7 @@ public class DualPlayerLobby : MonoBehaviour
     private void Start() // aux set up
     {
         Debug.Log("Begginning of START");
+        gameLobbyName = Client_MetaStats.networkCode;
     }
 
     private void Update()
