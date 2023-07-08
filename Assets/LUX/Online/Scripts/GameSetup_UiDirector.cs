@@ -57,7 +57,7 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.LoadLevel("DualPlayerLobby");
     }
 
     #endregion
@@ -83,7 +83,7 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined a room");
-        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.LoadLevel("DualPlayerLobby");
     }
 
     #endregion

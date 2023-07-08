@@ -1,10 +1,10 @@
-Current Version: b0.2
+Current Version: b0.21
 
 -----------
 
 Change Notes:
-+ Created and added scenes to build: 'Launcher', 'CreateOrJoin' and 'Waiting'
-+ Created scripts: 'LUX_PHOTON_Launcher.cs' and 'LU_PHOTON_CreateAndJoin.cs'
++ Added dual player lobby and game loop to build
++ Changed 'GameSetup_UiDirector.cs' to start up the dual player lobby instead of old one.
 
 -----------
 

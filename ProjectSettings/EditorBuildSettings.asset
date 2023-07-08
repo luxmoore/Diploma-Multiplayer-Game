@@ -29,4 +29,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/LUX/Online/Scenes/OnlineGameLoop.unity
     guid: d828c994f6c2e4be1898dcb258823fdb
+  - enabled: 1
+    path: Assets/LUX/DualPlayerMulti/Lobby/DualPlayerLobby.unity
+    guid: 2b7e22c677ff05140b4ae8b7e3b3d071
+  - enabled: 1
+    path: Assets/LUX/DualPlayerMulti/Game Loop/Dual Player Game Loop.unity
+    guid: a27a82dbc7915934c80b754c0ccec7db
   m_configObjects: {}

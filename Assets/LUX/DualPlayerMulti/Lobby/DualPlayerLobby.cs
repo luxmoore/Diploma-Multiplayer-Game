@@ -48,15 +48,11 @@ public class DualPlayerLobby : MonoBehaviour
     public void ButtonHostReady()
     {
         HostReady();
-
-        hostReadyButtonGameObject.SetActive(false);
     }
 
     public void ButtonClientReady()
     {
         ClientReady();
-
-        clientReadyButtonGameObject.SetActive(false);
     }
 
     #endregion
@@ -71,7 +67,8 @@ public class DualPlayerLobby : MonoBehaviour
     private void Start() // aux set up
     {
         Debug.Log("Begginning of START");
-        gameLobbyName = Client_MetaStats.networkCode;
+        gameLobbyName = PhotonNetwork.CurrentRoom.Name;
+        SetAppropiateButton();
     }
 
     private void Update()
@@ -149,6 +146,23 @@ public class DualPlayerLobby : MonoBehaviour
         }
     }
 
+    private void SetAppropiateButton()
+    {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            hostReadyButtonGameObject.SetActive(true);
+            clientReadyButtonGameObject.SetActive(false);
+        }
+        else
+        {
+            hostReadyButtonGameObject.SetActive(false);
+            clientReadyButtonGameObject.SetActive(true);
+        }
+
+        hostReadyShower.SetActive(false);
+        clientReadyShower.SetActive(false);
+    }
+
     #endregion
 
     #region (NESTED) RPC Functions
@@ -157,12 +171,15 @@ public class DualPlayerLobby : MonoBehaviour
     public void HostReady()
     {
         hostReady = true;
+        hostReadyButtonGameObject.SetActive(false);
     }
 
     [PunRPC]
     public void ClientReady()
     {
         clientReady = true;
+
+        clientReadyButtonGameObject.SetActive(false);
     }
 
     #endregion
