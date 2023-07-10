@@ -172,14 +172,15 @@ public class DualPlayerLobby : MonoBehaviour
     {
         hostReady = true;
         hostReadyButtonGameObject.SetActive(false);
+        hostReadyShower.SetActive(true);
     }
 
     [PunRPC]
     public void ClientReady()
     {
         clientReady = true;
-
         clientReadyButtonGameObject.SetActive(false);
+        clientReadyShower.SetActive(true);
     }
 
     #endregion

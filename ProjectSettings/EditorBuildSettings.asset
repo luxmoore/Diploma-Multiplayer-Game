@@ -24,12 +24,6 @@ EditorBuildSettings:
     path: Assets/LUX/Online/Scenes/CreateOrJoin.unity
     guid: 3a5c72f6b97754885ac86a759e505c7c
   - enabled: 1
-    path: Assets/LUX/Online/Scenes/Lobby.unity
-    guid: 9e971a16e50934a22afbf4d2d4c6d6d4
-  - enabled: 1
-    path: Assets/LUX/Online/Scenes/OnlineGameLoop.unity
-    guid: d828c994f6c2e4be1898dcb258823fdb
-  - enabled: 1
     path: Assets/LUX/DualPlayerMulti/Lobby/DualPlayerLobby.unity
     guid: 2b7e22c677ff05140b4ae8b7e3b3d071
   - enabled: 1

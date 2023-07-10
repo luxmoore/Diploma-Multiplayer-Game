@@ -66,7 +66,7 @@ public class GameSetup_UiDirector : MonoBehaviourPunCallbacks
 
     public void JoinRoom()
     {
-        Debug.Log("Attempting to call join");
+        Debug.Log("Attempting to call join. Room name is " + textRoomName);
         if (IsFilledOut())
         {
             Debug.Log("joining");
