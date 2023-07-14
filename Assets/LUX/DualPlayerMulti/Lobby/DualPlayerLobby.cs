@@ -39,6 +39,7 @@ public class DualPlayerLobby : MonoBehaviour
     public Vector2 clientSpawn = new Vector2(-69, -69);
     public TextMeshProUGUI clientSpawnGameObject;
 
+    PhotonView view;
     #endregion
 
     #region Functions
@@ -47,12 +48,12 @@ public class DualPlayerLobby : MonoBehaviour
 
     public void ButtonHostReady()
     {
-        HostReady();
+        view.RPC("HostReady", RpcTarget.All);
     }
 
     public void ButtonClientReady()
     {
-        ClientReady();
+        view.RPC("ClientReady", RpcTarget.All);   
     }
 
     #endregion
@@ -67,7 +68,14 @@ public class DualPlayerLobby : MonoBehaviour
     private void Start() // aux set up
     {
         Debug.Log("Begginning of START");
+
+        //Get reference to Photonview so we can call rpcs
+        view = GetComponent<PhotonView>();
+
         gameLobbyName = PhotonNetwork.CurrentRoom.Name;
+
+        if (!PhotonNetwork.IsMasterClient) clientHere = true;
+
         SetAppropiateButton();
     }
 
