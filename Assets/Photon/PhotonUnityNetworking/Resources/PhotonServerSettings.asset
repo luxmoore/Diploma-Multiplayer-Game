@@ -47,6 +47,7 @@ MonoBehaviour:
   - ButtonReady
   - ClientReady
   - HostReady
+  - EndTurn
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

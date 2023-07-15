@@ -12,10 +12,15 @@ public class OnlineSceneManager : MonoBehaviour
 
     [Header("NonShown Variables")]
     public bool isHostsTurn = true;
+    public int turnamount;
+
+    public OnlinePlayerStats hostStats;
+    public OnlinePlayerStats clientStats;
 
     [Header("Game UI")]
     public TextMeshProUGUI turnIndicatorGameObject;
     public GameObject attackButton;
+    public GameObject endGoButton;
 
     [Header("Host UI GameObjects")]
     public TextMeshProUGUI hostNameGameObject;
@@ -48,18 +53,159 @@ public class OnlineSceneManager : MonoBehaviour
     #endregion
 
     #region (NESTED) Unity Functions
+
+    private void Start()
+    {
+        // ---- turn set up ----
+        turnamount = 0;
+
+        if(PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            ToggleFunc(true);
+        }
+        else
+        {
+            ToggleFunc(false);
+        }
+    }
+
+    private void Update()
+    {
+        PerformFullUIChangeOver();
+    }
+
     #endregion
 
     #region (NESTED) Generic Functions
 
-    public void Damage(bool toHost, int howMuch)
+    public void Damage(bool isToHost, int howMuch)
     {
 
+    }
+
+
+
+    public void ToggleFunc(bool onOrOff)
+    {
+        if(onOrOff == true)
+        {
+            // toggle on functionality
+
+            attackButton.gameObject.SetActive(true);
+            endGoButton.gameObject.SetActive(true);
+        }
+        else if(onOrOff == false)
+        {
+            // toggle off functionality
+
+            attackButton.gameObject.SetActive(false);
+            endGoButton.gameObject.SetActive(false);
+        }
+    }
+
+    private void PerformFullUIChangeOver()
+    {
+        // Host
+        hostNameGameObject.SetText("[H]" + PhotonNetwork.PlayerList[0].NickName);
+        hostNameGameObject.ForceMeshUpdate();
+        ChangeHealthUI(true, hostStats.playerHealth);
+        ChangeDamDealtUI(true, hostStats.scoreDamDealt);
+        ChangeDamTakenUI(true, hostStats.scoreDamTaken);
+
+        // Client
+        clientNameGameObject.SetText("[C]" + PhotonNetwork.PlayerList[1].NickName);
+        clientHealthGameObject.ForceMeshUpdate();
+        ChangeHealthUI(false, hostStats.playerHealth);
+        ChangeDamDealtUI(false, hostStats.scoreDamDealt);
+        ChangeDamTakenUI(false, hostStats.scoreDamTaken);
+    }
+
+    private void ChangeHealthUI(bool isToHost, int howMuch)
+    {
+        TextMeshProUGUI target;
+
+        if(isToHost == true)
+        {
+            target = hostHealthGameObject.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            target = clientHealthGameObject.GetComponent<TextMeshProUGUI>();
+        }
+
+        target.SetText("HP - " + howMuch + "/100");
+        target.ForceMeshUpdate();
+    }
+
+    private void ChangeDamDealtUI(bool isToHost, int howMuch)
+    {
+        TextMeshProUGUI target;
+
+        if(isToHost)
+        {
+            target = hostScoreDamDealtGameObject.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            target = clientScoreDamDealtGameObject.GetComponent<TextMeshProUGUI>();
+        }
+
+        target.SetText("DD - " + howMuch);
+        target.ForceMeshUpdate();
+    }
+
+    private void ChangeDamTakenUI(bool isToHost, int howMuch)
+    {
+        TextMeshProUGUI target;
+
+        if(isToHost == true)
+        {
+            target = hostScoreDamTakenGameObject.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            target = clientScoreDamTakenGameObject.GetComponent<TextMeshProUGUI>();
+        }
+
+        target.SetText("DT - " + howMuch);
+        target.ForceMeshUpdate();
     }
 
     #endregion
 
     #region (NESTED) Photon RPCs
+
+    [PunRPC]
+    public void EndTurn()
+    {
+        turnamount = turnamount + 1;
+
+        if(isHostsTurn)
+        {
+            isHostsTurn = false;
+            if(PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                ToggleFunc(false);
+            }
+            else
+            {
+                ToggleFunc(true);
+            }
+        }
+        else
+        {
+            isHostsTurn = true;
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                ToggleFunc(true);
+            }
+            else
+            {
+                ToggleFunc(false);
+            }
+        }
+    }
+
     #endregion
 
     #endregion

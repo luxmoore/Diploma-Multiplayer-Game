@@ -169,16 +169,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHostsTurn: 1
-  turnIndicatorGameObject: {fileID: 0}
+  turnamount: 0
+  hostStats: {fileID: 279608992}
+  clientStats: {fileID: 908758867}
+  turnIndicatorGameObject: {fileID: 1687222227}
   attackButton: {fileID: 0}
-  hostNameGameObject: {fileID: 0}
-  hostHealthGameObject: {fileID: 0}
-  hostScoreDamDealtGameObject: {fileID: 0}
-  hostScoreDamTakenGameObject: {fileID: 0}
-  clientNameGameObject: {fileID: 0}
-  clientHealthGameObject: {fileID: 0}
-  clientScoreDamDealtGameObject: {fileID: 0}
-  clientScoreDamTakenGameObject: {fileID: 0}
+  endGoButton: {fileID: 0}
+  hostNameGameObject: {fileID: 1539871860}
+  hostHealthGameObject: {fileID: 1496681259}
+  hostScoreDamDealtGameObject: {fileID: 1926472413}
+  hostScoreDamTakenGameObject: {fileID: 1652763723}
+  clientNameGameObject: {fileID: 100207060}
+  clientHealthGameObject: {fileID: 1658600656}
+  clientScoreDamDealtGameObject: {fileID: 1969109031}
+  clientScoreDamTakenGameObject: {fileID: 369603171}
 --- !u!114 &5025172
 MonoBehaviour:
   m_ObjectHideFlags: 0
