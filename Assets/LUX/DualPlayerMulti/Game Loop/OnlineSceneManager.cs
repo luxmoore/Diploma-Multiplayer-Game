@@ -17,6 +17,8 @@ public class OnlineSceneManager : MonoBehaviour
     public OnlinePlayerStats hostStats;
     public OnlinePlayerStats clientStats;
 
+    PhotonView view;
+
     [Header("Game UI")]
     public TextMeshProUGUI turnIndicatorGameObject;
     public GameObject attackButton;
@@ -47,7 +49,7 @@ public class OnlineSceneManager : MonoBehaviour
 
     public void ButtonEndTurn()
     {
-
+        view.RPC("EndTurn", RpcTarget.All);
     }
 
     #endregion
@@ -67,6 +69,9 @@ public class OnlineSceneManager : MonoBehaviour
         {
             ToggleFunc(false);
         }
+
+        // ---- photon view set up ----
+        view = gameObject.GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -80,7 +85,10 @@ public class OnlineSceneManager : MonoBehaviour
 
     public void Damage(bool isToHost, int howMuch)
     {
+        if(isToHost)
+        {
 
+        }
     }
 
 
