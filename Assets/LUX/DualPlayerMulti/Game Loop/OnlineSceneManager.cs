@@ -44,7 +44,8 @@ public class OnlineSceneManager : MonoBehaviour
 
     public void ButtonAttack()
     {
-
+        // generate random number
+        // RPC that shit
     }
 
     public void ButtonEndTurn()
@@ -71,7 +72,7 @@ public class OnlineSceneManager : MonoBehaviour
         }
 
         // ---- photon view set up ----
-        view = gameObject.GetComponent<PhotonView>();
+        view = GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -113,6 +114,16 @@ public class OnlineSceneManager : MonoBehaviour
 
     private void PerformFullUIChangeOver()
     {
+        if(isHostsTurn)
+        {
+            turnIndicatorGameObject.SetText("[H] Turn " + turnamount);
+        }
+        else
+        {
+            turnIndicatorGameObject.SetText("[C] Turn " + turnamount);
+        }
+        
+
         // Host
         hostNameGameObject.SetText("[H]" + PhotonNetwork.PlayerList[0].NickName);
         hostNameGameObject.ForceMeshUpdate();
@@ -123,9 +134,9 @@ public class OnlineSceneManager : MonoBehaviour
         // Client
         clientNameGameObject.SetText("[C]" + PhotonNetwork.PlayerList[1].NickName);
         clientHealthGameObject.ForceMeshUpdate();
-        ChangeHealthUI(false, hostStats.playerHealth);
-        ChangeDamDealtUI(false, hostStats.scoreDamDealt);
-        ChangeDamTakenUI(false, hostStats.scoreDamTaken);
+        ChangeHealthUI(false, clientStats.playerHealth);
+        ChangeDamDealtUI(false, clientStats.scoreDamDealt);
+        ChangeDamTakenUI(false, clientStats.scoreDamTaken);
     }
 
     private void ChangeHealthUI(bool isToHost, int howMuch)
