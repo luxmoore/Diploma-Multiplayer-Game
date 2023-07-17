@@ -1,3 +1,9 @@
+---- Issue Rubber Duckier ----
+
+Attack damage is not being sent.
+It is generated, but not sent.
+Client did not recieve the damage, as indicated by the fact that there was no debug log
+
 ---- PLAN ----
 
 1. [DONE] End go functionality. 

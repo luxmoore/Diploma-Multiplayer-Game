@@ -45,13 +45,28 @@ public class OnlineSceneManager : MonoBehaviour
 
     public void ButtonAttack()
     {
-        // generate random number
-        tempDamVal = RandGenNum();
-        Debug.Log("Damage generated as " + tempDamVal);
+        // minus one energy
+        currentEnergy = currentEnergy - 1;
 
-        // send that to the host to sync numbers
-        object[] data = new object[] { tempDamVal };
-        PhotonNetwork.RaiseEvent(pun_attack, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+        // if the player has energy...
+        if( currentEnergy > 0)
+        {
+            // generate random number
+            tempDamVal = RandGenNum();
+            Debug.Log("Damage generated as " + tempDamVal);
+
+            // send that to the host to sync numbers
+            object[] data = new object[] { tempDamVal };
+            PhotonNetwork.RaiseEvent(pun_attack, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+        }
+        else //...
+        {
+            // set current energy to zero
+            currentEnergy = 0;
+
+            // do nuthin
+
+        }
     }
 
     public void ButtonEndTurn()
@@ -78,7 +93,7 @@ public class OnlineSceneManager : MonoBehaviour
         }
 
         // ---- photon view set up ----
-        view = GetComponent<PhotonView>();
+        view = gameObject.GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -302,7 +317,6 @@ public class OnlineSceneManager : MonoBehaviour
 
     // code index
     public const byte pun_attack = 7;
-    public const byte pun_end = 8;
 
     public void OnEvent(EventData eventData)
     {
@@ -319,6 +333,7 @@ public class OnlineSceneManager : MonoBehaviour
 
                 // turn received data into the tempDamVal int
                 tempDamVal = (int)receivedData[0];
+                Debug.Log("Damage variable recieved as " + tempDamVal);
 
                 // RPC that shit
                 if (isHostsTurn)
@@ -330,8 +345,7 @@ public class OnlineSceneManager : MonoBehaviour
                     view.RPC("Damage", RpcTarget.All, false, tempDamVal);
                 }
 
-                return;
-
+            return;
         }
     }
 
