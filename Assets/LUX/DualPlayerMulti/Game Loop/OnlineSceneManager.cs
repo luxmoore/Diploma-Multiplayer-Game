@@ -25,6 +25,11 @@ public class OnlineSceneManager : MonoBehaviour
     public int currentEnergy = 3;
     public TextMeshProUGUI energyIndicator;
 
+    [Header("Win Screen Stuff")]
+    public GameObject winScreen;
+    public TextMeshProUGUI winnerName;
+    public TextMeshProUGUI winnerScore;
+
     [Header("Host UI GameObjects")]
     public TextMeshProUGUI hostNameGameObject;
     public TextMeshProUGUI hostHealthGameObject;
@@ -291,7 +296,27 @@ public class OnlineSceneManager : MonoBehaviour
     [PunRPC]
     public void EndGame(bool hostWon)
     {
+        // kill all shared UI
+        turnIndicatorGameObject.gameObject.SetActive(false);
+        ToggleFunc(false);
 
+        // activate the win screen
+        winScreen.gameObject.SetActive(true);
+
+        // change the win screen
+        if (hostWon)
+        {
+            winnerName.SetText(PhotonNetwork.PlayerList[0].NickName + " has won!");
+            winnerScore.SetText("Score - " + (hostStats.scoreDamDealt - hostStats.scoreDamTaken));
+        } 
+        else
+        {
+            winnerName.SetText(PhotonNetwork.PlayerList[1].NickName + " has won!");
+            winnerScore.SetText("Score - " + (clientStats.scoreDamDealt - clientStats.scoreDamTaken));
+        }
+
+        winnerName.ForceMeshUpdate();
+        winnerScore.ForceMeshUpdate();
     }
 
     #endregion
