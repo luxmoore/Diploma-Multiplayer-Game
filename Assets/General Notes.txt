@@ -1,4 +1,4 @@
 ---- PLAN ----
 
-1. End go functionality.
+1. [DONE] End go functionality. 
 2. Attack functionality.

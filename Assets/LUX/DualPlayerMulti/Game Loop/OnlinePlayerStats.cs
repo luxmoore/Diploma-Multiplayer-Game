@@ -11,6 +11,6 @@ public class OnlinePlayerStats : MonoBehaviour
     public int scoreDamDealt;
     public int scoreDamTaken;
 
-    public static int minDam;
-    public static int maxDam;
+    public int minDam;
+    public int maxDam;
 }

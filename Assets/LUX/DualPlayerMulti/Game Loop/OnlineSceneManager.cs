@@ -13,16 +13,17 @@ public class OnlineSceneManager : MonoBehaviour
     [Header("NonShown Variables")]
     public bool isHostsTurn = true;
     public int turnamount;
-
+    private int tempDamVal;
     public OnlinePlayerStats hostStats;
     public OnlinePlayerStats clientStats;
-
     PhotonView view;
 
     [Header("Game UI")]
     public TextMeshProUGUI turnIndicatorGameObject;
     public GameObject attackButton;
     public GameObject endGoButton;
+    public int currentEnergy = 3;
+    public TextMeshProUGUI energyIndicator;
 
     [Header("Host UI GameObjects")]
     public TextMeshProUGUI hostNameGameObject;
@@ -45,7 +46,12 @@ public class OnlineSceneManager : MonoBehaviour
     public void ButtonAttack()
     {
         // generate random number
-        // RPC that shit
+        tempDamVal = RandGenNum();
+        Debug.Log("Damage generated as " + tempDamVal);
+
+        // send that to the host to sync numbers
+        object[] data = new object[] { tempDamVal };
+        PhotonNetwork.RaiseEvent(pun_attack, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
     }
 
     public void ButtonEndTurn()
@@ -84,24 +90,17 @@ public class OnlineSceneManager : MonoBehaviour
 
     #region (NESTED) Generic Functions
 
-    public void Damage(bool isToHost, int howMuch)
-    {
-        if(isToHost)
-        {
-
-        }
-    }
-
-
-
     public void ToggleFunc(bool onOrOff)
     {
+        currentEnergy = 3;
+
         if(onOrOff == true)
         {
             // toggle on functionality
 
             attackButton.gameObject.SetActive(true);
             endGoButton.gameObject.SetActive(true);
+            energyIndicator.gameObject.SetActive(true);
         }
         else if(onOrOff == false)
         {
@@ -109,6 +108,19 @@ public class OnlineSceneManager : MonoBehaviour
 
             attackButton.gameObject.SetActive(false);
             endGoButton.gameObject.SetActive(false);
+            energyIndicator.gameObject.SetActive(false);
+        }
+    }
+
+    private int RandGenNum()
+    {
+        if(isHostsTurn)
+        {
+            return Random.Range(hostStats.minDam, hostStats.maxDam);
+        }
+        else
+        {
+            return Random.Range(clientStats.minDam, clientStats.maxDam);
         }
     }
 
@@ -122,7 +134,8 @@ public class OnlineSceneManager : MonoBehaviour
         {
             turnIndicatorGameObject.SetText("[C] Turn " + turnamount);
         }
-        
+
+        ChangeEnergyUI();
 
         // Host
         hostNameGameObject.SetText("[H]" + PhotonNetwork.PlayerList[0].NickName);
@@ -137,6 +150,12 @@ public class OnlineSceneManager : MonoBehaviour
         ChangeHealthUI(false, clientStats.playerHealth);
         ChangeDamDealtUI(false, clientStats.scoreDamDealt);
         ChangeDamTakenUI(false, clientStats.scoreDamTaken);
+    }
+
+    private void ChangeEnergyUI()
+    {
+        energyIndicator.SetText("Energy - " + currentEnergy);
+        energyIndicator.ForceMeshUpdate();
     }
 
     private void ChangeHealthUI(bool isToHost, int howMuch)
@@ -225,6 +244,41 @@ public class OnlineSceneManager : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void Damage(bool isToHost, int howMuch)
+    {
+        if (isToHost)
+        {
+            hostStats.playerHealth = hostStats.playerHealth - howMuch;
+            hostStats.scoreDamTaken = hostStats.scoreDamTaken + howMuch;
+
+            clientStats.scoreDamDealt = clientStats.scoreDamDealt + howMuch;
+
+            if(hostStats.playerHealth <= 0)
+            {
+                view.RPC("EndGame", RpcTarget.All, false);
+            }
+        }
+        else
+        {
+            clientStats.playerHealth = clientStats.playerHealth - howMuch;
+            clientStats.scoreDamTaken = clientStats.scoreDamTaken + howMuch;
+
+            hostStats.scoreDamDealt = hostStats.scoreDamDealt + howMuch;
+
+            if (clientStats.playerHealth <= 0)
+            {
+                view.RPC("EndGame", RpcTarget.All, true);
+            }
+        }
+    }
+
+    [PunRPC]
+    public void EndGame(bool hostWon)
+    {
+
+    }
+
     #endregion
 
     #endregion
@@ -263,19 +317,20 @@ public class OnlineSceneManager : MonoBehaviour
                 // on sending, tell the other person that they have been attacked for a specified amount of damage.
                 // on receiving, take the damage specified.
 
-                int damToTake = (int) receivedData[0];
-                Debug.Log("Receiving damage amount : " + damToTake);
+                // turn received data into the tempDamVal int
+                tempDamVal = (int)receivedData[0];
 
-                if(PhotonNetwork.LocalPlayer.IsMasterClient)
+                // RPC that shit
+                if (isHostsTurn)
                 {
-                    Damage(true, damToTake);
+                    view.RPC("Damage", RpcTarget.All, false, tempDamVal);
                 }
                 else
                 {
-                    Damage(false, damToTake);
+                    view.RPC("Damage", RpcTarget.All, false, tempDamVal);
                 }
 
-            return;
+                return;
 
         }
     }
