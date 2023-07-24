@@ -6,7 +6,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using ExitGames.Client.Photon;
 
-public class OnlineSceneManager : MonoBehaviour
+public class OnlineSceneManager : MonoBehaviourPun
 {
     #region Variables
 
