@@ -24,6 +24,7 @@ public class OnlineSceneManager : MonoBehaviourPun
     public GameObject endGoButton;
     public int currentEnergy = 3;
     public TextMeshProUGUI energyIndicator;
+    public GameObject damIndicator;
 
     [Header("Win Screen Stuff")]
     public GameObject winScreen;
@@ -132,6 +133,7 @@ public class OnlineSceneManager : MonoBehaviourPun
             attackButton.gameObject.SetActive(true);
             endGoButton.gameObject.SetActive(true);
             energyIndicator.gameObject.SetActive(true);
+            damIndicator.SetActive(true);
         }
         else if(onOrOff == false)
         {
@@ -140,6 +142,7 @@ public class OnlineSceneManager : MonoBehaviourPun
             attackButton.gameObject.SetActive(false);
             endGoButton.gameObject.SetActive(false);
             energyIndicator.gameObject.SetActive(false);
+            damIndicator.SetActive(false);
         }
     }
 
