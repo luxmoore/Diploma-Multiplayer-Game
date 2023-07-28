@@ -60,9 +60,15 @@ public class OnlineSceneManager : MonoBehaviourPun
             tempDamVal = RandGenNum();
             Debug.Log("Damage generated as " + tempDamVal);
 
-            // send that to the host to sync numbers
-            object[] data = new object[] { tempDamVal };
-            PhotonNetwork.RaiseEvent(pun_attack, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+            // send up number
+            if (isHostsTurn)
+            {
+                view.RPC("Damage", RpcTarget.All, false, tempDamVal);
+            }
+            else
+            {
+                view.RPC("Damage", RpcTarget.All, false, tempDamVal);
+            }
         }
         else //...
         {
@@ -77,6 +83,11 @@ public class OnlineSceneManager : MonoBehaviourPun
     public void ButtonEndTurn()
     {
         view.RPC("EndTurn", RpcTarget.All);
+    }
+
+    public void ButtonKillGame()
+    {
+        Application.Quit();
     }
 
     #endregion
@@ -347,31 +358,6 @@ public class OnlineSceneManager : MonoBehaviourPun
     {
         byte eventCode = eventData.Code;
         object[] receivedData = (object[])eventData.CustomData;
-
-        Debug.Log("This client has received an event with the eventNo of " + eventCode);
-
-        switch (eventCode)
-        {
-            case pun_attack:
-                // on sending, tell the other person that they have been attacked for a specified amount of damage.
-                // on receiving, take the damage specified.
-
-                // turn received data into the tempDamVal int
-                tempDamVal = (int)receivedData[0];
-                Debug.Log("Damage variable recieved as " + tempDamVal);
-
-                // RPC that shit
-                if (isHostsTurn)
-                {
-                    view.RPC("Damage", RpcTarget.All, false, tempDamVal);
-                }
-                else
-                {
-                    view.RPC("Damage", RpcTarget.All, false, tempDamVal);
-                }
-
-            return;
-        }
     }
 
     #endregion
